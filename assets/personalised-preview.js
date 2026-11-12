@@ -22,9 +22,9 @@ const map={
  '004':{input:{edName:'names',edAge:'age',edDate:'date',edTime:'time',edVenue:'venue',edAddress:'address'}},
  '005':{input:{edName:'names',edAge:'age',edDate:'date',edTime:'time',edVenue:'venue',edCity:'address',edDress:'dress',edIntro:'message'}},
  '006':{input:{editName:'names',editAge:'age',editDate:'date',editTime:'time',editVenue:'venue',editAddress:'address',editTribute:'message'}},
- '007':{input:{'edit-parents':'names','edit-date':'date','edit-time':'time','edit-venue':'venue','edit-address':'address','edit-dress':'dress'}},
+ '007':{input:{'edit-parents':'names','edit-date':'date','edit-time':'time','edit-venue':'venue','edit-address':'address','edit-dress':'dress','edit-deadline':'deadline','edit-message':'message'}},
  '008':{input:{editParents:'names',editBaby:'child',editDate:'date',editTime:'time',editVenue:'venue',editCity:'address',editDress:'dress',editMessage:'message'}},
- '009':{input:{'edit-parents':'names','edit-date':'date','edit-time':'time','edit-venue':'venue','edit-address':'address','edit-dress':'dress'}},
+ '009':{input:{'edit-parents':'names','edit-date':'date','edit-dateShort':'date','edit-time':'time','edit-venue':'venue','edit-location':'address','edit-dress':'dress','edit-story':'message'}},
  '010':{input:{editParents:'names',editDate:'date',editTime:'time',editVenue:'venue',editAddress:'address',editDress:'dress',editParentStory:'message'}},
  '011':{text:{parents:'names',dateDisplay:'date',time:'time',venue:'venue',address:'address',dress:'dress',letter1:'message'}},
  '012':{text:{bride:'names',tribute:'message',invite:'message'}},
@@ -45,10 +45,10 @@ function applyDoc(doc){
  if(activeDoc!==doc){activeDoc=doc;applied=false}
  const conf=map[id]||{};
  const text=Object.assign({},studio.text||{});
- for(const [field,key] of Object.entries(conf.text||{})){if(filled(profile[key]))text[field]=profile[key]}
+ for(const [field,key] of Object.entries(conf.text||{})){if(filled(profile[key]))text[field]=(field==='dateDisplay'&&/^\d{4}-\d{2}-\d{2}$/.test(profile[key]))?new Date(profile[key]+'T12:00:00').toLocaleDateString('en-ZA',{day:'numeric',month:'long',year:'numeric'}):profile[key]}
  // Apply native editable controls first: their existing input/change handlers redraw the template.
  let nativeCount=0;
- for(const [field,key] of Object.entries(conf.input||{})){if(setValue(doc.getElementById(field),profile[key]))nativeCount++}
+ for(const [field,key] of Object.entries(conf.input||{})){let v=profile[key];if(id==='009'&&field==='edit-date'&&filled(v))v=new Date(v+'T12:00:00').toLocaleDateString('en-ZA',{weekday:'long',day:'numeric',month:'long',year:'numeric'});if(id==='009'&&field==='edit-dateShort'&&filled(v))v=new Date(v+'T12:00:00').toLocaleDateString('en-ZA',{day:'numeric',month:'long',year:'numeric'}).toUpperCase();if(setValue(doc.getElementById(field),v))nativeCount++}
  for(const [k,v] of Object.entries(studio.fields||{})){
   const el=doc.getElementById(k)||doc.querySelector('[name="'+CSS.escape(k)+'"]');
   if(!el||el.type==='file'||el.type==='password'||el.type==='radio')continue;
@@ -57,6 +57,18 @@ function applyDoc(doc){
  }
  let textCount=0;
  doc.querySelectorAll('[data-text]').forEach(el=>{const value=text[el.dataset.text];if(filled(value)){setText(el,value);textCount++}});
+ // 012 creates native editor fields without IDs. Match their label order to the template's own data model.
+ if(id==='012'){
+  const keys=['names','message','message','date','time','venue','address','dress',null,'deadline'];
+  const controls=[...doc.querySelectorAll('#editFields label > input,#editFields label > textarea')];
+  controls.slice(0,10).forEach((el,i)=>{const k=keys[i];if(k&&setValue(el,profile[k]))nativeCount++});
+ }
+ // Remove the templates' second full editor from Final Look, without removing guest experiences.
+ if(!doc.getElementById('vraxis-hide-native-editor')){
+  const style=doc.createElement('style');style.id='vraxis-hide-native-editor';
+  style.textContent='#editOpen,#editToggle,#editFab,#editTop,#editorToggle,#openEdit,#editBtn,#editPanel,#editor,#backdrop,#scrim,#panel,#editDrawer,#closeEditor{display:none!important}';
+  doc.head.append(style);
+ }
  // 009 and other direct-text designs expose semantic IDs rather than data-text keys.
  const direct={parentNamesHero:'names',heroDate:'date'};
  if(id==='009')for(const [selector,key] of Object.entries(direct)){const el=doc.getElementById(selector);if(el&&filled(profile[key])){setText(el,profile[key]);textCount++}}
