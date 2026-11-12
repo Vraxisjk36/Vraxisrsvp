@@ -65,7 +65,7 @@ if(outer.contentDocument?.readyState==='complete')findInner();
 window.addEventListener('vraxis-edit-mode',e=>{
  enabled=!!e.detail.enabled;
  try{if(doc){const old=doc.getElementById('vraxis-tap-css');old?.remove();if(enabled)setCursor(null)}}catch{}
- if(!enabled)dialog.hidden=true;
+ if(!enabled){dialog.hidden=true;dialog.style.display='none';}
 });
 const dialog=document.createElement('div');dialog.hidden=true;dialog.setAttribute('role','dialog');dialog.setAttribute('aria-label','Edit invitation text');
 dialog.style.cssText='position:fixed;z-index:999999;inset:0;background:#19251c9e;display:grid;place-items:center;padding:18px';
@@ -77,16 +77,16 @@ const cancel=document.createElement('button');cancel.textContent='Cancel';const 
 for(const b of [cancel,save])b.style.cssText='padding:12px 16px;border:1px solid #263a30;background:#263a30;color:white;font:600 13px Arial,sans-serif';
 cancel.style.background='transparent';cancel.style.color='#263a30';
 actions.append(cancel,save);panel.append(label,edit,actions);dialog.append(panel);document.body.append(dialog);
-dialog.hidden=true;
+dialog.hidden=true;dialog.style.display='none';
 const picker=document.createElement('input');picker.type='file';picker.accept='image/*';picker.hidden=true;document.body.append(picker);
-function showEditor(value){edit.value=value;dialog.hidden=false;edit.focus();edit.select()}
-cancel.onclick=()=>dialog.hidden=true;
-dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.hidden=true});
+function showEditor(value){edit.value=value;dialog.hidden=false;dialog.style.display='grid';edit.focus();edit.select()}
+cancel.onclick=()=>{dialog.hidden=true;dialog.style.display='none'};dialog.style.display='none';
+dialog.addEventListener('click',e=>{if(e.target===dialog){dialog.hidden=true;dialog.style.display='none'}});
 save.onclick=()=>{
  if(!selected||selectedKind!=='text')return;
  const value=edit.value.trim();if(!value)return;
  state.text[selectedPath]=value;if(!store())return;
- selected.textContent=value;dialog.hidden=true;
+ selected.textContent=value;dialog.hidden=true;dialog.style.display='none';dialog.style.display='none';
  const status=document.getElementById('renderStatus');if(status)status.textContent='✓ Text changed and saved · switch off edit mode to experience your invitation.';
 };
 picker.onchange=async()=>{
