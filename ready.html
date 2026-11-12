@@ -1,2 +1,64 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Your invitation is ready | VraxisRSVP</title><style>:root{--ink:#222c27;--cream:#f7f3ec;--line:#e1ddd4;--accent:#335547}*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:Arial,sans-serif}header{padding:22px 5%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}a{color:inherit}header a{text-decoration:none}header strong{font:26px Georgia,serif}nav{display:flex;gap:20px}main{max-width:1180px;margin:auto;padding:48px 5%}h1,h2{font-family:Georgia,serif;font-weight:400}h1{font-size:clamp(38px,6vw,70px);line-height:1.08;margin:10px 0 20px}h2{font-size:32px}p{line-height:1.6;color:#656d65}.eyebrow{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#a16e50}.btn,button{background:var(--accent);color:white;border:0;padding:15px 22px;cursor:pointer;text-decoration:none;display:inline-block;font-size:14px}.ghost{background:transparent;border:1px solid var(--ink);color:var(--ink)}.panel{background:white;border:1px solid var(--line);padding:28px}.layout{display:grid;grid-template-columns:1fr 1fr;gap:28px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:flex;flex-direction:column;gap:8px;margin:0 0 18px}.field.full{grid-column:1/-1}label{font-size:13px;font-weight:600}input,textarea,select{border:1px solid #d9d9d0;border-radius:0;background:#fff;padding:14px;width:100%;font:inherit}input[type=file]{font-size:12px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.preview{width:100%;height:650px;border:1px solid var(--line);background:#fff}.hint{font-size:12px}.tile{background:#fff;border:1px solid var(--line);padding:22px;margin:12px 0;display:flex;justify-content:space-between;align-items:center;gap:18px}.tile strong{font-family:Georgia,serif;font-size:23px}.empty{padding:60px 20px;text-align:center;border:1px dashed #c9c9c0}.step{display:inline-block;border:1px solid #ddd;padding:9px 12px;margin:0 6px 12px 0;font-size:12px}.active{background:#335547;color:white}.loading{position:fixed;inset:0;background:#f7f3ec;display:none;align-items:center;justify-content:center;z-index:99;text-align:center}.loading.show{display:flex}.spinner{width:46px;height:46px;border:3px solid #ddd;border-top-color:#335547;border-radius:50%;animation:spin .9s linear infinite;margin:0 auto 22px}@keyframes spin{to{transform:rotate(360deg)}}@media(max-width:800px){nav{gap:12px;font-size:12px}.layout,.fields{grid-template-columns:1fr}.preview{height:520px}main{padding:30px 5%}.panel{padding:20px}.tile{align-items:flex-start;flex-direction:column}}</style></head><body><header><a href="index.html"><strong>vraxisRSVP</strong></a><nav><a href="catalogue.html">Collection</a><a href="dashboard.html">My dashboard</a></nav></header><main><div class="eyebrow">YOUR INVITATION · STEP 03</div><h1>Your final look.</h1><p>Your invitation details have been saved. Review your design, make further edits in Studio, or save it to your dashboard. The live invitation below is still the original sample until the template-specific changes are applied.</p><div class="layout"><section class="panel"><h2>Invitation draft</h2><div id="summary"></div><div class="actions"><a class="btn" id="edit">Customise in Studio →</a><button id="done" type="button">Done · Add to dashboard</button><a class="btn ghost" id="preview">Edit my details</a></div><p class="hint">This is a frontend prototype. No checkout, payment or server-side publishing is active yet.</p></section><aside><iframe class="preview" id="frame" title="Invitation preview"></iframe></aside></div><p id="renderStatus" style="max-width:1180px;margin:0 auto 20px;padding:0 5%;font-size:13px;color:#59675c" aria-live="polite">Loading personalised template fields…</p></main><script src="assets/personalised-preview.js" defer></script><script>
-const p=new URLSearchParams(location.search),id=/^0(0[1-9]|1[0-3])$/.test(p.get('template')||'')?p.get('template'):'001',d=JSON.parse(localStorage.getItem('vraxis_personal_'+id)||'{}');document.getElementById('summary').textContent=[d.title,d.names,d.date,d.venue].filter(Boolean).join(' · ')||'No details saved yet';document.getElementById('edit').href='studio-'+id+'.html';document.getElementById('preview').href='personalise.html?template='+id;document.getElementById('frame').src='preview-'+id+'.html';document.getElementById('done').onclick=()=>{const key='vraxis_projects',projects=JSON.parse(localStorage.getItem(key)||'[]'),existing=projects.find(x=>x.id===id);if(existing){existing.updated=Date.now();existing.details=d}else projects.unshift({id,updated:Date.now(),details:d});try{localStorage.setItem(key,JSON.stringify(projects));location.href='dashboard.html'}catch(err){alert('Browser storage is full; could not save the project.')}};</script></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f2eb">
+<title>Your final look | VraxisRSVP</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#273b32;--paper:#f6f2eb;--line:#ddd9cf;--muted:#667268;--accent:#aa8068}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:'DM Sans',Arial,sans-serif}button,a{font:inherit}button{cursor:pointer}a{color:inherit}
+header{display:flex;justify-content:space-between;align-items:center;padding:19px max(22px,5vw);border-bottom:1px solid var(--line);background:#fff}
+.logo{font:26px Georgia,serif;text-decoration:none;letter-spacing:-1px}.logo em{font-style:normal;color:#a36f53}
+.links{display:flex;gap:20px;font-size:13px}.links a{text-decoration:none}
+main{max-width:1400px;margin:auto;padding:35px clamp(15px,4vw,58px) 70px}
+.kicker{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent)}
+h1,h2{font-family:'Playfair Display',Georgia,serif;font-weight:400}h1{font-size:clamp(40px,5vw,65px);margin:8px 0}h2{font-size:29px;margin:0 0 15px}p{color:var(--muted);line-height:1.65}
+.progress{width:100%;height:3px;background:#d7d5cc;margin:23px 0 28px}.progress:after{content:'';display:block;background:var(--ink);height:100%;width:100%}
+.grid{display:grid;grid-template-columns:minmax(290px,350px) minmax(0,1fr);gap:25px;align-items:start}
+.sidebar{background:#fff;border:1px solid var(--line);padding:28px}
+.summary{font-size:13px;color:#45584d;line-height:1.85;word-break:break-word;margin:12px 0 26px}
+button.btn,a.btn{border:1px solid var(--ink);background:var(--ink);color:white;display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:15px 17px;min-height:51px;text-decoration:none;font-weight:700;font-size:13px;margin:10px 0}
+.btn.light{background:transparent;color:var(--ink)}.btn.is-active{background:#bd8759;color:#111;border-color:#bd8759}
+.explain{font-size:12px;padding:16px;background:#f6f2e9;border-left:2px solid #a98166;margin:17px 0 10px;line-height:1.7}
+.device{padding:14px;background:#e9e6df;border:1px solid #ddd8cf}.device-label{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:11px;text-transform:uppercase;letter-spacing:1.1px;font-weight:700;padding:6px 4px 13px}
+iframe#frame{display:block;width:100%;height:750px;border:0;background:white;box-shadow:0 5px 30px #1b2d2317}
+#renderStatus{font-size:12px;margin:12px 3px}
+.note{font-size:12px;line-height:1.6;margin-top:20px}.helper{display:none;font-size:13px;border:1px dashed #a98166;background:#fffaf1;padding:13px 15px;margin-bottom:15px}.helper.show{display:block}
+@media(max-width:930px){.grid{grid-template-columns:1fr}.sidebar{order:2}.device{order:1}iframe#frame{height:660px}main{padding:24px 15px 70px}.links a:first-child{display:none}}
+@media(max-width:550px){header{padding:15px}.logo{font-size:23px}iframe#frame{height:620px}.sidebar{padding:22px}.device{padding:8px}.device-label{font-size:10px}}
+</style></head><body>
+<header><a class="logo" href="index.html">vraxis<em>RSVP</em></a><nav class="links"><a href="catalogue.html">Collection</a><a href="dashboard.html">Dashboard</a></nav></header>
+<main><div class="kicker">STEP 06 OF 06 · YOUR FINAL LOOK</div><h1>It's yours. Take a look.</h1><p>You've done the important work. Experience your invitation with your details and photographs, just as a guest would.</p><div class="progress"></div>
+<div class="grid">
+<section class="sidebar"><h2>Happy with your invitation?</h2><div id="summary" class="summary"></div>
+<button class="btn" id="done">✓ Finalise this invitation</button>
+<button class="btn light" id="customise" aria-pressed="false">✎ Tap to customise (optional)</button>
+<div class="explain"><strong>What does “Tap to customise” mean?</strong><br>It's a visual touch-up mode. Tap the wording on the invitation to change it where it appears. Tap a photo to replace it. You don't need to fill out another form or redesign anything.</div>
+<div class="helper" id="helper">Edit mode is on. <strong>Tap text or a photo inside the invitation on the right.</strong> Tap the button again when finished. Changes save automatically to this browser.</div>
+<a class="btn light" id="back">← Change event details</a>
+<p class="note">Finalising saves this invitation to your dashboard on this device. Public links, payments, and live RSVP tracking are not yet enabled.</p>
+</section>
+<div class="device"><div class="device-label"><span>Live invitation · <span id="templateLabel">your design</span></span><span id="modeLabel">Guest preview</span></div><iframe id="frame" title="Your personalised invitation"></iframe><p id="renderStatus" aria-live="polite">Preparing your personalised invitation…</p></div>
+</div></main>
+<script>
+(function(){
+ const id=new URLSearchParams(location.search).get('template');
+ if(!/^0(0[1-9]|1[0-3])$/.test(id||'')){location.replace('catalogue.html');return}
+ const names=['The Heirloom','The Grand Affair','The Modern Vow','Midnight Club','The Social Edit','After Hours','The Little Garden','Moonlit Lullaby','The Big Little Secret','Little Wonderland','Sunday, With Love','The Bridal Edit','Something Sweet'];
+ const get=k=>{try{return JSON.parse(localStorage.getItem(k)||'{}')}catch{return {}}};
+ const d=get('vraxis_personal_'+id);
+ document.getElementById('templateLabel').textContent=names[Number(id)-1];
+ document.getElementById('summary').textContent=[d.names,d.title,d.date,d.time,d.venue,d.address].filter(Boolean).join(' · ')||'No event details saved. Please complete the guided steps.';
+ document.getElementById('back').href='start.html?template='+id+'&step=1';
+ document.getElementById('frame').src='preview-'+id+'.html';
+ document.getElementById('customise').onclick=function(){
+  const on=this.getAttribute('aria-pressed')!=='true';
+  this.setAttribute('aria-pressed',String(on));this.classList.toggle('is-active',on);this.textContent=on?'✓ Finish tap edits':'✎ Tap to customise (optional)';
+  document.getElementById('helper').classList.toggle('show',on);document.getElementById('modeLabel').textContent=on?'Tap-to-edit mode':'Guest preview';
+  window.dispatchEvent(new CustomEvent('vraxis-edit-mode',{detail:{enabled:on}}))
+ };
+ document.getElementById('done').onclick=()=>{
+  const key='vraxis_projects';let projects=[];try{projects=JSON.parse(localStorage.getItem(key)||'[]')}catch{}
+  const item=projects.find(x=>x.id===id);if(item){item.details=d;item.updated=Date.now()}else projects.unshift({id,details:d,updated:Date.now()});
+  try{localStorage.setItem(key,JSON.stringify(projects));location.href='dashboard.html'}catch(e){alert('Could not save the invitation. Your browser storage may be full. Try using fewer photos.')}
+ };
+})();
+</script><script src="assets/personalised-preview.js" defer></script><script src="assets/tap-editor.js" defer></script>
+</body></html>
