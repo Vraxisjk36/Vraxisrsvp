@@ -34,8 +34,10 @@ function activate(d){
   if(!enabled)return;
   const raw=e.target;
   if(!(raw instanceof d.defaultView.Element))return;
-  if(raw.closest('button,a,input,textarea,select,[role="button"],[contenteditable="true"],.intro,.overlay,.modal,[class*="modal"]'))return;
+  const blocked=raw.closest('button,input,textarea,select,[role="button"],[contenteditable="true"],.intro,.overlay,.modal,[class*="modal"]');
+  if(blocked)return;
   let img=raw.closest('img');
+  if(!img&&raw.closest('a'))return;
   let text=raw.closest('[data-text],h1,h2,h3,h4,p,blockquote');
   if(!img&&!text)return;
   e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
