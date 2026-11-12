@@ -39,6 +39,9 @@ function activate(d){
   let img=raw.closest('img');
   if(!img&&raw.closest('a'))return;
   let text=raw.closest('[data-text],h1,h2,h3,h4,p,blockquote');
+  const leaf=raw.closest('span,em,strong,b');
+  if(text&&leaf&&text.contains(leaf)&&leaf.childElementCount===0&&leaf.textContent.trim())text=leaf;
+  if(text&&text.childElementCount>0&&!text.hasAttribute('data-text'))text=null;
   if(!img&&!text)return;
   e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
   if(img){selected=img;selectedPath=cssPath(img);selectedKind='image';picker.click();return}
