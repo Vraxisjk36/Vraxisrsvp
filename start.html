@@ -32,13 +32,13 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400}h1{font-si
 <main><div class="eyebrow">THE INVITATION JOURNEY</div><div class="step-head"><h1 id="heading">Make it yours.</h1><span class="count" id="count">Step 1 of 6</span></div><p id="subtitle">One guided personalisation. No second form when you're finished.</p><div class="progress" aria-label="Creation progress"><div id="progress" style="width:16.66%"></div></div>
 <div class="layout"><div><section class="panel" id="fields"></section><div class="actions"><button class="btn secondary" id="back" type="button">← Back</button><button class="btn" id="next" type="button">Continue →</button></div><p class="tip" id="saveStatus" aria-live="polite">Your draft saves automatically in this browser.</p></div>
 <aside class="sample"><div class="eyebrow">YOUR CHOSEN DESIGN</div><h3 id="templateName">Your invitation</h3><p class="tip">This is your template's original interactive demo. Your own personalised invitation appears on Step 6.</p><iframe id="sample" title="Original invitation preview"></iframe><p class="tip">The template's animations and layout are kept intact.</p></aside></div></main>
-<script>
+<script src="assets/draft.js"></script><script>
 (function(){
  const q=new URLSearchParams(location.search),id=q.get('template');
  if(!/^0(0[1-9]|1[0-3])$/.test(id||'')){location.replace('catalogue.html');return}
  const names=['The Heirloom','The Grand Affair','The Modern Vow','Midnight Club','The Social Edit','After Hours','The Little Garden','Moonlit Lullaby','The Big Little Secret','Little Wonderland','Sunday, With Love','The Bridal Edit','Something Sweet'];
  const category=Number(id);const birthday=category>=4&&category<=6,baby=category>=7&&category<=11;
- const key='vraxis_personal_'+id,photoKey='vraxis_photos_'+id;
+ const key='vraxis_draft_'+vraxisDraft.id+'_details',photoKey='vraxis_draft_'+vraxisDraft.id+'_photos';
  let step=1,model={};try{model=JSON.parse(localStorage.getItem(key)||'{}')||{}}catch{}
  const fields=document.getElementById('fields'),heading=document.getElementById('heading'),count=document.getElementById('count'),next=document.getElementById('next'),back=document.getElementById('back');
  document.getElementById('templateName').textContent=names[Number(id)-1];
@@ -55,7 +55,7 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400}h1{font-si
  {title:'Pick the perfect day.',intro:'Your date and time will appear throughout the invitation.',body:()=>'<div class="fields">'+field('date','Event date','date','',true)+field('time','Event time','time','',true)+'</div>'},
  {title:'Where are we celebrating?',intro:'Give guests the information they need to arrive without confusion.',body:()=>'<div class="fields">'+field('venue','Venue name','text','The Glasshouse',true)+field('address','Full venue address','text','Street, city, South Africa')+'</div>'},
  {title:'Give it your voice.',intro:'Your invitation should sound like you — not a generic message.',body:()=>'<div class="fields">'+field('message','Your personal message','textarea',"We'd love you to celebrate with us.")+field('dress','Dress code (optional)','text','Formal / Garden party')+field('deadline','RSVP deadline (optional)','date')+field('contact','Contact number (optional)','tel')+'</div>'},
- {title:'Add your favourite photos.',intro:'Replace the sample imagery with yours, or keep placeholders temporarily.',body:()=>'<p>Choose up to 6 photos. They are optimised for this browser draft.</p><label class="field"><span>Upload event photographs</span><input id="file" type="file" accept="image/*" multiple></label><div class="photo-list" id="thumbs"></div><p class="tip">For best results, start with a portrait or hero photo. You can replace individual photos later by tapping them.</p><div class="notice">Photos in this prototype only remain on your current device. Public hosting is not enabled yet.</div>'}
+ {title:'Add your favourite photos.',intro:'Replace the sample imagery with yours, or keep placeholders temporarily.',body:()=>'<p>Choose up to 6 photos. They are optimised for this browser draft.</p><label class="field"><span>Upload event photographs</span><input id="file" type="file" accept="image/*" multiple></label><div class="photo-list" id="thumbs"></div><p class="tip">For best results, start with a portrait or hero photo. You can replace individual photos later by tapping them.</p><div class="notice">Photos are kept in this draft until you save the invitation to your account.</div>'}
  ];
  function show(){
   const c=screens[step-1];heading.textContent=c.title;document.getElementById('subtitle').textContent=c.intro;count.textContent='Step '+step+' of 6';document.getElementById('progress').style.width=(step/6*100)+'%';
@@ -75,7 +75,7 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400}h1{font-si
   try{localStorage.setItem(photoKey,JSON.stringify(output));renderPhotos();document.getElementById('saveStatus').textContent='✓ '+output.length+' photo(s) saved.'}catch{alert('Browser storage is full. Try fewer or smaller photos.')}
  }
  back.onclick=()=>{if(step===1)location.href='preview-'+id+'.html';else{step--;show()}};
- next.onclick=()=>{if(step<=3){let inputs=[...fields.querySelectorAll('[required]')];const missing=inputs.find(el=>!el.value.trim());if(missing){missing.focus();missing.reportValidity();return}}if(!persist())return;if(step===5){localStorage.setItem('vraxis_selected_template',id);location.href='ready.html?template='+id+(q.get('project')?'&project='+encodeURIComponent(q.get('project')):'');return}step++;show()};
+ next.onclick=()=>{if(step<=3){let inputs=[...fields.querySelectorAll('[required]')];const missing=inputs.find(el=>!el.value.trim());if(missing){missing.focus();missing.reportValidity();return}}if(!persist())return;if(step===5){localStorage.setItem('vraxis_selected_template',id);location.href=vraxisDraft.url('ready.html');return}step++;show()};
  const requested=Number(q.get('step'));if(Number.isFinite(requested)&&requested>=1&&requested<=5)step=requested;
  show();
 })();
