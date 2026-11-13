@@ -23,9 +23,9 @@ function cssPath(el){
 function apply(d){
  if(!d?.body)return;
  for(const [path,value] of Object.entries(state.text)){try{let el=d.querySelector(path);if(el&&typeof value==='string')el.textContent=value}catch{}}
- for(const [path,src] of Object.entries(state.images)){try{let el=d.querySelector(path);if(el?.tagName==='IMG'&&src.startsWith('data:image/')){el.src=src;el.style.objectFit='cover'}}catch{}}
+ for(const [path,src] of Object.entries(state.images)){try{let el=d.querySelector(path);if(el?.tagName==='IMG'&&(src.startsWith('data:image/')||src.startsWith('https://'))){el.src=src;el.style.objectFit='cover'}}catch{}}
 }
-function setCursor(el){if(!enabled)return;const s=doc.createElement('style');s.id='vraxis-tap-css';s.textContent='[data-vraxis-editable="true"]{cursor:text!important;outline:2px dashed #b38a68!important;outline-offset:4px}img[data-vraxis-photo="true"]{cursor:pointer!important;outline:2px dashed #b38a68!important;outline-offset:4px}';doc.head.append(s)}
+function setCursor(el){if(!enabled)return;const s=doc.createElement('style');s.id='vraxis-tap-css';s.textContent='body.vraxis-editing h1,body.vraxis-editing h2,body.vraxis-editing h3,body.vraxis-editing h4,body.vraxis-editing p,body.vraxis-editing blockquote{cursor:text!important;outline:1px dashed #b38a68!important;outline-offset:3px}body.vraxis-editing img{cursor:pointer!important;outline:1px dashed #b38a68!important;outline-offset:3px}';doc.head.append(s)}
 function activate(d){
  doc=d;if(!d?.body)return;
  apply(d);
@@ -34,20 +34,20 @@ function activate(d){
   if(!enabled)return;
   const raw=e.target;
   if(!(raw instanceof d.defaultView.Element))return;
-  const blocked=raw.closest('button,input,textarea,select,[role="button"],[contenteditable="true"],.intro,.overlay,.modal,[class*="modal"]');
+  const blocked=raw.closest('button,input,textarea,select,[role="button"],[contenteditable="true"],.overlay,.modal,[class*="modal"]');
   if(blocked)return;
   let img=raw.closest('img');
   if(!img&&raw.closest('a'))return;
   let text=raw.closest('[data-text],h1,h2,h3,h4,p,blockquote');
   const leaf=raw.closest('span,em,strong,b');
   if(text&&leaf&&text.contains(leaf)&&leaf.childElementCount===0&&leaf.textContent.trim())text=leaf;
-  if(text&&text.childElementCount>0&&!text.hasAttribute('data-text'))text=null;
+  if(text&&text.childElementCount>0&&!text.hasAttribute('data-text')&&!['P','BLOCKQUOTE'].includes(text.tagName))text=null;
   if(!img&&!text)return;
   e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
   if(img){selected=img;selectedPath=cssPath(img);selectedKind='image';picker.click();return}
   if(!text)return;
   // Ignore long multi-element containers: edit a single paragraph or heading.
-  if(text.textContent.trim().length>400)return;
+  if(text.textContent.trim().length>3000)return;
   selected=text;selectedPath=cssPath(text);selectedKind='text';
   const initial=state.text[selectedPath]??text.textContent.trim();
   showEditor(initial);
@@ -69,7 +69,7 @@ outer.addEventListener('load',()=>{findInner();setTimeout(findInner,150)});
 if(outer.contentDocument?.readyState==='complete')findInner();
 window.addEventListener('vraxis-edit-mode',e=>{
  enabled=!!e.detail.enabled;
- try{if(doc){const old=doc.getElementById('vraxis-tap-css');old?.remove();if(enabled)setCursor(null)}}catch{}
+ try{if(doc){const old=doc.getElementById('vraxis-tap-css');old?.remove();doc.body.classList.toggle('vraxis-editing',enabled);if(enabled)setCursor(null)}}catch{}
  if(!enabled){dialog.hidden=true;dialog.style.display='none';}
 });
 const dialog=document.createElement('div');dialog.hidden=true;dialog.setAttribute('role','dialog');dialog.setAttribute('aria-label','Edit invitation text');
