@@ -11,9 +11,9 @@ const details=vraxisDraft.read('details',{}),studio=vraxisDraft.read('studio',{}
 const names=(details.names||'').split(/\s+(?:and|&)\s+|\s*,\s*/i).map(x=>x.trim()).filter(Boolean);
 const name1=names[0]||details.names||'',name2=names[1]||'';
 const profile={
- names:details.names,first:name1,second:name2,person:details.names,parents:details.names,
+ names:details.openingTitle||details.names,first:name1,second:name2,person:details.names,parents:details.names,
  date:details.date,time:details.time,venue:details.venue,address:details.address,city:details.address,
- dress:details.dress,message:details.message,letter:details.message,title:details.title,
+ dress:details.dress,message:details.introParagraph||details.message,letter:details.story||details.message,title:details.openingTitle||details.title,
  deadline:details.deadline,contact:details.contact,age:details.age,child:details.child
 };
 const map={
@@ -94,6 +94,24 @@ function applyDoc(doc){
  }
  if(id==='011'&&Array.isArray(photos)){[...doc.querySelectorAll('[data-img]')].forEach((img,i)=>{if(image(photos[i])){img.src=photos[i];photoCount++}})}
  if(id==='009'&&image(photos?.[0])){const img=doc.getElementById('heroImg');if(img){img.src=photos[0];photoCount++}}
+ // Make the invitation's people/event the main title, never the catalogue template's name.
+ const templateNames=['The Heirloom','The Grand Affair','The Modern Vow','Midnight Club','The Social Edit','After Hours','The Little Garden','Moonlit Lullaby','The Big Little Secret','Little Wonderland','Sunday, With Love','The Bridal Edit','Something Sweet'];
+ const original=templateNames[Number(id)-1];
+ const preferred=details.openingTitle||details.names||details.title;
+ if(filled(preferred)){
+  doc.querySelectorAll('h1,h2,h3,.hero-title,.cover-title,.main-title,.intro-title,.title').forEach(el=>{
+   if(el.closest('nav,header,form,#editPanel,#editor,#editDrawer'))return;
+   if(el.textContent.trim().replace(/\\s+/g,' ').toLowerCase()===original.toLowerCase())el.textContent=preferred;
+  });
+ }
+ // Preserve optional RSVP closing information across every original template.
+ if(filled(details.deadline)&&!doc.getElementById('vraxis-rsvp-deadline')){
+  const anchor=doc.querySelector('#rsvp,.rsvp,.rsvp-section,[id*=rsvp],form');
+  const chip=doc.createElement('p');chip.id='vraxis-rsvp-deadline';
+  chip.textContent='Please RSVP by '+details.deadline;
+  chip.style.cssText='margin:25px auto;padding:10px 18px;max-width:420px;text-align:center;font:600 13px Arial,sans-serif;letter-spacing:.04em;background:#f7f3ecd9;color:#283e32;border:1px solid #d3c9bd';
+  if(anchor?.parentElement)anchor.parentElement.insertBefore(chip,anchor);else doc.body.append(chip);
+ }
  status('Preview loaded · '+(nativeCount+textCount)+' personalised fields'+(photoCount?' · '+photoCount+' photos':'')+'. Changes are saved on this device.');
  applied=true;
 }
