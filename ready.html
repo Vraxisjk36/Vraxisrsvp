@@ -33,7 +33,7 @@ iframe#frame{display:block;width:100%;height:750px;border:0;background:white;box
 <div class="explain"><strong>What does “Tap to customise” mean?</strong><br>It's a visual touch-up mode. Tap the wording on the invitation to change it where it appears. Tap a photo to replace it. You don't need to fill out another form or redesign anything.</div>
 <div class="helper" id="helper">Edit mode is on. <strong>Tap text or a photo inside the invitation on the right.</strong> Tap the button again when finished. Changes save automatically to this browser.</div>
 <a class="btn light" id="back">← Change event details</a>
-<p class="note">Finalising saves your invitation details and visual edits to your account. Photo uploads remain on this device for now; cloud photo storage, checkout and publishing are coming next.</p>
+<p class="note">Finalising saves your invitation details and visual edits to your account. Photos are uploaded privately to your account when you save. Checkout and publishing are coming next.</p>
 </section>
 <div class="device"><div class="device-label"><span>Live invitation · <span id="templateLabel">your design</span></span><span id="modeLabel">Guest preview</span></div><iframe id="frame" title="Your personalised invitation"></iframe><p id="renderStatus" aria-live="polite">Preparing your personalised invitation…</p></div>
 </div></main>
@@ -68,8 +68,20 @@ iframe#frame{display:block;width:100%;height:750px;border:0;background:white;box
    else{result=await vraxisDB.from('invitations').insert(record).select('id').single()}
    if(result.error)throw result.error;
    cloudId=result.data.id;
-   if(existing){existing.details=d;existing.updated=Date.now();existing.cloudId=cloudId}
-   else projects.unshift({id,details:d,updated:Date.now(),cloudId});
+   const photos=get('vraxis_photos_'+id);
+   const paths=[];
+   if(Array.isArray(photos)&&photos.length){status.textContent='Uploading your photos securely…';for(let n=0;n<photos.length;n++){
+    const dataUrl=photos[n];if(typeof dataUrl!=='string'||!dataUrl.startsWith('data:image/'))continue;
+    const blob=await (await fetch(dataUrl)).blob();
+    const path=user.id+'/'+cloudId+'/'+crypto.randomUUID()+'.jpg';
+    const uploaded=await vraxisDB.storage.from('invitation-photos').upload(path,blob,{contentType:'image/jpeg',upsert:false});
+    if(uploaded.error)throw uploaded.error;paths.push(path);
+   }}
+   const photoPaths=paths.length?paths:(existing?.photoPaths||[]);
+   const saved=await vraxisDB.from('invitations').update({design_data:{tap_edits:edits,photo_paths:photoPaths}}).eq('id',cloudId);
+   if(saved.error)throw saved.error;
+   if(existing){existing.details=d;existing.updated=Date.now();existing.cloudId=cloudId;existing.photoPaths=photoPaths}
+   else projects.unshift({id,details:d,updated:Date.now(),cloudId,photoPaths});
    localStorage.setItem(key,JSON.stringify(projects));
    status.textContent='Saved securely. Opening your dashboard…';location.href='dashboard.html';
   }catch(e){status.textContent='Could not save: '+e.message;button.disabled=false}
