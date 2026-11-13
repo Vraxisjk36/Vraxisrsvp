@@ -99,9 +99,19 @@ function applyDoc(doc){
  const original=templateNames[Number(id)-1];
  const preferred=details.openingTitle||details.names||details.title;
  if(filled(preferred)){
-  doc.querySelectorAll('h1,h2,h3,.hero-title,.cover-title,.main-title,.intro-title,.title').forEach(el=>{
+  const normalise=value=>String(value||'').replace(/\\s+/g,' ').trim().toLowerCase();
+  const variants=new Set([normalise(original),normalise(original.replace(/^the /i,''))]);
+  doc.querySelectorAll('h1,h2,h3,h4,.hero-title,.cover-title,.main-title,.intro-title,.title,[data-cover-title]').forEach(el=>{
    if(el.closest('nav,header,form,#editPanel,#editor,#editDrawer'))return;
-   if(el.textContent.trim().replace(/\\s+/g,' ').toLowerCase()===original.toLowerCase())el.textContent=preferred;
+   if(el.children.length>1)return;
+   const existing=normalise(el.textContent);
+   if(variants.has(existing))el.textContent=preferred;
+  });
+  // Many template entrances use a separate title node rather than a semantic heading.
+  doc.querySelectorAll('[class*="opening"],[class*="cover"],[class*="intro"]').forEach(section=>{
+   if(section.closest('form,#editPanel,#editor,#editDrawer'))return;
+   const candidates=[...section.querySelectorAll('strong,span,div')].filter(el=>el.children.length===0);
+   candidates.forEach(el=>{if(variants.has(normalise(el.textContent)))el.textContent=preferred});
   });
  }
  // Preserve optional RSVP closing information across every original template.
