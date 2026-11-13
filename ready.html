@@ -28,16 +28,16 @@ iframe#frame{display:block;width:100%;height:750px;border:0;background:white;box
 <main><div class="kicker">STEP 06 OF 06 · YOUR FINAL LOOK</div><h1>It's yours. Take a look.</h1><p>You've done the important work. Experience your invitation with your details and photographs, just as a guest would.</p><div class="progress"></div>
 <div class="grid">
 <section class="sidebar"><h2>Happy with your invitation?</h2><div id="summary" class="summary"></div>
-<button class="btn" id="done">✓ Finalise this invitation</button>
+<button class="btn" id="done">✓ Save invitation to my account</button><p id="cloudStatus" role="status" aria-live="polite" style="font-size:13px"></p>
 <button class="btn light" id="customise" aria-pressed="false">✎ Tap to customise (optional)</button>
 <div class="explain"><strong>What does “Tap to customise” mean?</strong><br>It's a visual touch-up mode. Tap the wording on the invitation to change it where it appears. Tap a photo to replace it. You don't need to fill out another form or redesign anything.</div>
 <div class="helper" id="helper">Edit mode is on. <strong>Tap text or a photo inside the invitation on the right.</strong> Tap the button again when finished. Changes save automatically to this browser.</div>
 <a class="btn light" id="back">← Change event details</a>
-<p class="note">Finalising saves this invitation to your dashboard on this device. Public links, payments, and live RSVP tracking are not yet enabled.</p>
+<p class="note">Finalising saves your invitation details and visual edits to your account. Photo uploads remain on this device for now; cloud photo storage, checkout and publishing are coming next.</p>
 </section>
 <div class="device"><div class="device-label"><span>Live invitation · <span id="templateLabel">your design</span></span><span id="modeLabel">Guest preview</span></div><iframe id="frame" title="Your personalised invitation"></iframe><p id="renderStatus" aria-live="polite">Preparing your personalised invitation…</p></div>
 </div></main>
-<script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script><script src="assets/backend.js"></script><script>
 (function(){
  const id=new URLSearchParams(location.search).get('template');
  if(!/^0(0[1-9]|1[0-3])$/.test(id||'')){location.replace('catalogue.html');return}
@@ -54,10 +54,25 @@ iframe#frame{display:block;width:100%;height:750px;border:0;background:white;box
   document.getElementById('helper').classList.toggle('show',on);document.getElementById('modeLabel').textContent=on?'Tap-to-edit mode':'Guest preview';
   window.dispatchEvent(new CustomEvent('vraxis-edit-mode',{detail:{enabled:on}}))
  };
- document.getElementById('done').onclick=()=>{
-  const key='vraxis_projects';let projects=[];try{projects=JSON.parse(localStorage.getItem(key)||'[]')}catch{}
-  const item=projects.find(x=>x.id===id);if(item){item.details=d;item.updated=Date.now()}else projects.unshift({id,details:d,updated:Date.now()});
-  try{localStorage.setItem(key,JSON.stringify(projects));location.href='dashboard.html'}catch(e){alert('Could not save the invitation. Your browser storage may be full. Try using fewer photos.')}
+ document.getElementById('done').onclick=async()=>{
+  const status=document.getElementById('cloudStatus'),button=document.getElementById('done');
+  button.disabled=true;status.textContent='Checking your account…';
+  try{
+   const user=await vraxisRequireAuth();if(!user)return;
+   const key='vraxis_projects';let projects=[];try{projects=JSON.parse(localStorage.getItem(key)||'[]')}catch{}
+   let existing=projects.find(x=>x.id===id),cloudId=existing?.cloudId;
+   const edits=get('vraxis_tap_'+id);
+   const record={owner_id:user.id,template_id:id,title:d.title||d.names||names[Number(id)-1],event_data:d,design_data:{tap_edits:edits}};
+   let result;
+   if(cloudId){result=await vraxisDB.from('invitations').update(record).eq('id',cloudId).select('id').single()}
+   else{result=await vraxisDB.from('invitations').insert(record).select('id').single()}
+   if(result.error)throw result.error;
+   cloudId=result.data.id;
+   if(existing){existing.details=d;existing.updated=Date.now();existing.cloudId=cloudId}
+   else projects.unshift({id,details:d,updated:Date.now(),cloudId});
+   localStorage.setItem(key,JSON.stringify(projects));
+   status.textContent='Saved securely. Opening your dashboard…';location.href='dashboard.html';
+  }catch(e){status.textContent='Could not save: '+e.message;button.disabled=false}
  };
 })();
 </script><script src="assets/personalised-preview.js" defer></script><script src="assets/tap-editor.js" defer></script>
