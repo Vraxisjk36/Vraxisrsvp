@@ -41,7 +41,7 @@ function setPreservingMarkup(el,value){
 function apply(d){
  if(!d?.body)return;
  for(const [path,value] of Object.entries(state.text)){try{let el=d.querySelector(path);if(el&&typeof value==='string')setPreservingMarkup(el,value)}catch{}}
- for(const [path,src] of Object.entries(state.images)){try{let el=d.querySelector(path);if(el?.tagName==='IMG'&&(src.startsWith('data:image/')||src.startsWith('https://'))){el.src=src;el.style.objectFit='cover'}}catch{}}
+ for(const [path,src] of Object.entries(state.images)){try{let el=d.querySelector(path);if(el?.tagName==='IMG'&&(src.startsWith('data:image/')||src.startsWith('https://'))){VraxisInvitationPhotos.replace(el,src,true)}}catch{}}
 }
 function setCursor(el){if(!enabled)return;const s=doc.createElement('style');s.id='vraxis-tap-css';s.textContent='body.vraxis-editing h1,body.vraxis-editing h2,body.vraxis-editing h3,body.vraxis-editing h4,body.vraxis-editing p,body.vraxis-editing li,body.vraxis-editing label,body.vraxis-editing blockquote{cursor:text!important;outline:1px dashed #b38a68!important;outline-offset:3px}body.vraxis-editing img{cursor:pointer!important;outline:1px dashed #b38a68!important;outline-offset:3px}';doc.head.append(s)}
 function activate(d){
@@ -55,8 +55,8 @@ function activate(d){
   const raw=e.target;
   if(!(raw instanceof d.defaultView.Element))return;
   const blocked=raw.closest('button,input,textarea,select,[role="button"],[contenteditable="true"],.overlay,.modal,[class*="modal"]');
-  if(blocked)return;
   let img=raw.closest('img');
+  if(blocked&&!img)return;
   if(!img&&raw.closest('a'))return;
   let text=raw.closest('[data-text],h1,h2,h3,h4,p,blockquote,li,label,[data-editable-text]');
   
@@ -122,11 +122,11 @@ picker.onchange=async()=>{
  let url=URL.createObjectURL(file);
  try{
   let bmp=new Image();await new Promise((resolve,reject)=>{bmp.onload=resolve;bmp.onerror=reject;bmp.src=url});
-  const canvas=document.createElement('canvas'),scale=Math.min(1,1100/Math.max(bmp.width,bmp.height));
+  const canvas=document.createElement('canvas'),scale=Math.min(1,1800/Math.max(bmp.width,bmp.height));
   canvas.width=Math.max(1,Math.round(bmp.width*scale));canvas.height=Math.max(1,Math.round(bmp.height*scale));
   canvas.getContext('2d').drawImage(bmp,0,0,canvas.width,canvas.height);
-  const src=canvas.toDataURL('image/jpeg',.72);state.images[selectedPath]=src;
-  if(store()){for(const d of activeDocuments){try{const target=d.querySelector(selectedPath);if(target?.tagName==='IMG'){target.src=src;target.style.objectFit='cover'}}catch{}}const status=document.getElementById('renderStatus');if(status)status.textContent='✓ Photo replaced and saved.'}
+  const src=canvas.toDataURL('image/jpeg',.85);state.images[selectedPath]=src;
+  if(store()){for(const d of activeDocuments){try{const target=d.querySelector(selectedPath);if(target?.tagName==='IMG'){VraxisInvitationPhotos.replace(target,src,true)}}catch{}}const status=document.getElementById('renderStatus');if(status)status.textContent='✓ Photo replaced and saved.'}
  }catch{alert('Could not read this image. Please choose a JPG or PNG.')}finally{URL.revokeObjectURL(url);picker.value=''}
 };
 })();
