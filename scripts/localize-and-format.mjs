@@ -39,6 +39,30 @@ for (const filename of interiors) {
     }
   }
   html = html.replace(/https:\/\/images\.unsplash\.com\/(photo-[a-zA-Z0-9-]+)(?:\?[^\s"'<>\\)]*)?/g, (url, photo) => photos.get(photo) ?? url);
+  // JS-generated galleries reference photo IDs rather than literal URLs.
+  // Download these too so their local image paths resolve.
+  const dynamicIds = [...new Set([...html.matchAll(/photo-[a-zA-Z0-9-]{12,}/g)].map(x => x[0]))];
+  for (const photo of dynamicIds) {
+    const disk = path.join(root, `assets/images/${id}/${photo}.jpg`);
+    try {
+      await fs.access(disk);
+      continue;
+    } catch {}
+    try {
+      const response = await fetch(
+        `https://images.unsplash.com/${photo}?w=1800&q=85&fit=crop&fm=jpg`,
+        { signal: AbortSignal.timeout(30000) },
+      );
+      if (!response.ok) throw Error(`HTTP ${response.status}`);
+      const bytes = Buffer.from(await response.arrayBuffer());
+      if (bytes.length < 1000) throw Error('Unexpectedly small image');
+      await fs.mkdir(path.dirname(disk), { recursive: true });
+      await fs.writeFile(disk, bytes);
+      downloaded++;
+    } catch (error) {
+      failures.push(`${filename}: dynamic ${photo} (${error.message})`);
+    }
+  }
   await fs.writeFile(target, html);
 }
 const formatted = [];
