@@ -1,6 +1,6 @@
 # Media refactor report
 
-Local Unsplash images downloaded: 6
+Local Unsplash images downloaded: 0
 Files formatted: 72
 Warnings: 0
 
