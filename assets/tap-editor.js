@@ -4,7 +4,7 @@
 'use strict';
 const id=new URLSearchParams(location.search).get('template');
 const outer=document.getElementById('frame');if(!outer||!id)return;
-const key='vraxis_tap_'+id;
+const key='vraxis_draft_'+vraxisDraft.id+'_tap';
 let enabled=false,doc=null,selected=null,selectedPath='',selectedKind='';
 let state={text:{},images:{}};
 try{state=Object.assign(state,JSON.parse(localStorage.getItem(key)||'{}')||{})}catch{}
