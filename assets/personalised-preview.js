@@ -74,30 +74,9 @@ function applyDoc(doc){
  // 009 and other direct-text designs expose semantic IDs rather than data-text keys.
  const direct={parentNamesHero:'names',heroDate:'date'};
  if(id==='009')for(const [selector,key] of Object.entries(direct)){const el=doc.getElementById(selector);if(el&&filled(profile[key])){setText(el,profile[key]);textCount++}}
- // Preserve the user's chosen Studio photo on matching native slots.
- let photoCount=0;const slots=[...doc.querySelectorAll('[data-photo]')].filter(el=>el.tagName==='IMG'||el.querySelector('img'));
- slots.forEach((slot,i)=>{
-  const target=slot.tagName==='IMG'?slot:slot.querySelector('img');
-  const saved=studio.photos?.[slot.dataset.photo];
-  const uploaded=Array.isArray(photos)?photos[i]:null;
-  const src=saved?.src||uploaded;
-  if(target&&image(src)){target.src=src;target.style.objectFit='cover';target.style.objectPosition=(saved?.x??50)+'% '+(saved?.y??50)+'%';photoCount++}
- });
- // Native template editors frequently bind photo URLs rather than data-photo attributes.
- const photoInputs={
-  '003':['editHeroPhoto'],'004':['edHero','mcPortraitUrl'],'005':['edHero'],
-  '006':['editHero','editPortrait'],'008':['editPhoto']
- };
- (photoInputs[id]||[]).forEach((field,i)=>{const src=Array.isArray(photos)?photos[i]:null;if(image(src)&&setValue(doc.getElementById(field),src))photoCount++});
- // Remaining templates: images with clearly identifiable photographic sources, not icons/illustrations.
- if(Array.isArray(photos)&&photos.length&&!photoCount){
-  const candidates=[...doc.images].filter(img=>/images\.unsplash\.com|images\.pexels\.com/.test(img.currentSrc||img.src||'')&&!img.closest('button'));
-  candidates.slice(0,photos.length).forEach((img,i)=>{if(image(photos[i])){img.src=photos[i];img.style.objectFit='cover';photoCount++}});
- }
- if(id==='011'&&Array.isArray(photos)){[...doc.querySelectorAll('[data-img]')].forEach((img,i)=>{if(image(photos[i])){img.src=photos[i];photoCount++}})}
- if(id==='009'&&image(photos?.[0])){const img=doc.getElementById('heroImg');if(img){img.src=photos[0];photoCount++}}
+ const photoCount=VraxisInvitationPhotos.apply(doc,id,photos,studio.photos,true);
  // Make the invitation's people/event the main title, never the catalogue template's name.
- const templateNames=['The Heirloom','The Grand Affair','The Modern Vow','Midnight Club','The Social Edit','After Hours','The Little Garden','Moonlit Lullaby','The Big Little Secret','Little Wonderland','Sunday, With Love','The Bridal Edit','Something Sweet'];
+ const templateNames=['The Heirloom','The Grand Affair','The Modern Vow','Midnight Club','The Social Edit','After Hours','The Little Garden','Moonlit Lullaby','The Big Little Secret','Little Wonderland','Sunday, With Love','The Bridal Edit','Something Sweet','The Last Fling','The Brotherhood'];
  const original=templateNames[Number(id)-1];
  const preferred=details.openingTitle||details.names||details.title;
  if(filled(preferred)){

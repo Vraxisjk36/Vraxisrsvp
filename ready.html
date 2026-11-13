@@ -94,7 +94,7 @@ body.studio-open{overflow:hidden}
    const edits=vraxisDraft.read('tap',{});
    // Upload tap-to-replace images as private objects; never publish browser-local data URLs.
    const publishedEdits={text:{...(edits.text||{})},images:{}};
-   const record={owner_id:user.id,template_id:id,title:d.title||d.names||names[Number(id)-1],event_data:d,design_data:{tap_edits:edits}};
+   const record={owner_id:user.id,template_id:id,title:d.title||d.names||names[Number(id)-1],event_data:d,design_data:{}};
    let result;
    if(cloudId){result=await vraxisDB.from('invitations').update({title:record.title,event_data:record.event_data}).eq('id',cloudId).eq('owner_id',user.id).select('id').single()}
    else{result=await vraxisDB.from('invitations').insert(record).select('id').single()}
@@ -128,9 +128,8 @@ body.studio-open{overflow:hidden}
      const upload=await vraxisDB.storage.from('invitation-photos').upload(path,blob,{contentType:mime,upsert:false});
      if(upload.error)throw upload.error;
      imagePaths[selector]=path;
-    }else if(typeof oldImagePaths[selector]==='string'){
-     imagePaths[selector]=oldImagePaths[selector];
     }else if(src.startsWith('https://')){
+     delete imagePaths[selector];
      publishedEdits.images[selector]=src;
     }
    }
@@ -153,5 +152,5 @@ body.studio-open{overflow:hidden}
   }catch(e){status.textContent=e.message+' You can return to My Dashboard to continue.';button.disabled=false}
  };
 })();
-</script><script src="assets/personalised-preview.js" defer></script><script src="assets/tap-editor.js" defer></script>
+</script><script src="assets/invitation-photos.js" defer></script><script src="assets/personalised-preview.js" defer></script><script src="assets/tap-editor.js" defer></script>
 <script src="assets/site-nav.js" defer></script></body></html>
