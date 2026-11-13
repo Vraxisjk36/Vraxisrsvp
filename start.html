@@ -35,8 +35,8 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400}h1{font-si
 <script src="assets/draft.js"></script><script>
 (function(){
  const q=new URLSearchParams(location.search),id=q.get('template');
- if(!/^0(0[1-9]|1[0-3])$/.test(id||'')){location.replace('catalogue.html');return}
- const names=['The Heirloom','The Grand Affair','The Modern Vow','Midnight Club','The Social Edit','After Hours','The Little Garden','Moonlit Lullaby','The Big Little Secret','Little Wonderland','Sunday, With Love','The Bridal Edit','Something Sweet'];
+ if(!/^0(0[1-9]|1[0-5])$/.test(id||'')){location.replace('catalogue.html');return}
+ const names=['The Heirloom','The Grand Affair','The Modern Vow','Midnight Club','The Social Edit','After Hours','The Little Garden','Moonlit Lullaby','The Big Little Secret','Little Wonderland','Sunday, With Love','The Bridal Edit','Something Sweet','The Last Fling','The Brotherhood'];
  const category=Number(id);const birthday=category>=4&&category<=6,baby=category>=7&&category<=11;
  const key='vraxis_draft_'+vraxisDraft.id+'_details',photoKey='vraxis_draft_'+vraxisDraft.id+'_photos';
  let step=1,model={};try{model=JSON.parse(localStorage.getItem(key)||'{}')||{}}catch{}
