@@ -1,5 +1,5 @@
 /* Public default-template photography overrides. Customer-specific photos are applied later. */
-(()=>{'use strict';const id=(location.pathname.match(/preview-(\d{3})\.html$/)||[])[1];if(!id)return;
+(()=>{'use strict';if(window.__vraxisTemplateImagesLoaded)return;window.__vraxisTemplateImagesLoaded=true;const id=(location.pathname.match(/preview-(\d{3})\.html$/)||[])[1];if(!id)return;
 const endpoint='https://ogmlfnmdhmrbbmxnxwqw.supabase.co/rest/v1/template_image_overrides?template_id=eq.'+encodeURIComponent(id)+'&select=slot,image_url';
 const headers={'apikey':'sb_publishable_K8hadrdvJiqCRB3eXs9tHg_0kUXl9Ry'};
 fetch(endpoint,{headers}).then(r=>{if(!r.ok)throw Error('Photo overrides unavailable');return r.json()}).then(rows=>{
