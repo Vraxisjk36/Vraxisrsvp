@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "name": "vraxisrsvp-source-tools",
+  "version": "1.0.0",
+  "description": "Developer-only formatting commands; no change to the deployed website",
+  "scripts": {
+    "format": "prettier --write \"**/*.{html,css,js,json,md}\"",
+    "format:check": "prettier --check \"**/*.{html,css,js,json,md}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
+}
