@@ -75,7 +75,7 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400}h1{font-si
   try{localStorage.setItem(photoKey,JSON.stringify(output));renderPhotos();document.getElementById('saveStatus').textContent='✓ '+output.length+' photo(s) saved.'}catch{alert('Browser storage is full. Try fewer or smaller photos.')}
  }
  back.onclick=()=>{if(step===1)location.href='preview-'+id+'.html';else{step--;show()}};
- next.onclick=()=>{if(step<=3){let inputs=[...fields.querySelectorAll('[required]')];const missing=inputs.find(el=>!el.value.trim());if(missing){missing.focus();missing.reportValidity();return}}if(!persist())return;if(step===5){localStorage.setItem('vraxis_selected_template',id);location.href='ready.html?template='+id;return}step++;show()};
+ next.onclick=()=>{if(step<=3){let inputs=[...fields.querySelectorAll('[required]')];const missing=inputs.find(el=>!el.value.trim());if(missing){missing.focus();missing.reportValidity();return}}if(!persist())return;if(step===5){localStorage.setItem('vraxis_selected_template',id);location.href='ready.html?template='+id+(q.get('project')?'&project='+encodeURIComponent(q.get('project')):'');return}step++;show()};
  const requested=Number(q.get('step'));if(Number.isFinite(requested)&&requested>=1&&requested<=5)step=requested;
  show();
 })();
