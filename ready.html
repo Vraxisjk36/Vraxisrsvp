@@ -92,6 +92,8 @@ body.studio-open{overflow:hidden}
    const key='vraxis_projects';let projects=[];try{projects=JSON.parse(localStorage.getItem(key)||'[]')}catch{}
    let existing=projectId?projects.find(x=>x.cloudId===projectId):null,cloudId=projectId;
    const edits=vraxisDraft.read('tap',{});
+   // Upload tap-to-replace images as private objects; never publish browser-local data URLs.
+   const publishedEdits={text:{...(edits.text||{})},images:{}};
    const record={owner_id:user.id,template_id:id,title:d.title||d.names||names[Number(id)-1],event_data:d,design_data:{tap_edits:edits}};
    let result;
    if(cloudId){result=await vraxisDB.from('invitations').update({title:record.title,event_data:record.event_data}).eq('id',cloudId).eq('owner_id',user.id).select('id').single()}
@@ -107,9 +109,35 @@ body.studio-open{overflow:hidden}
     const uploaded=await vraxisDB.storage.from('invitation-photos').upload(path,blob,{contentType:'image/jpeg',upsert:false});
     if(uploaded.error)throw uploaded.error;paths.push(path);
    }}
+   // Keep previous cloud image references, replacing only edited image slots.
+   const prior=await vraxisDB.from('invitations').select('design_data').eq('id',cloudId).eq('owner_id',user.id).single();
+   if(prior.error)throw prior.error;
+   const previousDesign=prior.data.design_data||{};
+   const oldImages=previousDesign.tap_edits?.images||{};
+   const oldImagePaths=previousDesign.tap_image_paths||{};
+   const imagePaths={...oldImagePaths};
+   for(const [selector,src] of Object.entries(edits.images||{})){
+    if(typeof src!=='string')continue;
+    if(src.startsWith('data:image/')){
+     status.textContent='Saving your edited photographs…';
+     const blob=await(await fetch(src)).blob();
+     if(blob.size>8*1024*1024)throw new Error('An edited photo exceeds the 8 MB limit.');
+     const mime=blob.type==='image/png'?'image/png':blob.type==='image/webp'?'image/webp':'image/jpeg';
+     const ext=mime==='image/png'?'png':mime==='image/webp'?'webp':'jpg';
+     const path=user.id+'/'+cloudId+'/edited-'+crypto.randomUUID()+'.'+ext;
+     const upload=await vraxisDB.storage.from('invitation-photos').upload(path,blob,{contentType:mime,upsert:false});
+     if(upload.error)throw upload.error;
+     imagePaths[selector]=path;
+    }else if(typeof oldImagePaths[selector]==='string'){
+     imagePaths[selector]=oldImagePaths[selector];
+    }else if(src.startsWith('https://')){
+     publishedEdits.images[selector]=src;
+    }
+   }
+   for(const [selector,src] of Object.entries(oldImages)){if(!(selector in (edits.images||{}))&&typeof src==='string'&&src.startsWith('https://'))publishedEdits.images[selector]=src}
    let photoPaths=paths.length?paths:(existing?.photoPaths||[]);
    if(!paths.length&&!photoPaths.length&&cloudId){const previous=await vraxisDB.from('invitations').select('design_data').eq('id',cloudId).single();if(!previous.error)photoPaths=previous.data.design_data?.photo_paths||[];}
-   const saved=await vraxisDB.from('invitations').update({design_data:{tap_edits:edits,photo_paths:photoPaths}}).eq('id',cloudId).eq('owner_id',user.id);
+   const saved=await vraxisDB.from('invitations').update({design_data:{...previousDesign,tap_edits:publishedEdits,tap_image_paths:imagePaths,photo_paths:photoPaths}}).eq('id',cloudId).eq('owner_id',user.id);
    if(saved.error)throw saved.error;
    if(existing){existing.details=d;existing.updated=Date.now();existing.cloudId=cloudId;existing.photoPaths=photoPaths}
    else projects.unshift({id,details:d,updated:Date.now(),cloudId,photoPaths});
