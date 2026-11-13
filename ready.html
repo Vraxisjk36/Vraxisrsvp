@@ -23,21 +23,33 @@ iframe#frame{display:block;width:100%;height:750px;border:0;background:white;box
 .note{font-size:12px;line-height:1.6;margin-top:20px}.helper{display:none;font-size:13px;border:1px dashed #a98166;background:#fffaf1;padding:13px 15px;margin-bottom:15px}.helper.show{display:block}
 @media(max-width:930px){.grid{grid-template-columns:1fr}.sidebar{order:2}.device{order:1}iframe#frame{height:660px}main{padding:24px 15px 70px}.links a:first-child{display:none}}
 @media(max-width:550px){header{padding:15px}.logo{font-size:23px}iframe#frame{height:620px}.sidebar{padding:22px}.device{padding:8px}.device-label{font-size:10px}}
+</style><style id="vraxis-studio-css">
+body.studio-open{overflow:hidden}
+#studioShell[hidden]{display:none!important}
+#studioShell{position:fixed;inset:0;z-index:9998;background:#f6f2eb;display:flex;flex-direction:column;height:100dvh}
+.studio-top{height:60px;flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 12px;background:#fff;border-bottom:1px solid #ddd9cf}
+.studio-top strong{font:18px Georgia,serif}.studio-top button{border:1px solid #263a30;background:#263a30;color:white;padding:10px 12px;font:600 12px Arial,sans-serif;min-height:40px}
+.studio-top button.secondary{background:#fff;color:#263a30}
+.studio-canvas{flex:1;min-height:0;position:relative;overflow:hidden;background:#eae6de}
+#studioFrame{width:100%;height:100%;border:0;background:#fff;display:block}
+.studio-bottom{display:flex;gap:8px;justify-content:space-between;align-items:center;padding:9px 12px max(9px,env(safe-area-inset-bottom));background:#fff;border-top:1px solid #ddd9cf;font:12px Arial,sans-serif;color:#56645b}
+.studio-bottom button{border:1px solid #263a30;background:#fff;color:#263a30;padding:10px 12px;font-weight:700;min-height:42px}
+@media(min-width:850px){.studio-canvas{padding:14px 10vw}#studioFrame{max-width:950px;margin:auto;box-shadow:0 8px 35px #1a2c2530}}
 </style></head><body>
 <header><a class="logo" href="index.html">vraxis<em>RSVP</em></a><nav class="links"><a href="catalogue.html">Collection</a><a href="dashboard.html">Dashboard</a></nav></header>
 <main><div class="kicker">STEP 06 OF 06 · YOUR FINAL LOOK</div><h1>It's yours. Take a look.</h1><p>You've done the important work. Experience your invitation with your details and photographs, just as a guest would.</p><div class="progress"></div>
 <div class="grid">
 <section class="sidebar"><h2>Happy with your invitation?</h2><div id="summary" class="summary"></div>
 <button class="btn" id="done">Save & proceed to checkout →</button><p id="cloudStatus" role="status" aria-live="polite" style="font-size:13px"></p>
-<button class="btn light" id="customise" aria-pressed="false">✎ Tap to customise (optional)</button>
-<div class="explain"><strong>What does “Tap to customise” mean?</strong><br>It's a visual touch-up mode. Tap the wording on the invitation to change it where it appears. Tap a photo to replace it. You don't need to fill out another form or redesign anything.</div>
+<button class="btn light" id="customise" aria-pressed="false">✎ Open full-screen editor</button>
+<div class="explain"><strong>What does “Tap to customise” mean?</strong><br>It's a visual touch-up mode. Open the invitation full screen and tap wording to change it where it appears. Tap a photo to replace it. You don't need to fill out another form or redesign anything.</div>
 <div class="helper" id="helper">Edit mode is on. <strong>Tap text or a photo inside the invitation on the right.</strong> Tap the button again when finished. Changes save automatically to this browser.</div>
 <a class="btn light" id="back">← Change event details</a>
 <p class="note">Review the personalised preview first. When you continue, your design is securely saved to your account before payment. You can still edit it before checking out.</p>
 </section>
 <div class="device"><div class="device-label"><span>Live invitation · <span id="templateLabel">your design</span></span><span id="modeLabel">Guest preview</span></div><iframe id="frame" title="Your personalised invitation"></iframe><p id="renderStatus" aria-live="polite">Preparing your personalised invitation…</p></div>
 </div></main>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script><script src="assets/backend.js"></script><script src="assets/draft.js"></script><script>
+<section id="studioShell" hidden aria-label="Full screen invitation editor"><div class="studio-top"><strong>Invitation studio</strong><div style="display:flex;gap:8px"><button id="studioBack" class="secondary" type="button">← Preview</button><button id="studioDone" type="button">✓ Done editing</button></div></div><div class="studio-canvas"><iframe id="studioFrame" title="Full screen invitation editor"></iframe></div><div class="studio-bottom"><span>Tap any heading, paragraph or photo</span><button id="studioEditDetails" type="button">Edit event details</button></div></section><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script><script src="assets/backend.js"></script><script src="assets/draft.js"></script><script>
 (function(){
  const params=new URLSearchParams(location.search),id=params.get('template');
  const projectId=/^[0-9a-f-]{36}$/i.test(params.get('project')||'')?params.get('project'):null;let existingStatus=null;
@@ -50,12 +62,27 @@ iframe#frame{display:block;width:100%;height:750px;border:0;background:white;box
  document.getElementById('back').href=vraxisDraft.url('start.html',{step:'1'});
  document.getElementById('frame').src='preview-'+id+'.html';
  if(projectId){(async()=>{const user=await vraxisAuth();if(!user)return;const {data}=await vraxisDB.from('invitations').select('status').eq('id',projectId).eq('owner_id',user.id).maybeSingle();existingStatus=data?.status||null;if(existingStatus==='paid'||existingStatus==='published')document.getElementById('done').textContent='Save changes to my invitation →'})()}
- document.getElementById('customise').onclick=function(){
-  const on=this.getAttribute('aria-pressed')!=='true';
-  this.setAttribute('aria-pressed',String(on));this.classList.toggle('is-active',on);this.textContent=on?'✓ Finish tap edits':'✎ Tap to customise (optional)';
-  document.getElementById('helper').classList.toggle('show',on);document.getElementById('modeLabel').textContent=on?'Tap-to-edit mode':'Guest preview';
-  window.dispatchEvent(new CustomEvent('vraxis-edit-mode',{detail:{enabled:on}}))
+ const studioShell=document.getElementById('studioShell'),studioFrame=document.getElementById('studioFrame');
+ const previewFrame=document.getElementById('frame');
+ const openStudio=()=>{
+  studioShell.hidden=false;document.body.classList.add('studio-open');
+  // Reuse the same preview URL, so the full-screen view has the same personalisation.
+  studioFrame.src=previewFrame.src||('preview-'+id+'.html');
+  document.getElementById('customise').setAttribute('aria-pressed','true');
+  window.dispatchEvent(new CustomEvent('vraxis-edit-mode',{detail:{enabled:true}}));
  };
+ const closeStudio=()=>{
+  window.dispatchEvent(new CustomEvent('vraxis-edit-mode',{detail:{enabled:false}}));
+  studioShell.hidden=true;document.body.classList.remove('studio-open');
+  document.getElementById('customise').setAttribute('aria-pressed','false');
+  studioFrame.removeAttribute('src');
+  // Refresh the guest preview to apply edits made in the full-screen studio.
+  previewFrame.src=previewFrame.src;
+ };
+ document.getElementById('customise').onclick=openStudio;
+ document.getElementById('studioBack').onclick=closeStudio;
+ document.getElementById('studioDone').onclick=closeStudio;
+ document.getElementById('studioEditDetails').onclick=()=>{closeStudio();location.href=vraxisDraft.url('start.html',{step:'1'})};
  document.getElementById('done').onclick=async()=>{
   const status=document.getElementById('cloudStatus'),button=document.getElementById('done');
   button.disabled=true;status.textContent='Checking your account…';
