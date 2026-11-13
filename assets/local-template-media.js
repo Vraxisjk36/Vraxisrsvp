@@ -40,7 +40,7 @@ function apply(doc){
  });
  if(id==='002'){
   check(root+'palace-entrance.jpg',found=>{
-   if(!found||!doc.documentElement.isConnected)return;
+   if(!found||!doc.documentElement.isConnected||doc.getElementById('vraxis-palace-image-override'))return;
    let style=doc.getElementById('vraxis-local-palace');
    if(!style){style=doc.createElement('style');style.id='vraxis-local-palace';(doc.head||doc.documentElement).append(style)}
    style.textContent='.gateway-door{background-image:url("'+found+'")!important}.palace:before{background-image:url("'+found+'")!important}';
