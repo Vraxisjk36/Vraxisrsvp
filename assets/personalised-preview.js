@@ -4,7 +4,7 @@
 (()=>{
 "use strict";
 const params=new URLSearchParams(location.search);
-const id=/^0(0[1-9]|1[0-3])$/.test(params.get('template')||'')?params.get('template'):'001';
+const id=/^0(0[1-9]|1[0-5])$/.test(params.get('template')||'')?params.get('template'):'001';
 const hosts=[document.getElementById('frame'),document.getElementById('studioFrame')].filter(Boolean); if(!hosts.length)return;
 const get=(k,fallback={})=>{try{return JSON.parse(localStorage.getItem(k)||'null')??fallback}catch{return fallback}};
 const details=vraxisDraft.read('details',{}),studio=vraxisDraft.read('studio',{}),photos=vraxisDraft.read('photos',[]);
@@ -28,7 +28,9 @@ const map={
  '010':{input:{editParents:'names',editDate:'date',editTime:'time',editVenue:'venue',editAddress:'address',editDress:'dress',editParentStory:'message'}},
  '011':{text:{parents:'names',dateDisplay:'date',time:'time',venue:'venue',address:'address',dress:'dress',letter1:'message'}},
  '012':{text:{bride:'names',tribute:'message',invite:'message'}},
- '013':{input:{editBride:'names',editLetter:'message',editDate:'date',editTime:'time',editVenue:'venue',editAddress:'address',editDress:'dress'},text:{bride:'names'} }
+ '013':{input:{editBride:'names',editLetter:'message',editDate:'date',editTime:'time',editVenue:'venue',editAddress:'address',editDress:'dress'},text:{bride:'names'} },
+ '014':{text:{bride:'names',date:'date',city:'address',tribute:'message',venue:'venue',message:'message'}},
+ '015':{text:{groom:'names',tagline:'title',tribute:'message',quote:'letter',date:'date',time:'time',venue:'venue',address:'address'}}
 };
 let last=null,applied=false,bindings=new WeakSet(),activeDoc=null;
 function filled(v){return typeof v==='string'&&v.trim().length>0}
