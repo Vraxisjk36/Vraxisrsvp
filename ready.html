@@ -35,7 +35,7 @@ body.studio-open{overflow:hidden}
 .studio-bottom{display:flex;gap:8px;justify-content:space-between;align-items:center;padding:9px 12px max(9px,env(safe-area-inset-bottom));background:#fff;border-top:1px solid #ddd9cf;font:12px Arial,sans-serif;color:#56645b}
 .studio-bottom button{border:1px solid #263a30;background:#fff;color:#263a30;padding:10px 12px;font-weight:700;min-height:42px}
 @media(min-width:850px){.studio-canvas{padding:14px 10vw}#studioFrame{max-width:950px;margin:auto;box-shadow:0 8px 35px #1a2c2530}}
-</style></head><body>
+#studioShell .studio-top,#studioShell .studio-bottom{display:none!important}#studioShell .studio-canvas{position:absolute;inset:0;padding:0!important}#studioShell #studioFrame{position:absolute;inset:0;width:100%;height:100%;max-width:none;margin:0;box-shadow:none}#studioShell{height:100dvh;width:100vw}#studioExit{position:absolute;z-index:10;top:12px;right:12px;border:0;border-radius:50%;background:#1c3029c9;color:#fff;width:40px;height:40px;font-size:24px}</style></head><body>
 <header><a class="logo" href="index.html">vraxis<em>RSVP</em></a><nav class="links"><a href="catalogue.html">Collection</a><a href="dashboard.html">Dashboard</a></nav></header>
 <main><div class="kicker">STEP 06 OF 06 · YOUR FINAL LOOK</div><h1>It's yours. Take a look.</h1><p>You've done the important work. Experience your invitation with your details and photographs, just as a guest would.</p><div class="progress"></div>
 <div class="grid">
@@ -49,7 +49,7 @@ body.studio-open{overflow:hidden}
 </section>
 <div class="device"><div class="device-label"><span>Live invitation · <span id="templateLabel">your design</span></span><span id="modeLabel">Guest preview</span></div><iframe id="frame" title="Your personalised invitation"></iframe><p id="renderStatus" aria-live="polite">Preparing your personalised invitation…</p></div>
 </div></main>
-<section id="studioShell" hidden aria-label="Full screen invitation editor"><div class="studio-top"><strong>Invitation studio</strong><div style="display:flex;gap:8px"><button id="studioBack" class="secondary" type="button">← Preview</button><button id="studioDone" type="button">✓ Done editing</button></div></div><div class="studio-canvas"><iframe id="studioFrame" title="Full screen invitation editor"></iframe></div><div class="studio-bottom"><span>Tap any heading, paragraph or photo</span><button id="studioEditDetails" type="button">Edit event details</button></div></section><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script><script src="assets/backend.js"></script><script src="assets/draft.js"></script><script>
+<section id="studioShell" hidden aria-label="Full screen invitation editor"><div class="studio-top"><strong>Invitation studio</strong><div style="display:flex;gap:8px"><button id="studioBack" class="secondary" type="button">← Preview</button><button id="studioDone" type="button">✓ Done editing</button></div></div><div class="studio-canvas"><iframe id="studioFrame" title="Full screen invitation editor"></iframe></div><button id="studioExit" type="button" aria-label="Close full screen editor">×</button><div class="studio-bottom"><span>Tap any heading, paragraph or photo</span><button id="studioEditDetails" type="button">Edit event details</button></div></section><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script><script src="assets/backend.js"></script><script src="assets/draft.js"></script><script>
 (function(){
  const params=new URLSearchParams(location.search),id=params.get('template');
  const projectId=/^[0-9a-f-]{36}$/i.test(params.get('project')||'')?params.get('project'):null;let existingStatus=null;
@@ -82,6 +82,7 @@ body.studio-open{overflow:hidden}
  document.getElementById('customise').onclick=openStudio;
  document.getElementById('studioBack').onclick=closeStudio;
  document.getElementById('studioDone').onclick=closeStudio;
+ document.getElementById('studioExit').onclick=closeStudio;
  document.getElementById('studioEditDetails').onclick=()=>{closeStudio();location.href=vraxisDraft.url('start.html',{step:'1'})};
  document.getElementById('done').onclick=async()=>{
   const status=document.getElementById('cloudStatus'),button=document.getElementById('done');
