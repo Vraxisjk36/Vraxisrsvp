@@ -7,7 +7,7 @@ const params=new URLSearchParams(location.search);
 const id=/^0(0[1-9]|1[0-3])$/.test(params.get('template')||'')?params.get('template'):'001';
 const host=document.getElementById('frame'); if(!host)return;
 const get=(k,fallback={})=>{try{return JSON.parse(localStorage.getItem(k)||'null')??fallback}catch{return fallback}};
-const details=get('vraxis_personal_'+id),studio=get('vraxis_v6_'+id),photos=get('vraxis_photos_'+id,[]);
+const details=vraxisDraft.read('details',{}),studio=vraxisDraft.read('studio',{}),photos=vraxisDraft.read('photos',[]);
 const names=(details.names||'').split(/\s+(?:and|&)\s+|\s*,\s*/i).map(x=>x.trim()).filter(Boolean);
 const name1=names[0]||details.names||'',name2=names[1]||'';
 const profile={
