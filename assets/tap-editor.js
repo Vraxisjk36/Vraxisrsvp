@@ -3,7 +3,7 @@
 (()=>{
 'use strict';
 const id=new URLSearchParams(location.search).get('template');
-const outer=document.getElementById('studioFrame')||document.getElementById('frame');if(!outer||!id)return;
+const outers=[document.getElementById('studioFrame'),document.getElementById('frame')].filter(Boolean);if(!outers.length||!id)return;
 const key='vraxis_draft_'+vraxisDraft.id+'_tap';
 let enabled=false,doc=null,selected=null,selectedPath='',selectedKind='';
 let state={text:{},images:{}};
@@ -41,7 +41,7 @@ function activate(d){
   let img=raw.closest('img');
   if(!img&&raw.closest('a'))return;
   let text=raw.closest('[data-text],h1,h2,h3,h4,p,blockquote,li,label,[data-editable-text]');
-  const leaf=raw.closest('span,em,strong,b');
+  
   // Keep a styled heading or paragraph together rather than selecting one highlighted word.
   if(text&&text.closest('form,[role="dialog"],nav,header,[class*="editor"],[class*="Editor"]'))text=null;
   if(text&&text.querySelector('input,textarea,select,button,a'))text=null;
@@ -57,7 +57,7 @@ function activate(d){
   showEditor(initial);
  },true);
 }
-function findInner(){
+function findInner(outer){
  let parent;try{parent=outer.contentDocument}catch{return}
  if(!parent)return;
  const nested=parent.getElementById('invitation')||parent.querySelector('iframe');
@@ -69,10 +69,10 @@ function findInner(){
   try{activate(nested.contentDocument)}catch{}
  }else activate(parent);
 }
-outer.addEventListener('load',()=>{findInner();setTimeout(findInner,150)});
-if(outer.contentDocument?.readyState==='complete')findInner();
+for(const outer of outers){outer.addEventListener('load',()=>{findInner(outer);setTimeout(()=>findInner(outer),150)});try{if(outer.contentDocument?.readyState==='complete')findInner(outer)}catch{}}
 window.addEventListener('vraxis-edit-mode',e=>{
  enabled=!!e.detail.enabled;
+ for(const frame of outers){if(enabled)try{findInner(frame)}catch{}}
  try{if(doc){const old=doc.getElementById('vraxis-tap-css');old?.remove();doc.body.classList.toggle('vraxis-editing',enabled);if(enabled)setCursor(null)}}catch{}
  if(!enabled){dialog.hidden=true;dialog.style.display='none';}
 });
