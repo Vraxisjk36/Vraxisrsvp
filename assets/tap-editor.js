@@ -3,7 +3,7 @@
 (()=>{
 'use strict';
 const id=new URLSearchParams(location.search).get('template');
-const outer=document.getElementById('frame');if(!outer||!id)return;
+const outer=document.getElementById('studioFrame')||document.getElementById('frame');if(!outer||!id)return;
 const key='vraxis_draft_'+vraxisDraft.id+'_tap';
 let enabled=false,doc=null,selected=null,selectedPath='',selectedKind='';
 let state={text:{},images:{}};
@@ -29,6 +29,8 @@ function setCursor(el){if(!enabled)return;const s=doc.createElement('style');s.i
 function activate(d){
  doc=d;if(!d?.body)return;
  apply(d);
+ d.body.classList.toggle('vraxis-editing',enabled);
+ if(enabled&&!d.getElementById('vraxis-tap-css'))setCursor(null);
  if(d.__vraxisTapBound)return;d.__vraxisTapBound=true;
  d.addEventListener('click',async e=>{
   if(!enabled)return;
@@ -40,10 +42,10 @@ function activate(d){
   if(!img&&raw.closest('a'))return;
   let text=raw.closest('[data-text],h1,h2,h3,h4,p,blockquote,li,label,[data-editable-text]');
   const leaf=raw.closest('span,em,strong,b');
-  if(text&&leaf&&text.contains(leaf)&&leaf.childElementCount===0&&leaf.textContent.trim())text=leaf;
+  // Keep a styled heading or paragraph together rather than selecting one highlighted word.
   if(text&&text.closest('form,[role="dialog"],nav,header,[class*="editor"],[class*="Editor"]'))text=null;
   if(text&&text.querySelector('input,textarea,select,button,a'))text=null;
-  if(text&&text.childElementCount>0&&!text.hasAttribute('data-text')&&!text.hasAttribute('data-editable-text')&&!['P','BLOCKQUOTE','LI','LABEL'].includes(text.tagName))text=null;
+  if(text&&text.childElementCount>0&&!text.hasAttribute('data-text')&&!text.hasAttribute('data-editable-text')&&!['P','BLOCKQUOTE','LI','LABEL','H1','H2','H3','H4'].includes(text.tagName))text=null;
   if(!img&&!text)return;
   e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
   if(img){selected=img;selectedPath=cssPath(img);selectedKind='image';picker.click();return}
