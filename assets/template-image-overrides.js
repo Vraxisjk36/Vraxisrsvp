@@ -12,6 +12,15 @@ const map=new Map(rows.map(row=>[row.slot,row]));
 const watched=new WeakSet();
 function apply(doc){
  if(!doc?.body)return;
+ // The Grand Affair's animated palace is CSS artwork, not an <img>.
+ // Keep both opening-door halves and the legacy entrance background editable.
+ const entrance=map.get('palace-entrance');
+ if(id==='002'&&entrance?.image_url){
+  let style=doc.getElementById('vraxis-palace-image-override');
+  if(!style){style=doc.createElement('style');style.id='vraxis-palace-image-override';(doc.head||doc.documentElement).append(style)}
+  const safe=entrance.image_url.replace(/["\\\n\r]/g,'');
+  style.textContent='.gateway-door{background-image:url("'+safe+'")!important}.palace:before{background-image:url("'+safe+'")!important}';
+ }
  const imgs=[...doc.querySelectorAll('img')];
  imgs.forEach((img,i)=>{
   const slot=img.dataset.photo||img.dataset.img||'image-'+(i+1);
