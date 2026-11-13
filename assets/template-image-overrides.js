@@ -18,8 +18,8 @@ function apply(doc){
   const url=map.get(slot);
   if(!url||img.dataset.vraxisOverride===url)return;
   const current=img.getAttribute('src')||'';
-  // Never overwrite customer-selected data URLs or locally edited blob images.
-  if(/^(data:|blob:)/i.test(current))return;
+  // Source templates often embed default photographs as base64 data URLs; these must be replaceable. Blob URLs represent active local edits.
+  if(/^blob:/i.test(current))return;
   // Customer-specific photos use signed private storage URLs.
   if(current.includes('/storage/v1/object/sign/'))return;
   img.src=url;img.dataset.vraxisOverride=url;
