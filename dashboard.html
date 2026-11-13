@@ -17,7 +17,7 @@ function render(items){
    let local=[];try{local=JSON.parse(localStorage.getItem('vraxis_projects')||'[]')}catch{}
    const old=local.find(p=>p.id===id);if(old){old.cloudId=x.id;old.details=x.event_data;old.photoPaths=paths}else local.unshift({id,cloudId:x.id,details:x.event_data,photoPaths:paths,updated:Date.now()});
    localStorage.setItem('vraxis_projects',JSON.stringify(local));
-   location.href='ready.html?template='+id;
+   location.href='ready.html?template='+id+'&project='+encodeURIComponent(x.id);
   };
   actions.append(open);el.append(left,actions);list.append(el)
  }
