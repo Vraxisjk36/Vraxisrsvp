@@ -1,0 +1,22 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#172f28"><title>You're invited | VraxisRSVP</title><style>
+:root{--dark:#18352d;--cream:#f7f2e9;--accent:#b18c70}*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--dark);font-family:Arial,sans-serif}main{max-width:760px;margin:auto;min-height:100vh;text-align:center;padding:60px 22px 80px}header{font:22px Georgia,serif;letter-spacing:-1px}header span{color:#a46d53}.eyebrow{margin-top:95px;letter-spacing:.25em;text-transform:uppercase;font-size:11px;color:#947b68}h1{font:normal clamp(48px,9vw,90px)/1.04 Georgia,serif;overflow-wrap:anywhere;margin:30px 0}h2{font:normal 35px Georgia,serif}p{line-height:1.8;color:#58675e}.line{height:1px;background:#cfc9bd;margin:45px auto;max-width:300px}.detail{margin:22px 0}.detail b{display:block;font-size:11px;letter-spacing:.17em;text-transform:uppercase;color:#967960;margin-bottom:9px}.detail span{font:23px Georgia,serif;white-space:pre-wrap;overflow-wrap:anywhere}.photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:40px 0}.photos img{width:100%;aspect-ratio:4/5;object-fit:cover}a{color:inherit}.footer{margin-top:75px;font-size:12px;color:#7b847e}#status{margin:70px 0}#content{display:none}@media(max-width:480px){.eyebrow{margin-top:65px}.photos{gap:7px}}
+</style></head><body><main><header>vraxis<span>RSVP</span></header><p id="status" role="status">Opening your invitation…</p><section id="content"><div class="eyebrow">You are warmly invited</div><h1 id="heading"></h1><p id="message"></p><div class="line"></div><div id="details"></div><div class="photos" id="photos"></div><p>We can't wait to celebrate with you.</p></section><div class="footer">Made with VraxisRSVP</div></main><script>
+(async()=>{
+ const slug=new URLSearchParams(location.search).get('slug');
+ const status=document.getElementById('status');
+ if(!/^inv-[a-f0-9]{20}$/.test(slug||'')){status.textContent='This invitation link is invalid.';return}
+ try{
+  const res=await fetch('https://ogmlfnmdhmrbbmxnxwqw.supabase.co/functions/v1/public-invitation?slug='+encodeURIComponent(slug));
+  const data=await res.json();if(!res.ok)throw new Error(data.error||'Invitation unavailable');
+  const e=data.event||{};document.title=(data.title||'You are invited')+' | VraxisRSVP';
+  document.getElementById('heading').textContent=e.names||e.title||data.title||'A special celebration';
+  document.getElementById('message').textContent=e.message||e.description||'';
+  const details=document.getElementById('details');
+  for(const [label,key] of [['Date','date'],['Time','time'],['Venue','venue'],['Address','address'],['Dress code','dressCode']]){
+   if(!e[key])continue;const block=document.createElement('div');block.className='detail';const b=document.createElement('b');b.textContent=label;const value=document.createElement('span');value.textContent=e[key];block.append(b,value);details.append(block);
+  }
+  const gallery=document.getElementById('photos');for(const src of data.photos||[]){const img=document.createElement('img');img.src=src;img.alt='Event photograph';img.loading='lazy';gallery.append(img)}
+  status.hidden=true;document.getElementById('content').style.display='block';
+ }catch(err){status.textContent='We could not open this invitation. '+err.message}
+})();
+</script></body></html>
