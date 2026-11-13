@@ -21,6 +21,23 @@ function render(items){
    location.href='ready.html?template='+id+'&project='+encodeURIComponent(x.id)+'&draft='+encodeURIComponent(x.id);
   };
   actions.append(open);
+  if(x.status==='paid'||x.status==='published'){
+   const publish=document.createElement('button');publish.className='btn';publish.textContent=x.status==='published'?'Copy guest link':'Publish invitation';
+   publish.onclick=async()=>{
+    publish.disabled=true;
+    try{
+     let link;
+     if(x.status==='published'&&x.slug)link='https://vraxisrsvp.online/invite.html?slug='+encodeURIComponent(x.slug);
+     else{
+      const {data:{session}}=await vraxisDB.auth.getSession();
+      if(!session?.access_token)throw new Error('Sign in again');
+      const res=await fetch('https://ogmlfnmdhmrbbmxnxwqw.supabase.co/functions/v1/publish-invitation',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.access_token,'apikey':'sb_publishable_K8hadrdvJiqCRB3eXs9tHg_0kUXl9Ry'},body:JSON.stringify({invitation_id:x.id})});
+      const body=await res.json();if(!res.ok)throw new Error(body.error||'Could not publish');link=body.url;
+     }
+     await navigator.clipboard.writeText(link);alert('Guest link copied! '+link);location.reload();
+    }catch(e){alert('Could not finish: '+e.message);publish.disabled=false}
+   };actions.append(publish);
+  }
   if(x.status==='draft'){
    const pay=document.createElement('button');pay.className='btn';const price=['003','005','010','012'].includes(x.template_id)?'$24.00':'$15.99';pay.textContent='Checkout · '+price;
    pay.onclick=async()=>{
@@ -42,7 +59,7 @@ function render(items){
  list.textContent='Loading your invitations…';
  const user=await vraxisRequireAuth();if(!user)return;
  const signout=document.createElement('button');signout.className='ghost';signout.textContent='Sign out';signout.onclick=async()=>{await vraxisDB.auth.signOut();location.href='account.html'};document.querySelector('main .actions').append(signout);
- const {data,error}=await vraxisDB.from('invitations').select('id,template_id,title,status,event_data,design_data,updated_at').order('updated_at',{ascending:false});
+ const {data,error}=await vraxisDB.from('invitations').select('id,template_id,title,status,slug,event_data,design_data,updated_at').order('updated_at',{ascending:false});
  if(error){list.textContent='Could not load invitations: '+error.message;return}render(data||[]);
 })();
 </script></body></html>
