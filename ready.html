@@ -93,7 +93,7 @@ iframe#frame{display:block;width:100%;height:750px;border:0;background:white;box
    const response=await fetch('https://ogmlfnmdhmrbbmxnxwqw.supabase.co/functions/v1/create-checkout',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.access_token,'apikey':'sb_publishable_K8hadrdvJiqCRB3eXs9tHg_0kUXl9Ry'},body:JSON.stringify({invitation_id:cloudId})});
    const payment=await response.json();if(!response.ok)throw new Error('Invitation saved, but checkout could not start: '+(payment.error||'Please retry from Dashboard'));
    if(!payment.url||!payment.url.startsWith('https://'))throw new Error('Invitation saved, but checkout link is invalid.');
-   location.assign(payment.url);
+   localStorage.setItem('vraxis_checkout_invitation',cloudId);location.assign(payment.url);
   }catch(e){status.textContent=e.message+' You can return to My Dashboard to continue.';button.disabled=false}
  };
 })();
