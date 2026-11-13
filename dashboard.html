@@ -51,7 +51,7 @@ function render(items){
      const response=await fetch('https://ogmlfnmdhmrbbmxnxwqw.supabase.co/functions/v1/create-checkout',{method:'POST',headers:{'Content-Type':'application/json','apikey':'sb_publishable_K8hadrdvJiqCRB3eXs9tHg_0kUXl9Ry','Authorization':'Bearer '+session.access_token},body:JSON.stringify({invitation_id:x.id})});
      const body=await response.json();if(!response.ok)throw new Error(body.error||'Could not start checkout');
      if(!body.url||!body.url.startsWith('https://'))throw new Error('Invalid checkout URL');
-     location.assign(body.url);
+     localStorage.setItem('vraxis_checkout_invitation',x.id);location.assign(body.url);
     }catch(err){alert(err.message);pay.disabled=false;pay.textContent='Checkout · '+price}
    };actions.append(pay);
   }
@@ -66,9 +66,9 @@ function render(items){
  if(error){list.textContent='Could not load invitations: '+error.message;return}render(data||[]);
  if(new URLSearchParams(location.search).get('payment')==='return'){
   const banner=document.getElementById('payment-banner');banner.style.display='block';
-  const paid=(data||[]).filter(x=>x.status==='paid'||x.status==='published').sort((a,b)=>new Date(b.updated_at)-new Date(a.updated_at));
+  const checkoutId=localStorage.getItem('vraxis_checkout_invitation');const paid=(data||[]).filter(x=>x.id===checkoutId&&(x.status==='paid'||x.status==='published'));
   const title=document.createElement('strong'),message=document.createElement('p');
-  if(paid.length){title.textContent='Your invitation is ready for the next chapter.';message.textContent='Payment confirmed. Publish your invitation to unlock its guest link and begin receiving RSVPs.';const next=document.createElement('a');next.href='manage.html?id='+encodeURIComponent(paid[0].id);next.textContent='Open your event control centre →';banner.append(title,message,next)}
+  if(paid.length){title.textContent='Your invitation is ready for the next chapter.';message.textContent='Payment confirmed. Publish your invitation to unlock its guest link and begin receiving RSVPs.';localStorage.removeItem('vraxis_checkout_invitation');const next=document.createElement('a');next.href='manage.html?id='+encodeURIComponent(paid[0].id);next.textContent='Open your event control centre →';banner.append(title,message,next)}
   else{banner.classList.add('waiting');title.textContent='Back from checkout';message.textContent='Your payment confirmation is still being checked. Refresh the dashboard shortly. Do not pay a second time.';banner.append(title,message)}
  }
 })();
