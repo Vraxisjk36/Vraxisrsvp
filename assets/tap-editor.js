@@ -25,7 +25,7 @@ function apply(d){
  for(const [path,value] of Object.entries(state.text)){try{let el=d.querySelector(path);if(el&&typeof value==='string')el.textContent=value}catch{}}
  for(const [path,src] of Object.entries(state.images)){try{let el=d.querySelector(path);if(el?.tagName==='IMG'&&(src.startsWith('data:image/')||src.startsWith('https://'))){el.src=src;el.style.objectFit='cover'}}catch{}}
 }
-function setCursor(el){if(!enabled)return;const s=doc.createElement('style');s.id='vraxis-tap-css';s.textContent='body.vraxis-editing h1,body.vraxis-editing h2,body.vraxis-editing h3,body.vraxis-editing h4,body.vraxis-editing p,body.vraxis-editing blockquote{cursor:text!important;outline:1px dashed #b38a68!important;outline-offset:3px}body.vraxis-editing img{cursor:pointer!important;outline:1px dashed #b38a68!important;outline-offset:3px}';doc.head.append(s)}
+function setCursor(el){if(!enabled)return;const s=doc.createElement('style');s.id='vraxis-tap-css';s.textContent='body.vraxis-editing h1,body.vraxis-editing h2,body.vraxis-editing h3,body.vraxis-editing h4,body.vraxis-editing p,body.vraxis-editing li,body.vraxis-editing label,body.vraxis-editing blockquote{cursor:text!important;outline:1px dashed #b38a68!important;outline-offset:3px}body.vraxis-editing img{cursor:pointer!important;outline:1px dashed #b38a68!important;outline-offset:3px}';doc.head.append(s)}
 function activate(d){
  doc=d;if(!d?.body)return;
  apply(d);
@@ -38,10 +38,12 @@ function activate(d){
   if(blocked)return;
   let img=raw.closest('img');
   if(!img&&raw.closest('a'))return;
-  let text=raw.closest('[data-text],h1,h2,h3,h4,p,blockquote');
+  let text=raw.closest('[data-text],h1,h2,h3,h4,p,blockquote,li,label,[data-editable-text]');
   const leaf=raw.closest('span,em,strong,b');
   if(text&&leaf&&text.contains(leaf)&&leaf.childElementCount===0&&leaf.textContent.trim())text=leaf;
-  if(text&&text.childElementCount>0&&!text.hasAttribute('data-text')&&!['P','BLOCKQUOTE'].includes(text.tagName))text=null;
+  if(text&&text.closest('form,[role="dialog"],nav,header,[class*="editor"],[class*="Editor"]'))text=null;
+  if(text&&text.querySelector('input,textarea,select,button,a'))text=null;
+  if(text&&text.childElementCount>0&&!text.hasAttribute('data-text')&&!text.hasAttribute('data-editable-text')&&!['P','BLOCKQUOTE','LI','LABEL'].includes(text.tagName))text=null;
   if(!img&&!text)return;
   e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
   if(img){selected=img;selectedPath=cssPath(img);selectedKind='image';picker.click();return}
@@ -89,7 +91,7 @@ cancel.onclick=()=>{dialog.hidden=true;dialog.style.display='none'};dialog.style
 dialog.addEventListener('click',e=>{if(e.target===dialog){dialog.hidden=true;dialog.style.display='none'}});
 save.onclick=()=>{
  if(!selected||selectedKind!=='text')return;
- const value=edit.value.trim();if(!value)return;
+ const value=edit.value.trim();if(!value){alert('Enter the wording you want to display.');return;}
  state.text[selectedPath]=value;if(!store())return;
  selected.textContent=value;dialog.hidden=true;dialog.style.display='none';dialog.style.display='none';
  const status=document.getElementById('renderStatus');if(status)status.textContent='✓ Text changed and saved · switch off edit mode to experience your invitation.';
