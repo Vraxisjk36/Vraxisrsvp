@@ -62,4 +62,4 @@ function render(items){
  const {data,error}=await vraxisDB.from('invitations').select('id,template_id,title,status,slug,event_data,design_data,updated_at').order('updated_at',{ascending:false});
  if(error){list.textContent='Could not load invitations: '+error.message;return}render(data||[]);
 })();
-</script></body></html>
+</script><script src="assets/site-nav.js" defer></script></body></html>
