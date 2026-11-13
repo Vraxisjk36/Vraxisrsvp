@@ -5,7 +5,7 @@
 const id=new URLSearchParams(location.search).get('template');
 const outers=[document.getElementById('studioFrame'),document.getElementById('frame')].filter(Boolean);if(!outers.length||!id)return;
 const key='vraxis_draft_'+vraxisDraft.id+'_tap';
-let enabled=false,doc=null,selected=null,selectedPath='',selectedKind='';
+let enabled=false,doc=null,selected=null,selectedPath='',selectedKind='';const activeDocuments=new Set();
 let state={text:{},images:{}};
 try{state=Object.assign(state,JSON.parse(localStorage.getItem(key)||'{}')||{})}catch{}
 const store=()=>{try{localStorage.setItem(key,JSON.stringify(state));return true}catch{alert('Not enough storage for another image. Try a smaller photo.');return false}};
@@ -46,7 +46,7 @@ function apply(d){
 function setCursor(el){if(!enabled)return;const s=doc.createElement('style');s.id='vraxis-tap-css';s.textContent='body.vraxis-editing h1,body.vraxis-editing h2,body.vraxis-editing h3,body.vraxis-editing h4,body.vraxis-editing p,body.vraxis-editing li,body.vraxis-editing label,body.vraxis-editing blockquote{cursor:text!important;outline:1px dashed #b38a68!important;outline-offset:3px}body.vraxis-editing img{cursor:pointer!important;outline:1px dashed #b38a68!important;outline-offset:3px}';doc.head.append(s)}
 function activate(d){
  doc=d;if(!d?.body)return;
- apply(d);
+ activeDocuments.add(d);apply(d);
  d.body.classList.toggle('vraxis-editing',enabled);
  if(enabled&&!d.getElementById('vraxis-tap-css'))setCursor(null);
  if(d.__vraxisTapBound)return;d.__vraxisTapBound=true;
@@ -92,6 +92,7 @@ window.addEventListener('vraxis-edit-mode',e=>{
  enabled=!!e.detail.enabled;
  for(const frame of outers){if(enabled)try{findInner(frame)}catch{}}
  try{if(doc){const old=doc.getElementById('vraxis-tap-css');old?.remove();doc.body.classList.toggle('vraxis-editing',enabled);if(enabled)setCursor(null)}}catch{}
+ for(const d of activeDocuments){try{if(!d?.body)continue;d.getElementById('vraxis-tap-css')?.remove();d.body.classList.toggle('vraxis-editing',enabled);if(enabled&&!d.getElementById('vraxis-tap-css')){const style=d.createElement('style');style.id='vraxis-tap-css';style.textContent='body.vraxis-editing h1,body.vraxis-editing h2,body.vraxis-editing h3,body.vraxis-editing h4,body.vraxis-editing p,body.vraxis-editing li,body.vraxis-editing blockquote,body.vraxis-editing img{cursor:pointer!important;outline:1px dashed #b38a68!important;outline-offset:3px}';d.head.append(style)}}catch{activeDocuments.delete(d)}}
  if(!enabled){dialog.hidden=true;dialog.style.display='none';}
 });
 const dialog=document.createElement('div');dialog.hidden=true;dialog.setAttribute('role','dialog');dialog.setAttribute('aria-label','Edit invitation text');
@@ -113,7 +114,7 @@ save.onclick=()=>{
  if(!selected||selectedKind!=='text')return;
  const value=edit.value.trim();if(!value){alert('Enter the wording you want to display.');return;}
  state.text[selectedPath]=value;if(!store())return;
- setPreservingMarkup(selected,value);dialog.hidden=true;dialog.style.display='none';dialog.style.display='none';
+ for(const d of activeDocuments){try{const target=d.querySelector(selectedPath);if(target)setPreservingMarkup(target,value)}catch{}}dialog.hidden=true;dialog.style.display='none';dialog.style.display='none';
  const status=document.getElementById('renderStatus');if(status)status.textContent='✓ Text changed and saved · switch off edit mode to experience your invitation.';
 };
 picker.onchange=async()=>{
@@ -125,7 +126,7 @@ picker.onchange=async()=>{
   canvas.width=Math.max(1,Math.round(bmp.width*scale));canvas.height=Math.max(1,Math.round(bmp.height*scale));
   canvas.getContext('2d').drawImage(bmp,0,0,canvas.width,canvas.height);
   const src=canvas.toDataURL('image/jpeg',.72);state.images[selectedPath]=src;
-  if(store()){selected.src=src;selected.style.objectFit='cover';const status=document.getElementById('renderStatus');if(status)status.textContent='✓ Photo replaced and saved.'}
+  if(store()){for(const d of activeDocuments){try{const target=d.querySelector(selectedPath);if(target?.tagName==='IMG'){target.src=src;target.style.objectFit='cover'}}catch{}}const status=document.getElementById('renderStatus');if(status)status.textContent='✓ Photo replaced and saved.'}
  }catch{alert('Could not read this image. Please choose a JPG or PNG.')}finally{URL.revokeObjectURL(url);picker.value=''}
 };
 })();
