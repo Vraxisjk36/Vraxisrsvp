@@ -42,7 +42,7 @@ function render(items){
    const manage=document.createElement('a');manage.className='btn ghost';manage.href='manage.html?id='+encodeURIComponent(x.id);manage.textContent='Manage event & RSVPs';actions.append(manage);
   }
     if(x.status==='draft'){
-   const pay=document.createElement('button');pay.className='btn';const price=['003','005','010','012'].includes(x.template_id)?'$24.00':'$15.99';pay.textContent='Checkout · '+price;
+   const pay=document.createElement('button');pay.className='btn';const price=['002','005','010','012'].includes(x.template_id)?'$24.00':'$15.99';pay.textContent='Checkout · '+price;
    pay.onclick=async()=>{
     pay.disabled=true;pay.textContent='Preparing secure checkout…';
     try{
