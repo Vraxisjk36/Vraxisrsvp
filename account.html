@@ -4,4 +4,4 @@ const q=new URLSearchParams(location.search),next=q.get('next')||'dashboard.html
 function safeNext(){return /^(dashboard|ready|start)\.html(?:\?[^#]*)?$/.test(next)?next:'dashboard.html'}
 async function run(mode){message.textContent='Please wait…';const credentials={email:email.value.trim(),password:password.value};const {data,error}=mode==='signup'?await vraxisDB.auth.signUp({ ...credentials,options:{emailRedirectTo:new URL('account.html',location.href).href}}):await vraxisDB.auth.signInWithPassword(credentials);if(error){message.textContent=error.message;return}if(data.session){location.href=safeNext()}else message.textContent='Check your email to confirm your account, then sign in.'}
 form.addEventListener('submit',e=>{e.preventDefault();run('signin')});document.getElementById('signup').onclick=()=>{if(form.reportValidity())run('signup')};vraxisAuth().then(u=>{if(u)location.href=safeNext()});
-</script></body></html>
+</script><script src="assets/site-nav.js" defer></script></body></html>
