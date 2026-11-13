@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard.html
+Disallow: /manage.html
+Disallow: /account.html
+Disallow: /template-manager.html
+Disallow: /invite.html
+Disallow: /ready.html
+Disallow: /personalise.html
+Disallow: /start.html
+
+Sitemap: https://vraxisrsvp.online/sitemap.xml
