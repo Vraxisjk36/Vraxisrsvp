@@ -5,7 +5,7 @@
 "use strict";
 const params=new URLSearchParams(location.search);
 const id=/^0(0[1-9]|1[0-3])$/.test(params.get('template')||'')?params.get('template'):'001';
-const host=document.getElementById('frame'); if(!host)return;
+const hosts=[document.getElementById('frame'),document.getElementById('studioFrame')].filter(Boolean); if(!hosts.length)return;
 const get=(k,fallback={})=>{try{return JSON.parse(localStorage.getItem(k)||'null')??fallback}catch{return fallback}};
 const details=vraxisDraft.read('details',{}),studio=vraxisDraft.read('studio',{}),photos=vraxisDraft.read('photos',[]);
 const names=(details.names||'').split(/\s+(?:and|&)\s+|\s*,\s*/i).map(x=>x.trim()).filter(Boolean);
@@ -125,13 +125,12 @@ function applyDoc(doc){
  status('Preview loaded · '+(nativeCount+textCount)+' personalised fields'+(photoCount?' · '+photoCount+' photos':'')+'. Changes are saved on this device.');
  applied=true;
 }
-function bindInner(){
+function bindInner(host){
  let outer;try{outer=host.contentDocument}catch{status('Unable to access template preview.');return}
  const inner=outer?.getElementById('invitation')||outer?.querySelector('iframe');
  if(!inner){if(outer?.body)applyDoc(outer);return}
  if(!bindings.has(inner)){bindings.add(inner);inner.addEventListener('load',()=>{try{applyDoc(inner.contentDocument)}catch(e){status('Could not load the original template.')}})}
  try{const doc=inner.contentDocument;if(doc?.readyState==='complete')applyDoc(doc)}catch{status('Template content is not accessible from this preview.')}
 }
-host.addEventListener('load',bindInner);
-if(host.contentDocument?.readyState==='complete')bindInner();
+for(const host of hosts){host.addEventListener('load',()=>bindInner(host));if(host.contentDocument?.readyState==='complete')bindInner(host)}
 })();
