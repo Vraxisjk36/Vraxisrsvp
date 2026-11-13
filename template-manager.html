@@ -605,34 +605,30 @@
                     : "jpg";
               const path = id + "/" + crypto.randomUUID() + "." + ext;
               const uploaded = entry.file
-                ? await db.storage
-                    .from("template-images")
-                    .upload(path, entry.file, {
-                      contentType: entry.file.type,
-                      upsert: false,
-                      cacheControl: "3600",
-                    })
+                ? await db.storage.from("template-images").upload(path, entry.file, {
+                    contentType: entry.file.type,
+                    upsert: false,
+                    cacheControl: "3600",
+                  })
                 : { error: null };
               if (uploaded.error) throw uploaded.error;
               const url = entry.file
                 ? db.storage.from("template-images").getPublicUrl(path).data.publicUrl
                 : entry.original_url;
               if (!url) throw Error("No image to save");
-              const saved = await db
-                .from("template_image_overrides")
-                .upsert(
-                  {
-                    template_id: id,
-                    slot,
-                    image_url: url,
-                    fit_mode: entry.fit_mode || "cover",
-                    zoom: entry.zoom || 1,
-                    pos_x: entry.pos_x ?? 50,
-                    pos_y: entry.pos_y ?? 50,
-                    updated_at: new Date().toISOString(),
-                  },
-                  { onConflict: "template_id,slot" },
-                );
+              const saved = await db.from("template_image_overrides").upsert(
+                {
+                  template_id: id,
+                  slot,
+                  image_url: url,
+                  fit_mode: entry.fit_mode || "cover",
+                  zoom: entry.zoom || 1,
+                  pos_x: entry.pos_x ?? 50,
+                  pos_y: entry.pos_y ?? 50,
+                  updated_at: new Date().toISOString(),
+                },
+                { onConflict: "template_id,slot" },
+              );
               if (saved.error) throw saved.error;
               existing.set(slot, {
                 image_url: url,
