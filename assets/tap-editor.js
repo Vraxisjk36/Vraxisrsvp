@@ -20,9 +20,27 @@ function cssPath(el){
  }
  return bits.join(' > ');
 }
+// Change visible wording without replacing styled spans, emphasis or animation wrappers.
+function setPreservingMarkup(el,value){
+ const doc=el.ownerDocument,walker=doc.createTreeWalker(el,doc.defaultView.NodeFilter.SHOW_TEXT);
+ const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+ if(!nodes.length){el.textContent=value;return}
+ if(nodes.length===1){nodes[0].nodeValue=value;return}
+ const significant=nodes.map((node,i)=>({node,i,original:node.nodeValue})).filter(x=>x.original.trim());
+ if(!significant.length){nodes[0].nodeValue=value;for(const n of nodes.slice(1))n.nodeValue='';return}
+ const words=value.trim().split(/\s+/),weights=significant.map(x=>x.original.trim().split(/\s+/).length);
+ let cursor=0,remainingWeight=weights.reduce((a,b)=>a+b,0);
+ significant.forEach((part,index)=>{
+  const remaining=words.length-cursor;
+  const count=index===significant.length-1?remaining:Math.min(remaining,Math.max(0,Math.round(remaining*weights[index]/remainingWeight)));
+  const segment=words.slice(cursor,cursor+count).join(' ');cursor+=count;remainingWeight-=weights[index];
+  part.node.nodeValue=(/^\s/.test(part.original)?' ':'')+segment+(/\s$/.test(part.original)?' ':'');
+ });
+ for(const node of nodes)if(!significant.some(part=>part.node===node))node.nodeValue='';
+}
 function apply(d){
  if(!d?.body)return;
- for(const [path,value] of Object.entries(state.text)){try{let el=d.querySelector(path);if(el&&typeof value==='string')el.textContent=value}catch{}}
+ for(const [path,value] of Object.entries(state.text)){try{let el=d.querySelector(path);if(el&&typeof value==='string')setPreservingMarkup(el,value)}catch{}}
  for(const [path,src] of Object.entries(state.images)){try{let el=d.querySelector(path);if(el?.tagName==='IMG'&&(src.startsWith('data:image/')||src.startsWith('https://'))){el.src=src;el.style.objectFit='cover'}}catch{}}
 }
 function setCursor(el){if(!enabled)return;const s=doc.createElement('style');s.id='vraxis-tap-css';s.textContent='body.vraxis-editing h1,body.vraxis-editing h2,body.vraxis-editing h3,body.vraxis-editing h4,body.vraxis-editing p,body.vraxis-editing li,body.vraxis-editing label,body.vraxis-editing blockquote{cursor:text!important;outline:1px dashed #b38a68!important;outline-offset:3px}body.vraxis-editing img{cursor:pointer!important;outline:1px dashed #b38a68!important;outline-offset:3px}';doc.head.append(s)}
@@ -95,7 +113,7 @@ save.onclick=()=>{
  if(!selected||selectedKind!=='text')return;
  const value=edit.value.trim();if(!value){alert('Enter the wording you want to display.');return;}
  state.text[selectedPath]=value;if(!store())return;
- selected.textContent=value;dialog.hidden=true;dialog.style.display='none';dialog.style.display='none';
+ setPreservingMarkup(selected,value);dialog.hidden=true;dialog.style.display='none';dialog.style.display='none';
  const status=document.getElementById('renderStatus');if(status)status.textContent='✓ Text changed and saved · switch off edit mode to experience your invitation.';
 };
 picker.onchange=async()=>{
