@@ -31,7 +31,18 @@ function render(items){
    const id=x.template_id;
    const prefix='vraxis_draft_'+x.id+'_';
    localStorage.setItem(prefix+'details',JSON.stringify(x.event_data||{}));
-   localStorage.setItem(prefix+'tap',JSON.stringify(x.design_data?.tap_edits||{}));
+   const restoredEdits=JSON.parse(JSON.stringify(x.design_data?.tap_edits||{}));
+   restoredEdits.text=restoredEdits.text||{};
+   restoredEdits.images=restoredEdits.images||{};
+   const editedPaths=x.design_data?.tap_image_paths||{};
+   if(Object.keys(editedPaths).length){open.disabled=true;open.textContent='Restoring edited photos…'}
+   for(const [selector,path] of Object.entries(editedPaths)){
+    if(typeof path!=='string')continue;
+    const {data:signed,error}=await vraxisDB.storage.from('invitation-photos').createSignedUrl(path,3600);
+    if(error||!signed?.signedUrl){open.disabled=false;open.textContent='Edit invitation';alert('Could not restore an edited photo. Please retry.');return}
+    restoredEdits.images[selector]=signed.signedUrl;
+   }
+   localStorage.setItem(prefix+'tap',JSON.stringify(restoredEdits));
    const paths=x.design_data?.photo_paths||[];
    if(paths.length){open.disabled=true;open.textContent='Loading your photos…';const urls=[];for(const path of paths){const {data,error}=await vraxisDB.storage.from('invitation-photos').createSignedUrl(path,3600);if(error){open.disabled=false;open.textContent='Open invitation';alert('Could not load a photo: '+error.message);return}urls.push(data.signedUrl)}localStorage.setItem(prefix+'photos',JSON.stringify(urls))}else localStorage.removeItem(prefix+'photos');
    let local=[];try{local=JSON.parse(localStorage.getItem('vraxis_projects')||'[]')}catch{}
