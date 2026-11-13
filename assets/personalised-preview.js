@@ -99,7 +99,7 @@ function applyDoc(doc){
  const original=templateNames[Number(id)-1];
  const preferred=details.openingTitle||details.names||details.title;
  if(filled(preferred)){
-  const normalise=value=>String(value||'').replace(/\\s+/g,' ').trim().toLowerCase();
+  const normalise=value=>String(value||'').replace(/\s+/g,' ').trim().toLowerCase();
   const variants=new Set([normalise(original),normalise(original.replace(/^the /i,''))]);
   doc.querySelectorAll('h1,h2,h3,h4,.hero-title,.cover-title,.main-title,.intro-title,.title,[data-cover-title]').forEach(el=>{
    if(el.closest('nav,header,form,#editPanel,#editor,#editDrawer'))return;
