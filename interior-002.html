@@ -1,2151 +1,2969 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
-<meta content="#170d0b" name="theme-color"/>
-<title>The Grand Affair | Alexander &amp; Miranda</title><style>
-
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport" />
+    <meta content="#170d0b" name="theme-color" />
+    <title>The Grand Affair | Alexander &amp; Miranda</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;
 500;
 600&family=DM+Sans:wght@400;
 500;
-600&display=swap');
+600&display=swap");
 
-:root{
---wine:#3c111b;
---deep:#160d0c;
---gold:#cba76b;
---ivory:#f4ecdf;
---ink:#30201d;
---serif:'Cormorant Garamond',Georgia,serif;
---sans:'DM Sans',Arial,sans-serif}
-*{
-box-sizing:border-box}
-html{
-scroll-behavior:smooth}
-body{
-margin:0;
-background:var(--ivory);
-color:var(--ink);
-font-family:var(--sans)}
-button,input,select,textarea{
-font:inherit}
-button{
-cursor:pointer}
-a{
-color:inherit}
-img{
-display:block;
-max-width:100%}
-body.lock{
-overflow:hidden}
-.eyebrow{
-font-size:11px;
-letter-spacing:.28em;
-text-transform:uppercase;
-font-weight:600;
-color:#9e7849}
-.serif{
-font-family:var(--serif)}
-h1,h2,h3,p{
-margin-top:0}
-h2{
-font:500 clamp(48px,7vw,86px)/.97 var(--serif);
-margin:12px 0 22px}
-.bodycopy{
-font:21px/1.55 var(--serif)}
-.goldline{
-height:1px;
-background:linear-gradient(90deg,transparent,var(--gold),transparent);
-max-width:220px;
-margin:25px auto}
-.btn{
-border:1px solid #b28d54;
-background:var(--wine);
-color:#f9ead1;
-padding:16px 26px;
-letter-spacing:.17em;
-text-transform:uppercase;
-font-size:10px;
-font-weight:600;
-transition:transform .2s,background .2s}
-.btn:hover{
-transform:translateY(-2px);
-background:#5a1d29}
-.btn.light{
-background:transparent;
-color:var(--ivory)}
-.btn:focus-visible,a:focus-visible,input:focus-visible{
-outline:3px solid #e9bb70;
-outline-offset:3px}
-.intro{
-position:fixed;
-inset:0;
-z-index:100;
-background:#0d0909;
-color:var(--ivory);
-overflow:hidden;
-transition:opacity .9s,visibility .9s}
-.intro.done{
-opacity:0;
-visibility:hidden;
-pointer-events:none}
-.intro-scene{
-position:absolute;
-inset:0;
-display:flex;
-align-items:stretch;
-justify-content:center;
-background:radial-gradient(ellipse,#4c2a19 0%,#090606 76%)}
-.palace{
-position:relative;
-width:min(100%,650px);
-height:100%;
-overflow:hidden;
-background:#130d0a}
-.palace:before{
-content:"";
-position:absolute;
-inset:0;
-background:url('assets/images/002/embedded-01.webp') center/cover;
-filter:brightness(.68);
-transform:scale(1.02)}
-.palace.open:before{
-animation:palacefade 2.7s forwards}
-.palace:after{
-content:"";
-position:absolute;
-inset:0;
-background:linear-gradient(0deg,rgba(8,4,5,.95),transparent 62%,rgba(8,4,5,.35));
-pointer-events:none}
-.palace-glow{
-position:absolute;
-inset:0;
-background:url('assets/images/002/embedded-02.webp') center/cover;
-opacity:0;
-transform:scale(1.04)}
-.palace.open .palace-glow{
-animation:reveal 3s forwards}
-.palace-inner{
-position:absolute;
-inset:0;
-background:url('assets/images/002/embedded-03.webp') center/cover;
-opacity:0;
-transform:scale(1.2)}
-.palace.open .palace-inner{
-animation:room 3.5s .8s forwards}
-.intro-content{
-position:absolute;
-z-index:3;
-inset:0;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:space-between;
-text-align:center;
-padding:clamp(28px,5vh,56px) 20px 8vh}
-.intro-logo{
-font:15px var(--serif);
-letter-spacing:.37em}
-.intro-logo small{
-display:block;
-font:9px var(--sans);
-letter-spacing:.34em;
-margin-top:9px;
-color:var(--gold)}
-.intro-bottom{
-max-width:390px}
-.intro-bottom h1{
-font:italic 400 clamp(35px,8vw,58px)/1.04 var(--serif);
-margin:0 0 28px}
-.intro-bottom p{
-font-size:10px;
-letter-spacing:.18em;
-line-height:1.7;
-color:#f3dbb2}
-.intro-actions{
-display:flex;
-flex-direction:column;
-gap:16px;
-align-items:center}
-.skip{
-border:0;
-background:transparent;
-color:#f0dcb8;
-font-size:10px;
-letter-spacing:.22em;
-text-transform:uppercase;
-padding:12px}
-.intro.opening .intro-bottom{
-opacity:0;
-transform:translateY(20px);
-transition:.6s}
-.intro.opening .intro-logo{
-opacity:0;
-transition:.5s}
-@keyframes palacefade{
-to{
-opacity:0}
-}
-@keyframes reveal{
-30%{
-opacity:1}
-100%{
-opacity:0;
-transform:scale(1.15)}
-}
-@keyframes room{
-20%{
-opacity:0}
-75%,100%{
-opacity:1;
-transform:scale(1)}
-}
+      :root {
+        --wine: #3c111b;
+        --deep: #160d0c;
+        --gold: #cba76b;
+        --ivory: #f4ecdf;
+        --ink: #30201d;
+        --serif: "Cormorant Garamond", Georgia, serif;
+        --sans: "DM Sans", Arial, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--ivory);
+        color: var(--ink);
+        font-family: var(--sans);
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      a {
+        color: inherit;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      body.lock {
+        overflow: hidden;
+      }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: #9e7849;
+      }
+      .serif {
+        font-family: var(--serif);
+      }
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+      h2 {
+        font: 500 clamp(48px, 7vw, 86px)/0.97 var(--serif);
+        margin: 12px 0 22px;
+      }
+      .bodycopy {
+        font: 21px/1.55 var(--serif);
+      }
+      .goldline {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        max-width: 220px;
+        margin: 25px auto;
+      }
+      .btn {
+        border: 1px solid #b28d54;
+        background: var(--wine);
+        color: #f9ead1;
+        padding: 16px 26px;
+        letter-spacing: 0.17em;
+        text-transform: uppercase;
+        font-size: 10px;
+        font-weight: 600;
+        transition:
+          transform 0.2s,
+          background 0.2s;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+        background: #5a1d29;
+      }
+      .btn.light {
+        background: transparent;
+        color: var(--ivory);
+      }
+      .btn:focus-visible,
+      a:focus-visible,
+      input:focus-visible {
+        outline: 3px solid #e9bb70;
+        outline-offset: 3px;
+      }
+      .intro {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        background: #0d0909;
+        color: var(--ivory);
+        overflow: hidden;
+        transition:
+          opacity 0.9s,
+          visibility 0.9s;
+      }
+      .intro.done {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      .intro-scene {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+        background: radial-gradient(ellipse, #4c2a19 0%, #090606 76%);
+      }
+      .palace {
+        position: relative;
+        width: min(100%, 650px);
+        height: 100%;
+        overflow: hidden;
+        background: #130d0a;
+      }
+      .palace:before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("assets/images/002/embedded-01.webp") center/cover;
+        filter: brightness(0.68);
+        transform: scale(1.02);
+      }
+      .palace.open:before {
+        animation: palacefade 2.7s forwards;
+      }
+      .palace:after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          0deg,
+          rgba(8, 4, 5, 0.95),
+          transparent 62%,
+          rgba(8, 4, 5, 0.35)
+        );
+        pointer-events: none;
+      }
+      .palace-glow {
+        position: absolute;
+        inset: 0;
+        background: url("assets/images/002/embedded-02.webp") center/cover;
+        opacity: 0;
+        transform: scale(1.04);
+      }
+      .palace.open .palace-glow {
+        animation: reveal 3s forwards;
+      }
+      .palace-inner {
+        position: absolute;
+        inset: 0;
+        background: url("assets/images/002/embedded-03.webp") center/cover;
+        opacity: 0;
+        transform: scale(1.2);
+      }
+      .palace.open .palace-inner {
+        animation: room 3.5s 0.8s forwards;
+      }
+      .intro-content {
+        position: absolute;
+        z-index: 3;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        text-align: center;
+        padding: clamp(28px, 5vh, 56px) 20px 8vh;
+      }
+      .intro-logo {
+        font: 15px var(--serif);
+        letter-spacing: 0.37em;
+      }
+      .intro-logo small {
+        display: block;
+        font: 9px var(--sans);
+        letter-spacing: 0.34em;
+        margin-top: 9px;
+        color: var(--gold);
+      }
+      .intro-bottom {
+        max-width: 390px;
+      }
+      .intro-bottom h1 {
+        font: italic 400 clamp(35px, 8vw, 58px)/1.04 var(--serif);
+        margin: 0 0 28px;
+      }
+      .intro-bottom p {
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        line-height: 1.7;
+        color: #f3dbb2;
+      }
+      .intro-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: center;
+      }
+      .skip {
+        border: 0;
+        background: transparent;
+        color: #f0dcb8;
+        font-size: 10px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        padding: 12px;
+      }
+      .intro.opening .intro-bottom {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: 0.6s;
+      }
+      .intro.opening .intro-logo {
+        opacity: 0;
+        transition: 0.5s;
+      }
+      @keyframes palacefade {
+        to {
+          opacity: 0;
+        }
+      }
+      @keyframes reveal {
+        30% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: scale(1.15);
+        }
+      }
+      @keyframes room {
+        20% {
+          opacity: 0;
+        }
+        75%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
 
-nav{
-position:sticky;
-top:0;
-z-index:30;
-background:#1d1111f2;
-color:#e9dcc7;
-backdrop-filter:blur(12px);
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:12px;
-padding:17px clamp(18px,5vw,70px);
-border-bottom:1px solid #97774b66}
-.brand{
-font:18px var(--serif);
-letter-spacing:.23em;
-text-decoration:none;
-white-space:nowrap}
-.brand span{
-display:block;
-font:8px var(--sans);
-letter-spacing:.24em;
-color:var(--gold);
-margin-top:4px}
-.navlinks{
-display:flex;
-gap:22px;
-align-items:center}
-.navlinks a{
-text-decoration:none;
-text-transform:uppercase;
-font-size:9px;
-letter-spacing:.14em}
-.navlinks a:hover{
-color:var(--gold)}
-.navlinks .nav-rsvp{
-border:1px solid var(--gold);
-padding:10px 14px}
-.hero{
-min-height:min(850px,95svh);
-position:relative;
-display:flex;
-align-items:center;
-background:#160b0a url('assets/images/002/embedded-04.webp') center/cover;
-color:#fff3dc}
-.hero:before{
-content:"";
-position:absolute;
-inset:0;
-background:linear-gradient(90deg,rgba(14,7,7,.93),rgba(14,7,7,.52) 48%,rgba(14,7,7,.12)),linear-gradient(0deg,#160d0c9c,transparent 60%)}
-.hero-content{
-position:relative;
-padding:100px clamp(24px,8vw,140px);
-max-width:850px}
-.hero h1{
-font:400 clamp(70px,12vw,145px)/.8 var(--serif);
-letter-spacing:-.035em;
-margin:25px 0}
-.hero h1 em{
-font-weight:400;
-color:#ddbc81}
-.hero .eyebrow{
-color:#e2c08e}
-.hero-date{
-letter-spacing:.25em;
-font-size:12px;
-text-transform:uppercase;
-margin-top:32px}
-.section{
-padding:clamp(75px,10vw,145px) clamp(20px,6vw,95px)}
-.story{
-background:#eee3d2;
-display:grid;
-grid-template-columns:1fr 1fr;
-align-items:center;
-gap:clamp(25px,6vw,100px)}
-.story-copy{
-max-width:550px;
-margin:auto}
-.story-image{
-position:relative;
-min-height:580px;
-background:url('assets/images/002/embedded-05.webp') center/cover;
-border:12px solid #f6ecdf;
-box-shadow:0 22px 50px #37241e26}
-.story-image:after{
-content:'A & M';
-position:absolute;
-right:25px;
-bottom:20px;
-background:#4b1721;
-color:#ebd0a3;
-font:30px var(--serif);
-padding:15px 22px;
-border:1px solid #d4b57d}
-.details{
-background:#e9d7bc url('assets/images/002/embedded-06.webp') center/cover;
-text-align:center}
-.details-wrap{
-max-width:1100px;
-margin:auto;
-padding:45px;
-background:#f9f0e4e8;
-border:1px solid #c8aa79;
-box-shadow:0 20px 70px #5a32152a}
-.detail-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:22px;
-margin:40px 0}
-.detail-card{
-padding:42px 18px;
-border:1px solid #c0a277;
-background:#fff9f1d9}
-.detail-card h3{
-font:40px var(--serif);
-margin:10px 0}
-.detail-card .time{
-font:600 38px var(--serif);
-color:var(--wine)}
-.detail-card p{
-font:19px/1.5 var(--serif)}
-.programme{
-background:#271719;
-color:#f8ead6;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:6vw;
-align-items:center}
-.programme-art{
-min-height:620px;
-background:url('assets/images/002/embedded-07.webp') center/cover;
-border:1px solid #c09b62}
-.programme .eyebrow{
-color:#d2b17b}
-.timeline{
-list-style:none;
-padding:0;
-margin:35px 0 0}
-.timeline li{
-display:grid;
-grid-template-columns:78px 18px 1fr;
-gap:15px;
-align-items:start;
-min-height:67px;
-font:20px var(--serif)}
-.timeline time{
-color:#d8b882}
-.dot{
-height:10px;
-width:10px;
-border-radius:50%;
-background:var(--gold);
-margin-top:9px;
-position:relative}
-.timeline li:not(:last-child) .dot:after{
-content:"";
-position:absolute;
-top:12px;
-left:4px;
-height:50px;
-width:1px;
-background:#a07d54}
-.gallery{
-background:radial-gradient(ellipse at 50% 0%,#5b2529,#210d13 65%);
-color:#f7e9d8;
-text-align:center}
-.gallery .eyebrow{
-color:#d8b882}
-.gallery-strip{
-display:flex;
-gap:20px;
-overflow-x:auto;
-scroll-snap-type:x mandatory;
-padding:25px 5px 40px;
-scrollbar-color:#9e7854 transparent;
-max-width:1200px;
-margin:auto}
-.portrait{
-flex:0 0 clamp(210px,27vw,330px);
-height:390px;
-overflow:hidden;
-position:relative;
-scroll-snap-align:center;
-border:5px solid #c9a96f;
-box-shadow:0 20px 35px #0008;
-background:#221}
-.portrait img{
-width:100%;
-height:100%;
-object-fit:cover;
-transition:transform .5s}
-.portrait:hover img{
-transform:scale(1.05)}
-.portrait:after{
-content:attr(data-caption);
-position:absolute;
-bottom:0;
-left:0;
-right:0;
-padding:25px 10px 12px;
-color:white;
-background:linear-gradient(transparent,#000b);
-font:23px var(--serif)}
-.gallery-actions{
-display:flex;
-justify-content:center;
-gap:12px}
-.gallery-actions button{
-border:1px solid #bfa06e;
-background:transparent;
-color:#fff;
-padding:12px 20px}
-.rsvp{
-background:#f3e9db;
-text-align:center}
-.rsvp-form{
-max-width:570px;
-margin:30px auto 0;
-padding:clamp(24px,5vw,55px);
-border:1px solid #c2a77b;
-background:#fff9f2;
-box-shadow:0 15px 45px #40201912;
-text-align:left}
-.field{
-display:block;
-margin-bottom:20px}
-.field>span,.form-legend{
-display:block;
-text-transform:uppercase;
-font-size:11px;
-font-weight:600;
-letter-spacing:.12em;
-margin-bottom:9px;
-color:#553a32}
-.field input,.field textarea,.field select{
-width:100%;
-padding:14px;
-border:1px solid #c8b8a5;
-border-radius:0;
-background:#fff;
-color:#261b19}
-.choices{
-display:flex;
-flex-wrap:wrap;
-gap:16px 25px;
-margin:14px 0 24px}
-.choices label{
-font-size:13px;
-letter-spacing:0;
-display:flex;
-align-items:center;
-gap:8px}
-.choices input{
-accent-color:var(--wine);
-width:18px;
-height:18px}
-.form-message{
-font-size:13px;
-margin-top:16px;
-line-height:1.5}
-.closing{
-padding:110px 20px;
-background:#1d1011;
-color:#e9d5b4;
-text-align:center}
-.closing h2{
-font:italic 400 70px var(--serif)}
-.footer{
-padding:25px;
-text-align:center;
-background:#130b0c;
-color:#c6a97b;
-font-size:10px;
-letter-spacing:.16em}
-.editor-toggle{
-position:fixed;
-z-index:45;
-bottom:18px;
-right:18px;
-border:1px solid #e1bc83;
-background:#3e1822;
-color:#fff2d8;
-padding:12px 16px;
-font-size:11px;
-letter-spacing:.1em;
-box-shadow:0 6px 22px #0006}
-.editor{
-position:fixed;
-z-index:44;
-right:16px;
-bottom:65px;
-width:min(360px,calc(100vw - 32px));
-max-height:75vh;
-overflow:auto;
-background:#fff8ee;
-padding:25px;
-border:1px solid #c7aa79;
-box-shadow:0 20px 65px #0005;
-display:none}
-.editor.active{
-display:block}
-.editor h3{
-font:34px var(--serif)}
-.editor label{
-display:block;
-font-size:12px;
-margin:12px 0}
-.editor input,.editor textarea{
-display:block;
-width:100%;
-margin-top:5px;
-padding:9px;
-border:1px solid #c9b8a4}
-.editor p{
-font-size:11px;
-line-height:1.5;
-color:#6c5548}
-.hidden{
-display:none!important}
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        background: #1d1111f2;
+        color: #e9dcc7;
+        backdrop-filter: blur(12px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 17px clamp(18px, 5vw, 70px);
+        border-bottom: 1px solid #97774b66;
+      }
+      .brand {
+        font: 18px var(--serif);
+        letter-spacing: 0.23em;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .brand span {
+        display: block;
+        font: 8px var(--sans);
+        letter-spacing: 0.24em;
+        color: var(--gold);
+        margin-top: 4px;
+      }
+      .navlinks {
+        display: flex;
+        gap: 22px;
+        align-items: center;
+      }
+      .navlinks a {
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 9px;
+        letter-spacing: 0.14em;
+      }
+      .navlinks a:hover {
+        color: var(--gold);
+      }
+      .navlinks .nav-rsvp {
+        border: 1px solid var(--gold);
+        padding: 10px 14px;
+      }
+      .hero {
+        min-height: min(850px, 95svh);
+        position: relative;
+        display: flex;
+        align-items: center;
+        background: #160b0a url("assets/images/002/embedded-04.webp") center/cover;
+        color: #fff3dc;
+      }
+      .hero:before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(
+            90deg,
+            rgba(14, 7, 7, 0.93),
+            rgba(14, 7, 7, 0.52) 48%,
+            rgba(14, 7, 7, 0.12)
+          ),
+          linear-gradient(0deg, #160d0c9c, transparent 60%);
+      }
+      .hero-content {
+        position: relative;
+        padding: 100px clamp(24px, 8vw, 140px);
+        max-width: 850px;
+      }
+      .hero h1 {
+        font: 400 clamp(70px, 12vw, 145px)/0.8 var(--serif);
+        letter-spacing: -0.035em;
+        margin: 25px 0;
+      }
+      .hero h1 em {
+        font-weight: 400;
+        color: #ddbc81;
+      }
+      .hero .eyebrow {
+        color: #e2c08e;
+      }
+      .hero-date {
+        letter-spacing: 0.25em;
+        font-size: 12px;
+        text-transform: uppercase;
+        margin-top: 32px;
+      }
+      .section {
+        padding: clamp(75px, 10vw, 145px) clamp(20px, 6vw, 95px);
+      }
+      .story {
+        background: #eee3d2;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: clamp(25px, 6vw, 100px);
+      }
+      .story-copy {
+        max-width: 550px;
+        margin: auto;
+      }
+      .story-image {
+        position: relative;
+        min-height: 580px;
+        background: url("assets/images/002/embedded-05.webp") center/cover;
+        border: 12px solid #f6ecdf;
+        box-shadow: 0 22px 50px #37241e26;
+      }
+      .story-image:after {
+        content: "A & M";
+        position: absolute;
+        right: 25px;
+        bottom: 20px;
+        background: #4b1721;
+        color: #ebd0a3;
+        font: 30px var(--serif);
+        padding: 15px 22px;
+        border: 1px solid #d4b57d;
+      }
+      .details {
+        background: #e9d7bc url("assets/images/002/embedded-06.webp") center/cover;
+        text-align: center;
+      }
+      .details-wrap {
+        max-width: 1100px;
+        margin: auto;
+        padding: 45px;
+        background: #f9f0e4e8;
+        border: 1px solid #c8aa79;
+        box-shadow: 0 20px 70px #5a32152a;
+      }
+      .detail-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+        margin: 40px 0;
+      }
+      .detail-card {
+        padding: 42px 18px;
+        border: 1px solid #c0a277;
+        background: #fff9f1d9;
+      }
+      .detail-card h3 {
+        font: 40px var(--serif);
+        margin: 10px 0;
+      }
+      .detail-card .time {
+        font: 600 38px var(--serif);
+        color: var(--wine);
+      }
+      .detail-card p {
+        font: 19px/1.5 var(--serif);
+      }
+      .programme {
+        background: #271719;
+        color: #f8ead6;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6vw;
+        align-items: center;
+      }
+      .programme-art {
+        min-height: 620px;
+        background: url("assets/images/002/embedded-07.webp") center/cover;
+        border: 1px solid #c09b62;
+      }
+      .programme .eyebrow {
+        color: #d2b17b;
+      }
+      .timeline {
+        list-style: none;
+        padding: 0;
+        margin: 35px 0 0;
+      }
+      .timeline li {
+        display: grid;
+        grid-template-columns: 78px 18px 1fr;
+        gap: 15px;
+        align-items: start;
+        min-height: 67px;
+        font: 20px var(--serif);
+      }
+      .timeline time {
+        color: #d8b882;
+      }
+      .dot {
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        background: var(--gold);
+        margin-top: 9px;
+        position: relative;
+      }
+      .timeline li:not(:last-child) .dot:after {
+        content: "";
+        position: absolute;
+        top: 12px;
+        left: 4px;
+        height: 50px;
+        width: 1px;
+        background: #a07d54;
+      }
+      .gallery {
+        background: radial-gradient(ellipse at 50% 0%, #5b2529, #210d13 65%);
+        color: #f7e9d8;
+        text-align: center;
+      }
+      .gallery .eyebrow {
+        color: #d8b882;
+      }
+      .gallery-strip {
+        display: flex;
+        gap: 20px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding: 25px 5px 40px;
+        scrollbar-color: #9e7854 transparent;
+        max-width: 1200px;
+        margin: auto;
+      }
+      .portrait {
+        flex: 0 0 clamp(210px, 27vw, 330px);
+        height: 390px;
+        overflow: hidden;
+        position: relative;
+        scroll-snap-align: center;
+        border: 5px solid #c9a96f;
+        box-shadow: 0 20px 35px #0008;
+        background: #221;
+      }
+      .portrait img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s;
+      }
+      .portrait:hover img {
+        transform: scale(1.05);
+      }
+      .portrait:after {
+        content: attr(data-caption);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 25px 10px 12px;
+        color: white;
+        background: linear-gradient(transparent, #000b);
+        font: 23px var(--serif);
+      }
+      .gallery-actions {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+      }
+      .gallery-actions button {
+        border: 1px solid #bfa06e;
+        background: transparent;
+        color: #fff;
+        padding: 12px 20px;
+      }
+      .rsvp {
+        background: #f3e9db;
+        text-align: center;
+      }
+      .rsvp-form {
+        max-width: 570px;
+        margin: 30px auto 0;
+        padding: clamp(24px, 5vw, 55px);
+        border: 1px solid #c2a77b;
+        background: #fff9f2;
+        box-shadow: 0 15px 45px #40201912;
+        text-align: left;
+      }
+      .field {
+        display: block;
+        margin-bottom: 20px;
+      }
+      .field > span,
+      .form-legend {
+        display: block;
+        text-transform: uppercase;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        margin-bottom: 9px;
+        color: #553a32;
+      }
+      .field input,
+      .field textarea,
+      .field select {
+        width: 100%;
+        padding: 14px;
+        border: 1px solid #c8b8a5;
+        border-radius: 0;
+        background: #fff;
+        color: #261b19;
+      }
+      .choices {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px 25px;
+        margin: 14px 0 24px;
+      }
+      .choices label {
+        font-size: 13px;
+        letter-spacing: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .choices input {
+        accent-color: var(--wine);
+        width: 18px;
+        height: 18px;
+      }
+      .form-message {
+        font-size: 13px;
+        margin-top: 16px;
+        line-height: 1.5;
+      }
+      .closing {
+        padding: 110px 20px;
+        background: #1d1011;
+        color: #e9d5b4;
+        text-align: center;
+      }
+      .closing h2 {
+        font: italic 400 70px var(--serif);
+      }
+      .footer {
+        padding: 25px;
+        text-align: center;
+        background: #130b0c;
+        color: #c6a97b;
+        font-size: 10px;
+        letter-spacing: 0.16em;
+      }
+      .editor-toggle {
+        position: fixed;
+        z-index: 45;
+        bottom: 18px;
+        right: 18px;
+        border: 1px solid #e1bc83;
+        background: #3e1822;
+        color: #fff2d8;
+        padding: 12px 16px;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        box-shadow: 0 6px 22px #0006;
+      }
+      .editor {
+        position: fixed;
+        z-index: 44;
+        right: 16px;
+        bottom: 65px;
+        width: min(360px, calc(100vw - 32px));
+        max-height: 75vh;
+        overflow: auto;
+        background: #fff8ee;
+        padding: 25px;
+        border: 1px solid #c7aa79;
+        box-shadow: 0 20px 65px #0005;
+        display: none;
+      }
+      .editor.active {
+        display: block;
+      }
+      .editor h3 {
+        font: 34px var(--serif);
+      }
+      .editor label {
+        display: block;
+        font-size: 12px;
+        margin: 12px 0;
+      }
+      .editor input,
+      .editor textarea {
+        display: block;
+        width: 100%;
+        margin-top: 5px;
+        padding: 9px;
+        border: 1px solid #c9b8a4;
+      }
+      .editor p {
+        font-size: 11px;
+        line-height: 1.5;
+        color: #6c5548;
+      }
+      .hidden {
+        display: none !important;
+      }
 
-@media(max-width:800px){
-.navlinks{
-gap:12px}
-.navlinks a{
-font-size:9px}
-.navlinks a:nth-child(1),.navlinks a:nth-child(4){
-display:none}
-.story,.programme{
-grid-template-columns:1fr}
-.story-image{
-min-height:410px;
-order:-1}
-.programme-art{
-min-height:400px;
-order:-1}
-.hero{
-min-height:80svh;
-background-position:60% center}
-.hero-content{
-padding:85px 24px}
-.hero h1{
-font-size:clamp(66px,14vw,110px)}
-.detail-grid{
-grid-template-columns:1fr}
-.details-wrap{
-padding:24px 15px}
-.section{
-padding:75px 20px}
-.portrait{
-height:340px}
-.closing h2{
-font-size:55px}
-}
-@media(max-width:420px){
-.brand{
-font-size:14px}
-.navlinks{
-gap:9px}
-.navlinks a:nth-child(3){
-display:none}
-.intro-logo{
-font-size:12px}
-.hero h1{
-font-size:68px}
-.hero-date{
-font-size:10px}
-.detail-card{
-padding:30px 15px}
-.story-image{
-min-height:330px}
-}
-@media(prefers-reduced-motion:reduce){
-*,*:before,*:after{
-animation-duration:.01ms!important;
-transition-duration:.01ms!important;
-scroll-behavior:auto!important}
-}
+      @media (max-width: 800px) {
+        .navlinks {
+          gap: 12px;
+        }
+        .navlinks a {
+          font-size: 9px;
+        }
+        .navlinks a:nth-child(1),
+        .navlinks a:nth-child(4) {
+          display: none;
+        }
+        .story,
+        .programme {
+          grid-template-columns: 1fr;
+        }
+        .story-image {
+          min-height: 410px;
+          order: -1;
+        }
+        .programme-art {
+          min-height: 400px;
+          order: -1;
+        }
+        .hero {
+          min-height: 80svh;
+          background-position: 60% center;
+        }
+        .hero-content {
+          padding: 85px 24px;
+        }
+        .hero h1 {
+          font-size: clamp(66px, 14vw, 110px);
+        }
+        .detail-grid {
+          grid-template-columns: 1fr;
+        }
+        .details-wrap {
+          padding: 24px 15px;
+        }
+        .section {
+          padding: 75px 20px;
+        }
+        .portrait {
+          height: 340px;
+        }
+        .closing h2 {
+          font-size: 55px;
+        }
+      }
+      @media (max-width: 420px) {
+        .brand {
+          font-size: 14px;
+        }
+        .navlinks {
+          gap: 9px;
+        }
+        .navlinks a:nth-child(3) {
+          display: none;
+        }
+        .intro-logo {
+          font-size: 12px;
+        }
+        .hero h1 {
+          font-size: 68px;
+        }
+        .hero-date {
+          font-size: 10px;
+        }
+        .detail-card {
+          padding: 30px 15px;
+        }
+        .story-image {
+          min-height: 330px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *:before,
+        *:after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
 
-/* Prestige chapter rebuild: story odyssey and architectural event reveals */
-html{
-scroll-padding-top:90px}
-body{
-overflow-x:hidden}
-.reveal{
-opacity:0;
-transform:translateY(38px);
-transition:opacity .85s ease,transform .85s cubic-bezier(.2,.7,.2,1)}
-.reveal.is-visible{
-opacity:1;
-transform:none}
+      /* Prestige chapter rebuild: story odyssey and architectural event reveals */
+      html {
+        scroll-padding-top: 90px;
+      }
+      body {
+        overflow-x: hidden;
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(38px);
+        transition:
+          opacity 0.85s ease,
+          transform 0.85s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+      }
 
-.story-odyssey{
-background:#e9dfd0;
-color:#30201d;
-overflow:hidden}
-.story-prologue{
-text-align:center;
-max-width:900px;
-margin:auto;
-padding:clamp(100px,12vw,180px) 22px 80px}
-.story-prologue h2{
-font-size:clamp(54px,9vw,120px);
-line-height:.91;
-margin:30px 0}
-.story-prologue h2 em,.story-words h3 em,.details-heading h2 em,.event-panel h3 em{
-font-weight:400;
-color:#854d49}
-.story-prologue>p{
-font:clamp(21px,3vw,30px)/1.4 var(--serif);
-max-width:560px;
-margin:20px auto 0}
-.story-scroll-hint{
-font-size:10px;
-letter-spacing:.18em;
-text-transform:uppercase;
-margin-top:60px;
-color:#8e6a4a}
-.story-scroll-hint span{
-display:block;
-font-size:28px;
-margin-top:10px;
-animation:floatArrow 2s infinite alternate}
-.story-chapters{
-display:grid;
-gap:clamp(70px,9vw,145px);
-padding:0 clamp(18px,6vw,90px) 110px;
-max-width:1550px;
-margin:auto}
-.story-chapter{
-display:grid;
-grid-template-columns:1.05fr .95fr;
-gap:clamp(28px,7vw,115px);
-align-items:center}
-.story-chapter.reverse .story-frame{
-order:2}
-.story-frame{
-position:relative;
-min-height:clamp(350px,48vw,700px);
-padding:14px;
-background:#f8f0e3;
-box-shadow:0 24px 60px #291c1b30;
-transform:rotate(-1deg)}
-.story-chapter.reverse .story-frame{
-transform:rotate(1.2deg)}
-.story-frame img{
-width:100%;
-height:100%;
-position:absolute;
-inset:14px;
-width:calc(100% - 28px);
-height:calc(100% - 28px);
-object-fit:cover;
-filter:saturate(.82)}
-.frame-index{
-position:absolute;
-bottom:28px;
-left:29px;
-color:white;
-font-size:10px;
-letter-spacing:.2em;
-text-shadow:0 2px 8px #000;
-z-index:1}
-.story-words{
-max-width:530px}
-.story-words h3{
-font:400 clamp(52px,6vw,92px)/.93 var(--serif);
-margin:25px 0 30px}
-.story-words p{
-font:clamp(21px,2.2vw,28px)/1.45 var(--serif)}
-.story-ornament{
-font-size:28px;
-color:#b38a58;
-display:block;
-margin-top:32px}
-.chapter-link{
-display:inline-flex;
-align-items:center;
-gap:25px;
-text-decoration:none;
-border-bottom:1px solid #b18a64;
-padding-bottom:12px;
-margin-top:18px;
-font-size:12px;
-letter-spacing:.1em;
-text-transform:uppercase}
-.story-epilogue{
-text-align:center;
-padding:80px 20px 125px;
-background:radial-gradient(ellipse,#513034,#211416);
-color:#f7e8d6}
-.story-epilogue .eyebrow{
-color:#d9b987}
-.story-epilogue p{
-font:italic clamp(29px,5vw,57px)/1.2 var(--serif);
-max-width:800px;
-margin:26px auto}
-.story-epilogue .story-ornament{
-color:#d9b987}
+      .story-odyssey {
+        background: #e9dfd0;
+        color: #30201d;
+        overflow: hidden;
+      }
+      .story-prologue {
+        text-align: center;
+        max-width: 900px;
+        margin: auto;
+        padding: clamp(100px, 12vw, 180px) 22px 80px;
+      }
+      .story-prologue h2 {
+        font-size: clamp(54px, 9vw, 120px);
+        line-height: 0.91;
+        margin: 30px 0;
+      }
+      .story-prologue h2 em,
+      .story-words h3 em,
+      .details-heading h2 em,
+      .event-panel h3 em {
+        font-weight: 400;
+        color: #854d49;
+      }
+      .story-prologue > p {
+        font: clamp(21px, 3vw, 30px)/1.4 var(--serif);
+        max-width: 560px;
+        margin: 20px auto 0;
+      }
+      .story-scroll-hint {
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        margin-top: 60px;
+        color: #8e6a4a;
+      }
+      .story-scroll-hint span {
+        display: block;
+        font-size: 28px;
+        margin-top: 10px;
+        animation: floatArrow 2s infinite alternate;
+      }
+      .story-chapters {
+        display: grid;
+        gap: clamp(70px, 9vw, 145px);
+        padding: 0 clamp(18px, 6vw, 90px) 110px;
+        max-width: 1550px;
+        margin: auto;
+      }
+      .story-chapter {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: clamp(28px, 7vw, 115px);
+        align-items: center;
+      }
+      .story-chapter.reverse .story-frame {
+        order: 2;
+      }
+      .story-frame {
+        position: relative;
+        min-height: clamp(350px, 48vw, 700px);
+        padding: 14px;
+        background: #f8f0e3;
+        box-shadow: 0 24px 60px #291c1b30;
+        transform: rotate(-1deg);
+      }
+      .story-chapter.reverse .story-frame {
+        transform: rotate(1.2deg);
+      }
+      .story-frame img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        inset: 14px;
+        width: calc(100% - 28px);
+        height: calc(100% - 28px);
+        object-fit: cover;
+        filter: saturate(0.82);
+      }
+      .frame-index {
+        position: absolute;
+        bottom: 28px;
+        left: 29px;
+        color: white;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-shadow: 0 2px 8px #000;
+        z-index: 1;
+      }
+      .story-words {
+        max-width: 530px;
+      }
+      .story-words h3 {
+        font: 400 clamp(52px, 6vw, 92px)/0.93 var(--serif);
+        margin: 25px 0 30px;
+      }
+      .story-words p {
+        font: clamp(21px, 2.2vw, 28px)/1.45 var(--serif);
+      }
+      .story-ornament {
+        font-size: 28px;
+        color: #b38a58;
+        display: block;
+        margin-top: 32px;
+      }
+      .chapter-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 25px;
+        text-decoration: none;
+        border-bottom: 1px solid #b18a64;
+        padding-bottom: 12px;
+        margin-top: 18px;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .story-epilogue {
+        text-align: center;
+        padding: 80px 20px 125px;
+        background: radial-gradient(ellipse, #513034, #211416);
+        color: #f7e8d6;
+      }
+      .story-epilogue .eyebrow {
+        color: #d9b987;
+      }
+      .story-epilogue p {
+        font: italic clamp(29px, 5vw, 57px)/1.2 var(--serif);
+        max-width: 800px;
+        margin: 26px auto;
+      }
+      .story-epilogue .story-ornament {
+        color: #d9b987;
+      }
 
-.grand-details{
-background:#eadcc6;
-color:#2c1d1a;
-overflow:hidden}
-.details-heading{
-text-align:center;
-padding:clamp(90px,11vw,155px) 20px 85px}
-.details-heading h2{
-font-size:clamp(58px,9vw,118px);
-margin:25px 0}
-.details-heading>p{
-font:clamp(21px,2.8vw,30px)/1.35 var(--serif)}
-.event-scenes{
-max-width:1500px;
-margin:auto}
-.event-scene{
-min-height:650px;
-display:grid;
-grid-template-columns:1fr 1fr;
-position:relative}
-.event-art{
-position:relative;
-overflow:hidden;
-min-height:650px;
-background:#291716}
-.event-art img{
-width:100%;
-height:100%;
-position:absolute;
-inset:0;
-object-fit:cover;
-transition:transform 1.8s cubic-bezier(.2,.7,.2,1);
-transform:scale(1.11)}
-.event-scene.is-visible .event-art img{
-transform:scale(1)}
-.event-art-shade{
-position:absolute;
-inset:0;
-background:linear-gradient(90deg,#100a0a40,#100a0a0a),linear-gradient(0deg,#100a0a8a,transparent 60%)}
-.event-art-word{
-position:absolute;
-bottom:24px;
-left:40px;
-font:clamp(130px,17vw,260px)/1 var(--serif);
-color:#fff5e433;
-text-shadow:0 2px 20px #0004}
-.event-panel{
-background:#f6ecdd;
-padding:clamp(18px,4vw,60px);
-display:grid;
-place-items:center;
-position:relative}
-.event-panel:before{
-content:'';
-position:absolute;
-inset:18px;
-border:1px solid #b9996b;
-pointer-events:none}
-.event-panel:after{
-content:'✦';
-position:absolute;
-top:5px;
-left:50%;
-transform:translateX(-50%);
-color:#b9996b;
-background:#f6ecdd;
-padding:0 12px}
-.event-panel-inner{
-position:relative;
-text-align:center;
-max-width:460px;
-width:100%;
-padding:30px 0}
-.event-kicker{
-display:flex;
-align-items:center;
-justify-content:center;
-gap:16px}
-.event-number{
-font:italic 32px var(--serif);
-color:#aa8053}
-.event-rule{
-width:90px;
-height:1px;
-background:#b9996b;
-margin:25px auto}
-.event-panel h3{
-font:400 clamp(50px,5.5vw,88px)/.91 var(--serif);
-margin:20px 0 25px}
-.event-description{
-font:clamp(19px,2vw,25px)/1.35 var(--serif);
-max-width:390px;
-margin:0 auto 25px}
-.event-time{
-font:500 clamp(47px,5vw,72px)/1 var(--serif);
-color:#5b1824;
-margin:20px 0 15px}
-.event-meta strong{
-font:500 clamp(27px,3vw,43px)/1.05 var(--serif);
-display:block;
-overflow-wrap:anywhere}
-.event-meta span{
-font:20px/1.3 var(--serif);
-display:block;
-margin-top:9px}
-.event-direction{
-display:inline-flex;
-align-items:center;
-gap:22px;
-text-transform:uppercase;
-font-size:10px;
-letter-spacing:.13em;
-text-decoration:none;
-border-bottom:1px solid #a98658;
-padding:13px 0;
-margin-top:27px}
-.event-direction span{
-font-size:18px}
-.reception-scene .event-art{
-order:2}
-.reception-scene .event-panel{
-order:1}
-.interlude{
-display:flex;
-align-items:center;
-justify-content:center;
-gap:25px;
-background:#2b181c;
-color:#f2e1ca;
-padding:40px 15px;
-text-align:center;
-font:italic clamp(20px,3vw,32px) var(--serif)}
-.interlude-star{
-color:#c9a36c}
-.details-outro{
-text-align:center;
-padding:85px 20px 110px}
-.details-outro p{
-font:italic 32px var(--serif);
-margin:22px 0 30px}
-.details-outro .btn{
-display:inline-block;
-text-decoration:none}
+      .grand-details {
+        background: #eadcc6;
+        color: #2c1d1a;
+        overflow: hidden;
+      }
+      .details-heading {
+        text-align: center;
+        padding: clamp(90px, 11vw, 155px) 20px 85px;
+      }
+      .details-heading h2 {
+        font-size: clamp(58px, 9vw, 118px);
+        margin: 25px 0;
+      }
+      .details-heading > p {
+        font: clamp(21px, 2.8vw, 30px)/1.35 var(--serif);
+      }
+      .event-scenes {
+        max-width: 1500px;
+        margin: auto;
+      }
+      .event-scene {
+        min-height: 650px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        position: relative;
+      }
+      .event-art {
+        position: relative;
+        overflow: hidden;
+        min-height: 650px;
+        background: #291716;
+      }
+      .event-art img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        inset: 0;
+        object-fit: cover;
+        transition: transform 1.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+        transform: scale(1.11);
+      }
+      .event-scene.is-visible .event-art img {
+        transform: scale(1);
+      }
+      .event-art-shade {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, #100a0a40, #100a0a0a),
+          linear-gradient(0deg, #100a0a8a, transparent 60%);
+      }
+      .event-art-word {
+        position: absolute;
+        bottom: 24px;
+        left: 40px;
+        font: clamp(130px, 17vw, 260px)/1 var(--serif);
+        color: #fff5e433;
+        text-shadow: 0 2px 20px #0004;
+      }
+      .event-panel {
+        background: #f6ecdd;
+        padding: clamp(18px, 4vw, 60px);
+        display: grid;
+        place-items: center;
+        position: relative;
+      }
+      .event-panel:before {
+        content: "";
+        position: absolute;
+        inset: 18px;
+        border: 1px solid #b9996b;
+        pointer-events: none;
+      }
+      .event-panel:after {
+        content: "✦";
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #b9996b;
+        background: #f6ecdd;
+        padding: 0 12px;
+      }
+      .event-panel-inner {
+        position: relative;
+        text-align: center;
+        max-width: 460px;
+        width: 100%;
+        padding: 30px 0;
+      }
+      .event-kicker {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+      }
+      .event-number {
+        font: italic 32px var(--serif);
+        color: #aa8053;
+      }
+      .event-rule {
+        width: 90px;
+        height: 1px;
+        background: #b9996b;
+        margin: 25px auto;
+      }
+      .event-panel h3 {
+        font: 400 clamp(50px, 5.5vw, 88px)/0.91 var(--serif);
+        margin: 20px 0 25px;
+      }
+      .event-description {
+        font: clamp(19px, 2vw, 25px)/1.35 var(--serif);
+        max-width: 390px;
+        margin: 0 auto 25px;
+      }
+      .event-time {
+        font: 500 clamp(47px, 5vw, 72px)/1 var(--serif);
+        color: #5b1824;
+        margin: 20px 0 15px;
+      }
+      .event-meta strong {
+        font: 500 clamp(27px, 3vw, 43px)/1.05 var(--serif);
+        display: block;
+        overflow-wrap: anywhere;
+      }
+      .event-meta span {
+        font: 20px/1.3 var(--serif);
+        display: block;
+        margin-top: 9px;
+      }
+      .event-direction {
+        display: inline-flex;
+        align-items: center;
+        gap: 22px;
+        text-transform: uppercase;
+        font-size: 10px;
+        letter-spacing: 0.13em;
+        text-decoration: none;
+        border-bottom: 1px solid #a98658;
+        padding: 13px 0;
+        margin-top: 27px;
+      }
+      .event-direction span {
+        font-size: 18px;
+      }
+      .reception-scene .event-art {
+        order: 2;
+      }
+      .reception-scene .event-panel {
+        order: 1;
+      }
+      .interlude {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 25px;
+        background: #2b181c;
+        color: #f2e1ca;
+        padding: 40px 15px;
+        text-align: center;
+        font: italic clamp(20px, 3vw, 32px) var(--serif);
+      }
+      .interlude-star {
+        color: #c9a36c;
+      }
+      .details-outro {
+        text-align: center;
+        padding: 85px 20px 110px;
+      }
+      .details-outro p {
+        font: italic 32px var(--serif);
+        margin: 22px 0 30px;
+      }
+      .details-outro .btn {
+        display: inline-block;
+        text-decoration: none;
+      }
 
-@keyframes floatArrow{
-to{
-transform:translateY(9px)}
-}
+      @keyframes floatArrow {
+        to {
+          transform: translateY(9px);
+        }
+      }
 
-@media(max-width:800px){
-.story-prologue{
-padding-top:95px;
-padding-bottom:75px}
-.story-chapter{
-grid-template-columns:1fr;
-gap:28px}
-.story-chapter.reverse .story-frame{
-order:0}
-.story-frame{
-min-height:clamp(340px,110vw,560px)}
-.story-words{
-padding:12px 7px 0}
-.story-words h3{
-font-size:clamp(55px,12vw,80px)}
-.story-chapters{
-gap:100px;
-padding-bottom:90px}
-.event-scene{
-grid-template-columns:1fr;
-min-height:0}
-.event-art{
-min-height:clamp(310px,78vw,500px)}
-.event-panel{
-min-height:520px;
-padding:42px 32px}
-.event-panel:before{
-inset:13px}
-.event-panel-inner{
-padding:30px 0}
-.reception-scene .event-art{
-order:0}
-.reception-scene .event-panel{
-order:1}
-.event-panel h3{
-font-size:clamp(54px,12vw,76px)}
-.interlude{
-padding:35px 20px;
-gap:12px}
-.interlude-star{
-font-size:15px}
-.details-heading{
-padding:95px 20px 65px}
-.event-art-word{
-font-size:160px}
-}
+      @media (max-width: 800px) {
+        .story-prologue {
+          padding-top: 95px;
+          padding-bottom: 75px;
+        }
+        .story-chapter {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+        .story-chapter.reverse .story-frame {
+          order: 0;
+        }
+        .story-frame {
+          min-height: clamp(340px, 110vw, 560px);
+        }
+        .story-words {
+          padding: 12px 7px 0;
+        }
+        .story-words h3 {
+          font-size: clamp(55px, 12vw, 80px);
+        }
+        .story-chapters {
+          gap: 100px;
+          padding-bottom: 90px;
+        }
+        .event-scene {
+          grid-template-columns: 1fr;
+          min-height: 0;
+        }
+        .event-art {
+          min-height: clamp(310px, 78vw, 500px);
+        }
+        .event-panel {
+          min-height: 520px;
+          padding: 42px 32px;
+        }
+        .event-panel:before {
+          inset: 13px;
+        }
+        .event-panel-inner {
+          padding: 30px 0;
+        }
+        .reception-scene .event-art {
+          order: 0;
+        }
+        .reception-scene .event-panel {
+          order: 1;
+        }
+        .event-panel h3 {
+          font-size: clamp(54px, 12vw, 76px);
+        }
+        .interlude {
+          padding: 35px 20px;
+          gap: 12px;
+        }
+        .interlude-star {
+          font-size: 15px;
+        }
+        .details-heading {
+          padding: 95px 20px 65px;
+        }
+        .event-art-word {
+          font-size: 160px;
+        }
+      }
 
-@media(max-width:430px){
-.event-panel{
-padding:40px 26px;
-min-height:550px}
-.event-panel-inner{
-padding:25px 2px}
-.event-kicker{
-gap:8px}
-.event-kicker .eyebrow{
-font-size:10px;
-letter-spacing:.16em}
-.story-words p{
-font-size:23px}
-.story-prologue h2{
-font-size:56px}
-}
+      @media (max-width: 430px) {
+        .event-panel {
+          padding: 40px 26px;
+          min-height: 550px;
+        }
+        .event-panel-inner {
+          padding: 25px 2px;
+        }
+        .event-kicker {
+          gap: 8px;
+        }
+        .event-kicker .eyebrow {
+          font-size: 10px;
+          letter-spacing: 0.16em;
+        }
+        .story-words p {
+          font-size: 23px;
+        }
+        .story-prologue h2 {
+          font-size: 56px;
+        }
+      }
 
-@media(prefers-reduced-motion:reduce){
-.reveal{
-opacity:1;
-transform:none;
-transition:none}
-.event-art img{
-transform:none!important;
-transition:none}
-.story-scroll-hint span{
-animation:none}
-}
+      @media (prefers-reduced-motion: reduce) {
+        .reveal {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+        .event-art img {
+          transform: none !important;
+          transition: none;
+        }
+        .story-scroll-hint span {
+          animation: none;
+        }
+      }
 
-/* V1.2 — cinematic polish */
-:root{
---gold:#d3b078}
-html{
-scroll-padding-top:84px}
-button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,.portrait:focus-visible{
-outline:3px solid #d4aa63;
-outline-offset:4px}
+      /* V1.2 — cinematic polish */
+      :root {
+        --gold: #d3b078;
+      }
+      html {
+        scroll-padding-top: 84px;
+      }
+      button:focus-visible,
+      a:focus-visible,
+      input:focus-visible,
+      textarea:focus-visible,
+      select:focus-visible,
+      .portrait:focus-visible {
+        outline: 3px solid #d4aa63;
+        outline-offset: 4px;
+      }
 
-nav{
-box-shadow:0 12px 38px #130a0826}
- .brand{
-letter-spacing:.18em}
- .hero:before{
-background:linear-gradient(90deg,#110807e8,#130b0a75 55%,#130b0a30),linear-gradient(0deg,#110807c9,transparent 50%)}
-.hero-content{
-position:relative;
-z-index:1}
-.hero h1{
-text-shadow:0 6px 30px #0009}
+      nav {
+        box-shadow: 0 12px 38px #130a0826;
+      }
+      .brand {
+        letter-spacing: 0.18em;
+      }
+      .hero:before {
+        background:
+          linear-gradient(90deg, #110807e8, #130b0a75 55%, #130b0a30),
+          linear-gradient(0deg, #110807c9, transparent 50%);
+      }
+      .hero-content {
+        position: relative;
+        z-index: 1;
+      }
+      .hero h1 {
+        text-shadow: 0 6px 30px #0009;
+      }
 
-.intro-scene{
-isolation:isolate}
-.entrance-sparkles{
-pointer-events:none;
-position:absolute;
-inset:0;
-z-index:3;
-opacity:.45;
-background:radial-gradient(circle at 26% 40%,#f6d58d 0 1px,transparent 2px),radial-gradient(circle at 70% 28%,#fff0c4 0 1px,transparent 2px),radial-gradient(circle at 53% 69%,#fff0c4 0 1px,transparent 2px);
-background-size:230px 260px,330px 280px,260px 320px;
-animation:sparkleDrift 14s linear infinite}
-.intro.opening .entrance-sparkles{
-opacity:0;
-transition:opacity 2s}
-@keyframes sparkleDrift{
-to{
-background-position:60px -80px,-50px 100px,40px -60px}
-}
+      .intro-scene {
+        isolation: isolate;
+      }
+      .entrance-sparkles {
+        pointer-events: none;
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        opacity: 0.45;
+        background:
+          radial-gradient(circle at 26% 40%, #f6d58d 0 1px, transparent 2px),
+          radial-gradient(circle at 70% 28%, #fff0c4 0 1px, transparent 2px),
+          radial-gradient(circle at 53% 69%, #fff0c4 0 1px, transparent 2px);
+        background-size:
+          230px 260px,
+          330px 280px,
+          260px 320px;
+        animation: sparkleDrift 14s linear infinite;
+      }
+      .intro.opening .entrance-sparkles {
+        opacity: 0;
+        transition: opacity 2s;
+      }
+      @keyframes sparkleDrift {
+        to {
+          background-position:
+            60px -80px,
+            -50px 100px,
+            40px -60px;
+        }
+      }
 
-.story-progress{
-display:flex;
-justify-content:center;
-gap:12px;
-margin-top:25px}
-.story-progress span{
-width:36px;
-height:1px;
-background:#a78157;
-opacity:.55}
-.story-progress span:first-child{
-height:2px;
-opacity:1}
-.story-frame{
-box-shadow:0 30px 70px #27110e22}
-.story-frame img{
-transition:transform 1.6s cubic-bezier(.2,.7,.2,1),filter 1.2s;
-filter:saturate(.87)}
-.story-chapter.is-visible .story-frame img{
-transform:scale(1);
-filter:saturate(1)}
-.story-chapter .story-frame img{
-transform:scale(1.07)}
-.story-words p{
-max-width:560px}
-.story-words h3{
-letter-spacing:-.025em}
-.story-chapter:not(.is-visible) .story-words{
-opacity:.25;
-transform:translateY(22px)}
-.story-words{
-transition:opacity 1.1s,transform 1.1s}
-.story-chapter.is-visible .story-words{
-opacity:1;
-transform:none}
+      .story-progress {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 25px;
+      }
+      .story-progress span {
+        width: 36px;
+        height: 1px;
+        background: #a78157;
+        opacity: 0.55;
+      }
+      .story-progress span:first-child {
+        height: 2px;
+        opacity: 1;
+      }
+      .story-frame {
+        box-shadow: 0 30px 70px #27110e22;
+      }
+      .story-frame img {
+        transition:
+          transform 1.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+          filter 1.2s;
+        filter: saturate(0.87);
+      }
+      .story-chapter.is-visible .story-frame img {
+        transform: scale(1);
+        filter: saturate(1);
+      }
+      .story-chapter .story-frame img {
+        transform: scale(1.07);
+      }
+      .story-words p {
+        max-width: 560px;
+      }
+      .story-words h3 {
+        letter-spacing: -0.025em;
+      }
+      .story-chapter:not(.is-visible) .story-words {
+        opacity: 0.25;
+        transform: translateY(22px);
+      }
+      .story-words {
+        transition:
+          opacity 1.1s,
+          transform 1.1s;
+      }
+      .story-chapter.is-visible .story-words {
+        opacity: 1;
+        transform: none;
+      }
 
-.event-scene{
-overflow:hidden}
-.event-art:after{
-content:"";
-position:absolute;
-inset:0;
-border:1px solid #d9b67755;
-pointer-events:none}
-.event-panel{
-isolation:isolate}
-.event-panel-inner{
-transition:transform 1s ease,opacity 1s ease}
-.event-scene:not(.is-visible) .event-panel-inner{
-transform:translateY(24px);
-opacity:.4}
-.event-scene.is-visible .event-panel-inner{
-transform:none;
-opacity:1}
-.event-time{
-font-variant-numeric:lining-nums;
-letter-spacing:-.04em}
-.event-direction{
-transition:color .25s,letter-spacing .25s}
-.event-direction:hover{
-color:#9a6645;
-letter-spacing:.07em}
+      .event-scene {
+        overflow: hidden;
+      }
+      .event-art:after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 1px solid #d9b67755;
+        pointer-events: none;
+      }
+      .event-panel {
+        isolation: isolate;
+      }
+      .event-panel-inner {
+        transition:
+          transform 1s ease,
+          opacity 1s ease;
+      }
+      .event-scene:not(.is-visible) .event-panel-inner {
+        transform: translateY(24px);
+        opacity: 0.4;
+      }
+      .event-scene.is-visible .event-panel-inner {
+        transform: none;
+        opacity: 1;
+      }
+      .event-time {
+        font-variant-numeric: lining-nums;
+        letter-spacing: -0.04em;
+      }
+      .event-direction {
+        transition:
+          color 0.25s,
+          letter-spacing 0.25s;
+      }
+      .event-direction:hover {
+        color: #9a6645;
+        letter-spacing: 0.07em;
+      }
 
-.programme{
-position:relative}
-.programme:before{
-content:"IV";
-position:absolute;
-left:3%;
-bottom:0;
-font:220px/1 var(--serif);
-color:#b49a7822;
-pointer-events:none}
-.timeline li{
-transition-delay:.08s}
-.timeline li:nth-child(2){
-transition-delay:.15s}
-.timeline li:nth-child(3){
-transition-delay:.22s}
-.timeline li:nth-child(4){
-transition-delay:.29s}
-.timeline li:nth-child(5){
-transition-delay:.36s}
-.timeline li:nth-child(6){
-transition-delay:.43s}
+      .programme {
+        position: relative;
+      }
+      .programme:before {
+        content: "IV";
+        position: absolute;
+        left: 3%;
+        bottom: 0;
+        font: 220px/1 var(--serif);
+        color: #b49a7822;
+        pointer-events: none;
+      }
+      .timeline li {
+        transition-delay: 0.08s;
+      }
+      .timeline li:nth-child(2) {
+        transition-delay: 0.15s;
+      }
+      .timeline li:nth-child(3) {
+        transition-delay: 0.22s;
+      }
+      .timeline li:nth-child(4) {
+        transition-delay: 0.29s;
+      }
+      .timeline li:nth-child(5) {
+        transition-delay: 0.36s;
+      }
+      .timeline li:nth-child(6) {
+        transition-delay: 0.43s;
+      }
 
-.gallery{
-position:relative;
-overflow:hidden}
-.gallery:before{
-content:"";
-position:absolute;
-inset:0;
-pointer-events:none;
-background:radial-gradient(ellipse at 10% 20%,#8b3e3c38,transparent 45%)}
-.gallery-strip{
-padding-bottom:34px;
-scroll-padding-inline:25px}
-.portrait{
-position:relative;
-cursor:zoom-in;
-transition:transform .35s,box-shadow .35s;
-box-shadow:0 20px 34px #0005}
-.portrait:hover{
-transform:translateY(-8px);
-box-shadow:0 30px 45px #0007}
-.portrait:after{
-content:attr(data-caption);
-position:absolute;
-bottom:0;
-left:0;
-right:0;
-color:#fff4dc;
-background:linear-gradient(transparent,#110807c9);
-padding:55px 14px 18px;
-font:24px/1.1 var(--serif);
-text-align:left;
-opacity:0;
-transition:opacity .3s}
-.portrait:hover:after,.portrait:focus:after{
-opacity:1}
-.gallery-actions button{
-transition:background .2s,transform .2s}
-.gallery-actions button:hover{
-transform:scale(1.08)}
+      .gallery {
+        position: relative;
+        overflow: hidden;
+      }
+      .gallery:before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(ellipse at 10% 20%, #8b3e3c38, transparent 45%);
+      }
+      .gallery-strip {
+        padding-bottom: 34px;
+        scroll-padding-inline: 25px;
+      }
+      .portrait {
+        position: relative;
+        cursor: zoom-in;
+        transition:
+          transform 0.35s,
+          box-shadow 0.35s;
+        box-shadow: 0 20px 34px #0005;
+      }
+      .portrait:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 30px 45px #0007;
+      }
+      .portrait:after {
+        content: attr(data-caption);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        color: #fff4dc;
+        background: linear-gradient(transparent, #110807c9);
+        padding: 55px 14px 18px;
+        font: 24px/1.1 var(--serif);
+        text-align: left;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .portrait:hover:after,
+      .portrait:focus:after {
+        opacity: 1;
+      }
+      .gallery-actions button {
+        transition:
+          background 0.2s,
+          transform 0.2s;
+      }
+      .gallery-actions button:hover {
+        transform: scale(1.08);
+      }
 
-.portrait-lightbox[hidden]{
-display:none}
-.portrait-lightbox{
-position:fixed;
-inset:0;
-z-index:1000;
-background:#100909f5;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:55px 52px;
-backdrop-filter:blur(14px)}
-.portrait-lightbox figure{
-margin:0;
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:14px;
-max-width:100%;
-max-height:100%}
-.portrait-lightbox img{
-max-height:calc(100dvh - 140px);
-max-width:min(85vw,900px);
-object-fit:contain;
-border:1px solid #cba76b77;
-box-shadow:0 20px 60px #0008}
-.portrait-lightbox figcaption{
-color:#e9d8b7;
-font:italic 25px var(--serif)}
-.lightbox-close,.lightbox-arrow{
-position:absolute;
-background:#2d1716cc;
-border:1px solid #cba76b;
-color:#f7e7c9;
-border-radius:50%;
-width:46px;
-height:46px;
-font-size:28px;
-display:grid;
-place-items:center}
-.lightbox-close{
-right:20px;
-top:20px}
-.lightbox-arrow.left{
-left:15px}
-.lightbox-arrow.right{
-right:15px}
+      .portrait-lightbox[hidden] {
+        display: none;
+      }
+      .portrait-lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        background: #100909f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 55px 52px;
+        backdrop-filter: blur(14px);
+      }
+      .portrait-lightbox figure {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        max-width: 100%;
+        max-height: 100%;
+      }
+      .portrait-lightbox img {
+        max-height: calc(100dvh - 140px);
+        max-width: min(85vw, 900px);
+        object-fit: contain;
+        border: 1px solid #cba76b77;
+        box-shadow: 0 20px 60px #0008;
+      }
+      .portrait-lightbox figcaption {
+        color: #e9d8b7;
+        font: italic 25px var(--serif);
+      }
+      .lightbox-close,
+      .lightbox-arrow {
+        position: absolute;
+        background: #2d1716cc;
+        border: 1px solid #cba76b;
+        color: #f7e7c9;
+        border-radius: 50%;
+        width: 46px;
+        height: 46px;
+        font-size: 28px;
+        display: grid;
+        place-items: center;
+      }
+      .lightbox-close {
+        right: 20px;
+        top: 20px;
+      }
+      .lightbox-arrow.left {
+        left: 15px;
+      }
+      .lightbox-arrow.right {
+        right: 15px;
+      }
 
-.rsvp{
-position:relative;
-isolation:isolate}
-.rsvp:before,.rsvp:after{
-content:"";
-position:absolute;
-pointer-events:none;
-border:1px solid #b99b6b65;
-inset:18px;
-z-index:-1}
-.rsvp:after{
-inset:26px;
-border-color:#b99b6b36}
-.rsvp-crest{
-margin:0 auto 16px;
-width:76px;
-height:76px;
-display:grid;
-place-items:center;
-border:1px solid #b99b6b;
-border-radius:50%;
-font:27px var(--serif);
-color:#754337;
-letter-spacing:.08em}
-.rsvp-crest span{
-font-style:italic;
-font-size:20px}
-.rsvp h2{
-font-size:clamp(54px,7vw,86px)}
-.rsvp-form{
-position:relative}
-.rsvp-form input:not([type=radio]),.rsvp-form textarea,.rsvp-form select{
-transition:border-color .25s,box-shadow .25s}
-.rsvp-form input:focus,.rsvp-form textarea:focus,.rsvp-form select:focus{
-border-color:#b38b56;
-box-shadow:0 0 0 3px #d1b27c25}
+      .rsvp {
+        position: relative;
+        isolation: isolate;
+      }
+      .rsvp:before,
+      .rsvp:after {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+        border: 1px solid #b99b6b65;
+        inset: 18px;
+        z-index: -1;
+      }
+      .rsvp:after {
+        inset: 26px;
+        border-color: #b99b6b36;
+      }
+      .rsvp-crest {
+        margin: 0 auto 16px;
+        width: 76px;
+        height: 76px;
+        display: grid;
+        place-items: center;
+        border: 1px solid #b99b6b;
+        border-radius: 50%;
+        font: 27px var(--serif);
+        color: #754337;
+        letter-spacing: 0.08em;
+      }
+      .rsvp-crest span {
+        font-style: italic;
+        font-size: 20px;
+      }
+      .rsvp h2 {
+        font-size: clamp(54px, 7vw, 86px);
+      }
+      .rsvp-form {
+        position: relative;
+      }
+      .rsvp-form input:not([type="radio"]),
+      .rsvp-form textarea,
+      .rsvp-form select {
+        transition:
+          border-color 0.25s,
+          box-shadow 0.25s;
+      }
+      .rsvp-form input:focus,
+      .rsvp-form textarea:focus,
+      .rsvp-form select:focus {
+        border-color: #b38b56;
+        box-shadow: 0 0 0 3px #d1b27c25;
+      }
 
-@media(max-width:800px){
-.intro-bottom h1{
-max-width:320px;
-margin-left:auto;
-margin-right:auto}
-.event-art img{
-object-position:center}
-.story-chapters{
-gap:80px}
-.story-frame{
-box-shadow:0 18px 35px #27110e24}
-.story-prologue{
-padding-top:80px}
-.gallery-strip{
-padding-bottom:40px}
-.portrait:after{
-opacity:1}
-.rsvp:before{
-inset:9px}
-.rsvp:after{
-inset:15px}
-.rsvp{
-padding-left:28px;
-padding-right:28px}
-.portrait-lightbox{
-padding:60px 18px}
-.portrait-lightbox img{
-max-width:calc(100vw - 70px)}
-.lightbox-arrow{
-width:38px;
-height:38px;
-font-size:24px}
-.lightbox-arrow.left{
-left:5px}
-.lightbox-arrow.right{
-right:5px}
-.lightbox-close{
-right:12px;
-top:12px}
-}
+      @media (max-width: 800px) {
+        .intro-bottom h1 {
+          max-width: 320px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .event-art img {
+          object-position: center;
+        }
+        .story-chapters {
+          gap: 80px;
+        }
+        .story-frame {
+          box-shadow: 0 18px 35px #27110e24;
+        }
+        .story-prologue {
+          padding-top: 80px;
+        }
+        .gallery-strip {
+          padding-bottom: 40px;
+        }
+        .portrait:after {
+          opacity: 1;
+        }
+        .rsvp:before {
+          inset: 9px;
+        }
+        .rsvp:after {
+          inset: 15px;
+        }
+        .rsvp {
+          padding-left: 28px;
+          padding-right: 28px;
+        }
+        .portrait-lightbox {
+          padding: 60px 18px;
+        }
+        .portrait-lightbox img {
+          max-width: calc(100vw - 70px);
+        }
+        .lightbox-arrow {
+          width: 38px;
+          height: 38px;
+          font-size: 24px;
+        }
+        .lightbox-arrow.left {
+          left: 5px;
+        }
+        .lightbox-arrow.right {
+          right: 5px;
+        }
+        .lightbox-close {
+          right: 12px;
+          top: 12px;
+        }
+      }
 
-@media(max-width:430px){
-.navlinks a:nth-child(2){
-display:none}
-.navlinks a:nth-child(5){
-display:block}
-.event-panel{
-min-height:500px}
-.story-prologue h2{
-font-size:clamp(47px,13vw,62px)}
-.rsvp{
-padding-left:24px;
-padding-right:24px}
-.rsvp-form{
-max-width:100%}
-.story-words h3{
-overflow-wrap:anywhere}
-}
+      @media (max-width: 430px) {
+        .navlinks a:nth-child(2) {
+          display: none;
+        }
+        .navlinks a:nth-child(5) {
+          display: block;
+        }
+        .event-panel {
+          min-height: 500px;
+        }
+        .story-prologue h2 {
+          font-size: clamp(47px, 13vw, 62px);
+        }
+        .rsvp {
+          padding-left: 24px;
+          padding-right: 24px;
+        }
+        .rsvp-form {
+          max-width: 100%;
+        }
+        .story-words h3 {
+          overflow-wrap: anywhere;
+        }
+      }
 
-@media(prefers-reduced-motion:reduce){
-.entrance-sparkles{
-animation:none}
-.story-frame img,.story-words,.event-panel-inner,.portrait{
-transition:none!important;
-transform:none!important}
-.timeline li{
-transition-delay:0s!important}
-}
+      @media (prefers-reduced-motion: reduce) {
+        .entrance-sparkles {
+          animation: none;
+        }
+        .story-frame img,
+        .story-words,
+        .event-panel-inner,
+        .portrait {
+          transition: none !important;
+          transform: none !important;
+        }
+        .timeline li {
+          transition-delay: 0s !important;
+        }
+      }
 
-/* Grand Affair / cinematic palace doors — dedicated mobile-first opening */
-html,body{
-width:100%;
-max-width:100%;
-overflow-x:clip}
+      /* Grand Affair / cinematic palace doors — dedicated mobile-first opening */
+      html,
+      body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: clip;
+      }
 
-.grand-gateway{
-position:fixed;
-inset:0;
-inset:0 0 0 0;
-z-index:200;
-overflow:hidden;
-background:#100909;
-color:#f7e8d2;
-isolation:isolate;
-touch-action:pan-y;
-transition:opacity .65s ease,visibility .65s ease}
+      .grand-gateway {
+        position: fixed;
+        inset: 0;
+        inset: 0 0 0 0;
+        z-index: 200;
+        overflow: hidden;
+        background: #100909;
+        color: #f7e8d2;
+        isolation: isolate;
+        touch-action: pan-y;
+        transition:
+          opacity 0.65s ease,
+          visibility 0.65s ease;
+      }
 
-.grand-gateway.done{
-opacity:0;
-visibility:hidden;
-pointer-events:none}
+      .grand-gateway.done {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
 
-.gateway-world,.gateway-hall,.gateway-doors,.gateway-shade{
-position:absolute;
-inset:0}
+      .gateway-world,
+      .gateway-hall,
+      .gateway-doors,
+      .gateway-shade {
+        position: absolute;
+        inset: 0;
+      }
 
-.gateway-world{
-background:radial-gradient(ellipse at center,#8c5d31 0%,#110c0a 74%)}
+      .gateway-world {
+        background: radial-gradient(ellipse at center, #8c5d31 0%, #110c0a 74%);
+      }
 
-.gateway-hall{
-background:url('assets/images/002/embedded-02.webp') center/cover no-repeat;
-transform:scale(1.12);
-filter:brightness(.85);
-transition:transform 3s cubic-bezier(.18,.7,.18,1),filter 2s}
+      .gateway-hall {
+        background: url("assets/images/002/embedded-02.webp") center/cover no-repeat;
+        transform: scale(1.12);
+        filter: brightness(0.85);
+        transition:
+          transform 3s cubic-bezier(0.18, 0.7, 0.18, 1),
+          filter 2s;
+      }
 
-.gateway-doors{
-display:flex;
-perspective:1100px}
+      .gateway-doors {
+        display: flex;
+        perspective: 1100px;
+      }
 
-.gateway-door{
-width:50%;
-height:100%;
-background-image:url('assets/images/002/embedded-01.webp');
-background-repeat:no-repeat;
-background-size:200% 100%;
-will-change:transform;
-transition:transform 2.35s cubic-bezier(.65,0,.18,1),filter 1.6s;
-box-shadow:0 0 45px #08040380}
+      .gateway-door {
+        width: 50%;
+        height: 100%;
+        background-image: url("assets/images/002/embedded-01.webp");
+        background-repeat: no-repeat;
+        background-size: 200% 100%;
+        will-change: transform;
+        transition:
+          transform 2.35s cubic-bezier(0.65, 0, 0.18, 1),
+          filter 1.6s;
+        box-shadow: 0 0 45px #08040380;
+      }
 
-.gateway-left{
-background-position:left center;
-transform-origin:left center}
+      .gateway-left {
+        background-position: left center;
+        transform-origin: left center;
+      }
 
-.gateway-right{
-background-position:right center;
-transform-origin:right center}
+      .gateway-right {
+        background-position: right center;
+        transform-origin: right center;
+      }
 
-.gateway-shade{
-pointer-events:none;
-background:linear-gradient(180deg,#0905059c 0%,transparent 25%,#0905052b 48%,#090505d9 100%);
-transition:opacity 1s}
+      .gateway-shade {
+        pointer-events: none;
+        background: linear-gradient(
+          180deg,
+          #0905059c 0%,
+          transparent 25%,
+          #0905052b 48%,
+          #090505d9 100%
+        );
+        transition: opacity 1s;
+      }
 
-.gateway-content{
-position:absolute;
-inset:0;
-display:flex;
-flex-direction:column;
-justify-content:space-between;
-align-items:center;
-text-align:center;
-padding:max(22px,env(safe-area-inset-top)) 18px max(24px,env(safe-area-inset-bottom));
-z-index:2;
-transition:opacity .6s,transform .6s}
+      .gateway-content {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+        padding: max(22px, env(safe-area-inset-top)) 18px max(24px, env(safe-area-inset-bottom));
+        z-index: 2;
+        transition:
+          opacity 0.6s,
+          transform 0.6s;
+      }
 
-.gateway-top{
-width:100%;
-max-width:560px;
-display:flex;
-justify-content:space-between;
-align-items:start;
-gap:16px;
-text-shadow:0 2px 12px #0009}
+      .gateway-top {
+        width: 100%;
+        max-width: 560px;
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        gap: 16px;
+        text-shadow: 0 2px 12px #0009;
+      }
 
-.gateway-monogram{
-font:26px/1 'Cormorant Garamond',Georgia,serif;
-letter-spacing:.1em;
-white-space:nowrap}
-.gateway-monogram i{
-font-weight:400;
-color:#dfbc80}
+      .gateway-monogram {
+        font:
+          26px/1 "Cormorant Garamond",
+          Georgia,
+          serif;
+        letter-spacing: 0.1em;
+        white-space: nowrap;
+      }
+      .gateway-monogram i {
+        font-weight: 400;
+        color: #dfbc80;
+      }
 
-.gateway-brand{
-font:11px/1.5 Georgia,serif;
-letter-spacing:.23em;
-text-align:right}
-.gateway-brand small{
-display:block;
-font:8px/1.6 Arial,sans-serif;
-letter-spacing:.23em;
-color:#d5b987}
+      .gateway-brand {
+        font:
+          11px/1.5 Georgia,
+          serif;
+        letter-spacing: 0.23em;
+        text-align: right;
+      }
+      .gateway-brand small {
+        display: block;
+        font:
+          8px/1.6 Arial,
+          sans-serif;
+        letter-spacing: 0.23em;
+        color: #d5b987;
+      }
 
-.gateway-invite{
-width:min(100%,470px);
-margin:auto auto 4vh;
-padding:18px 10px 20px;
-text-shadow:0 3px 22px #000d}
+      .gateway-invite {
+        width: min(100%, 470px);
+        margin: auto auto 4vh;
+        padding: 18px 10px 20px;
+        text-shadow: 0 3px 22px #000d;
+      }
 
-.gateway-rule{
-display:block;
-width:50px;
-height:1px;
-margin:0 auto 22px;
-background:#dfbc80}
+      .gateway-rule {
+        display: block;
+        width: 50px;
+        height: 1px;
+        margin: 0 auto 22px;
+        background: #dfbc80;
+      }
 
-.gateway-eyebrow{
-font:600 10px/1.6 Arial,sans-serif;
-letter-spacing:.27em;
-color:#f0d7a8;
-margin:0 0 14px}
+      .gateway-eyebrow {
+        font:
+          600 10px/1.6 Arial,
+          sans-serif;
+        letter-spacing: 0.27em;
+        color: #f0d7a8;
+        margin: 0 0 14px;
+      }
 
-.gateway-invite h1{
-font:400 clamp(55px,13.2vw,89px)/.78 'Cormorant Garamond',Georgia,serif;
-letter-spacing:-.035em;
-margin:0 auto 22px;
-overflow-wrap:anywhere}
+      .gateway-invite h1 {
+        font:
+          400 clamp(55px, 13.2vw, 89px)/0.78 "Cormorant Garamond",
+          Georgia,
+          serif;
+        letter-spacing: -0.035em;
+        margin: 0 auto 22px;
+        overflow-wrap: anywhere;
+      }
 
-.gateway-invite h1 span{
-display:block}
-.gateway-invite h1 em{
-display:block;
-font:italic 400 42px/1.15 'Cormorant Garamond',Georgia,serif;
-color:#d9b982;
-margin:9px 0}
+      .gateway-invite h1 span {
+        display: block;
+      }
+      .gateway-invite h1 em {
+        display: block;
+        font:
+          italic 400 42px/1.15 "Cormorant Garamond",
+          Georgia,
+          serif;
+        color: #d9b982;
+        margin: 9px 0;
+      }
 
-.gateway-date{
-font:500 10px/1.5 Arial,sans-serif;
-letter-spacing:.25em;
-text-transform:uppercase;
-margin:0 0 28px}
+      .gateway-date {
+        font:
+          500 10px/1.5 Arial,
+          sans-serif;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        margin: 0 0 28px;
+      }
 
-.gateway-enter{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:25px;
-width:min(100%,320px);
-margin:0 auto;
-background:#f2e5cf;
-color:#291613;
-border:1px solid #d7ba86;
-padding:18px 20px;
-font:600 10px Arial,sans-serif;
-text-transform:uppercase;
-letter-spacing:.17em;
-box-shadow:0 8px 30px #0008;
-min-height:54px}
+      .gateway-enter {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 25px;
+        width: min(100%, 320px);
+        margin: 0 auto;
+        background: #f2e5cf;
+        color: #291613;
+        border: 1px solid #d7ba86;
+        padding: 18px 20px;
+        font:
+          600 10px Arial,
+          sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.17em;
+        box-shadow: 0 8px 30px #0008;
+        min-height: 54px;
+      }
 
-.gateway-enter span:last-child{
-font-size:18px}
-.gateway-skip{
-display:block;
-margin:12px auto 0;
-border:0;
-background:none;
-color:#f6e9d6;
-text-decoration:underline;
-text-underline-offset:5px;
-padding:12px;
-font:11px Arial,sans-serif;
-letter-spacing:.07em}
+      .gateway-enter span:last-child {
+        font-size: 18px;
+      }
+      .gateway-skip {
+        display: block;
+        margin: 12px auto 0;
+        border: 0;
+        background: none;
+        color: #f6e9d6;
+        text-decoration: underline;
+        text-underline-offset: 5px;
+        padding: 12px;
+        font:
+          11px Arial,
+          sans-serif;
+        letter-spacing: 0.07em;
+      }
 
-.gateway-foot{
-font:9px Arial,sans-serif;
-letter-spacing:.18em;
-text-transform:uppercase;
-color:#e7cda7}
-.gateway-foot span{
-padding:0 10px}
+      .gateway-foot {
+        font:
+          9px Arial,
+          sans-serif;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #e7cda7;
+      }
+      .gateway-foot span {
+        padding: 0 10px;
+      }
 
-.gateway-welcome{
-position:absolute;
-inset:0;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:14px;
-text-align:center;
-z-index:3;
-opacity:0;
-pointer-events:none;
-text-shadow:0 4px 20px #000}
-.gateway-welcome span{
-font:10px Arial,sans-serif;
-letter-spacing:.25em}
-.gateway-welcome strong{
-font:italic 400 clamp(42px,10vw,75px) 'Cormorant Garamond',Georgia,serif}
+      .gateway-welcome {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        text-align: center;
+        z-index: 3;
+        opacity: 0;
+        pointer-events: none;
+        text-shadow: 0 4px 20px #000;
+      }
+      .gateway-welcome span {
+        font:
+          10px Arial,
+          sans-serif;
+        letter-spacing: 0.25em;
+      }
+      .gateway-welcome strong {
+        font:
+          italic 400 clamp(42px, 10vw, 75px) "Cormorant Garamond",
+          Georgia,
+          serif;
+      }
 
-.grand-gateway.opening .gateway-left{
-transform:translateX(-104%) rotateY(-13deg);
-filter:brightness(.5)}
-.grand-gateway.opening .gateway-right{
-transform:translateX(104%) rotateY(13deg);
-filter:brightness(.5)}
+      .grand-gateway.opening .gateway-left {
+        transform: translateX(-104%) rotateY(-13deg);
+        filter: brightness(0.5);
+      }
+      .grand-gateway.opening .gateway-right {
+        transform: translateX(104%) rotateY(13deg);
+        filter: brightness(0.5);
+      }
 
-.grand-gateway.opening .gateway-hall{
-transform:scale(1);
-filter:brightness(1)}
-.grand-gateway.opening .gateway-shade{
-opacity:.25}
-.grand-gateway.opening .gateway-content{
-opacity:0;
-transform:translateY(15px);
-pointer-events:none}
-.grand-gateway.opening .gateway-welcome{
-animation:grandWelcome 1.6s 1.1s both}
+      .grand-gateway.opening .gateway-hall {
+        transform: scale(1);
+        filter: brightness(1);
+      }
+      .grand-gateway.opening .gateway-shade {
+        opacity: 0.25;
+      }
+      .grand-gateway.opening .gateway-content {
+        opacity: 0;
+        transform: translateY(15px);
+        pointer-events: none;
+      }
+      .grand-gateway.opening .gateway-welcome {
+        animation: grandWelcome 1.6s 1.1s both;
+      }
 
-@keyframes grandWelcome{
-0%{
-opacity:0;
-transform:translateY(14px)}
-35%,80%{
-opacity:1;
-transform:translateY(0)}
-100%{
-opacity:0}
-}
+      @keyframes grandWelcome {
+        0% {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        35%,
+        80% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        100% {
+          opacity: 0;
+        }
+      }
 
-@media(max-width:430px){
-.gateway-invite{
-margin-bottom:3vh}
-.gateway-invite h1{
-font-size:clamp(48px,13vw,64px)}
-.gateway-top{
-padding-top:6px}
-.gateway-foot{
-font-size:8px}
-.gateway-brand{
-font-size:10px}
-}
+      @media (max-width: 430px) {
+        .gateway-invite {
+          margin-bottom: 3vh;
+        }
+        .gateway-invite h1 {
+          font-size: clamp(48px, 13vw, 64px);
+        }
+        .gateway-top {
+          padding-top: 6px;
+        }
+        .gateway-foot {
+          font-size: 8px;
+        }
+        .gateway-brand {
+          font-size: 10px;
+        }
+      }
 
-@media(max-height:700px){
-.gateway-invite{
-margin-bottom:0;
-padding:5px}
-.gateway-invite h1{
-font-size:clamp(45px,10vh,66px)}
-.gateway-rule{
-margin-bottom:10px}
-.gateway-date{
-margin-bottom:14px}
-.gateway-foot{
-font-size:8px}
-}
+      @media (max-height: 700px) {
+        .gateway-invite {
+          margin-bottom: 0;
+          padding: 5px;
+        }
+        .gateway-invite h1 {
+          font-size: clamp(45px, 10vh, 66px);
+        }
+        .gateway-rule {
+          margin-bottom: 10px;
+        }
+        .gateway-date {
+          margin-bottom: 14px;
+        }
+        .gateway-foot {
+          font-size: 8px;
+        }
+      }
 
-@media(prefers-reduced-motion:reduce){
-.gateway-door,.gateway-hall,.gateway-content{
-transition-duration:.15s!important}
-.gateway-welcome{
-animation:none!important}
-}
+      @media (prefers-reduced-motion: reduce) {
+        .gateway-door,
+        .gateway-hall,
+        .gateway-content {
+          transition-duration: 0.15s !important;
+        }
+        .gateway-welcome {
+          animation: none !important;
+        }
+      }
 
-/* V3: palace interior art-direction polish;
+      /* V3: palace interior art-direction polish;
  entrance unchanged */
-html{
-scroll-behavior:smooth}
-body{
-overflow-x:clip}
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        overflow-x: clip;
+      }
 
-.story-odyssey,.grand-details,.programme,.gallery,.rsvp,.closing{
-position:relative;
-isolation:isolate}
+      .story-odyssey,
+      .grand-details,
+      .programme,
+      .gallery,
+      .rsvp,
+      .closing {
+        position: relative;
+        isolation: isolate;
+      }
 
-.story-odyssey::before,.grand-details::before,.gallery::before{
-content:"";
-pointer-events:none;
-position:absolute;
-inset:0;
-z-index:-1;
-background:radial-gradient(ellipse at 4% 20%,rgba(177,139,78,.13),transparent 35%),radial-gradient(ellipse at 96% 75%,rgba(135,99,53,.12),transparent 35%)}
+      .story-odyssey::before,
+      .grand-details::before,
+      .gallery::before {
+        content: "";
+        pointer-events: none;
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background:
+          radial-gradient(ellipse at 4% 20%, rgba(177, 139, 78, 0.13), transparent 35%),
+          radial-gradient(ellipse at 96% 75%, rgba(135, 99, 53, 0.12), transparent 35%);
+      }
 
-.story-odyssey::after{
-content:"✦";
-position:absolute;
-top:2rem;
-right:5%;
-font-size:clamp(4rem,12vw,10rem);
-color:rgba(170,133,72,.12);
-pointer-events:none}
+      .story-odyssey::after {
+        content: "✦";
+        position: absolute;
+        top: 2rem;
+        right: 5%;
+        font-size: clamp(4rem, 12vw, 10rem);
+        color: rgba(170, 133, 72, 0.12);
+        pointer-events: none;
+      }
 
-.story-prologue h2,.details-heading h2,.gallery h2,.programme h2,.rsvp h2{
-letter-spacing:-.045em;
-text-wrap:balance}
+      .story-prologue h2,
+      .details-heading h2,
+      .gallery h2,
+      .programme h2,
+      .rsvp h2 {
+        letter-spacing: -0.045em;
+        text-wrap: balance;
+      }
 
-.story-frame,.event-art,.portrait,.programme-art{
-overflow:hidden;
-box-shadow:0 20px 55px rgba(29,20,14,.17)}
+      .story-frame,
+      .event-art,
+      .portrait,
+      .programme-art {
+        overflow: hidden;
+        box-shadow: 0 20px 55px rgba(29, 20, 14, 0.17);
+      }
 
-.story-frame img,.event-art img,.portrait img{
-transition:transform .9s cubic-bezier(.2,.7,.2,1),filter .7s ease}
+      .story-frame img,
+      .event-art img,
+      .portrait img {
+        transition:
+          transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+          filter 0.7s ease;
+      }
 
-.story-frame:hover img,.event-scene:hover .event-art img,.portrait:hover img{
-transform:scale(1.045)}
+      .story-frame:hover img,
+      .event-scene:hover .event-art img,
+      .portrait:hover img {
+        transform: scale(1.045);
+      }
 
-.story-chapter{
-position:relative}
+      .story-chapter {
+        position: relative;
+      }
 
-.story-chapter::before{
-content:"";
-position:absolute;
-top:5%;
-bottom:5%;
-left:50%;
-width:1px;
-background:linear-gradient(transparent,rgba(173,137,79,.32),transparent);
-z-index:-1;
-pointer-events:none}
+      .story-chapter::before {
+        content: "";
+        position: absolute;
+        top: 5%;
+        bottom: 5%;
+        left: 50%;
+        width: 1px;
+        background: linear-gradient(transparent, rgba(173, 137, 79, 0.32), transparent);
+        z-index: -1;
+        pointer-events: none;
+      }
 
-.story-chapter:nth-child(even) .story-frame{
-transform:rotate(1.25deg)}
+      .story-chapter:nth-child(even) .story-frame {
+        transform: rotate(1.25deg);
+      }
 
-.story-chapter:nth-child(odd) .story-frame{
-transform:rotate(-1.25deg)}
+      .story-chapter:nth-child(odd) .story-frame {
+        transform: rotate(-1.25deg);
+      }
 
-.story-frame{
-border:7px solid rgba(255,252,243,.8);
-outline:1px solid rgba(176,139,81,.3)}
+      .story-frame {
+        border: 7px solid rgba(255, 252, 243, 0.8);
+        outline: 1px solid rgba(176, 139, 81, 0.3);
+      }
 
-.grand-details{
-background-image:linear-gradient(135deg,rgba(255,255,255,.045),transparent 45%)}
+      .grand-details {
+        background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.045), transparent 45%);
+      }
 
-.event-scene{
-transition:transform .5s ease}
-.event-scene:hover{
-transform:translateY(-5px)}
+      .event-scene {
+        transition: transform 0.5s ease;
+      }
+      .event-scene:hover {
+        transform: translateY(-5px);
+      }
 
-.event-art::after{
-content:"";
-position:absolute;
-inset:0;
-pointer-events:none;
-border:1px solid rgba(231,203,153,.45);
-margin:12px}
+      .event-art::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        border: 1px solid rgba(231, 203, 153, 0.45);
+        margin: 12px;
+      }
 
-.event-art{
-position:relative}
+      .event-art {
+        position: relative;
+      }
 
-.programme{
-overflow:hidden}
-.programme::before{
-content:"";
-position:absolute;
-width:65vw;
-height:65vw;
-max-width:750px;
-max-height:750px;
-border:1px solid rgba(178,142,81,.14);
-border-radius:50%;
-left:-22%;
-top:-30%;
-pointer-events:none}
+      .programme {
+        overflow: hidden;
+      }
+      .programme::before {
+        content: "";
+        position: absolute;
+        width: 65vw;
+        height: 65vw;
+        max-width: 750px;
+        max-height: 750px;
+        border: 1px solid rgba(178, 142, 81, 0.14);
+        border-radius: 50%;
+        left: -22%;
+        top: -30%;
+        pointer-events: none;
+      }
 
-.programme-art{
-border:10px solid rgba(240,226,201,.12);
-outline:1px solid rgba(194,162,106,.55);
-min-height:390px}
+      .programme-art {
+        border: 10px solid rgba(240, 226, 201, 0.12);
+        outline: 1px solid rgba(194, 162, 106, 0.55);
+        min-height: 390px;
+      }
 
-.timeline li{
-transition:transform .25s ease,background .25s ease,padding .25s ease}
-.timeline li:hover{
-transform:translateX(6px)}
+      .timeline li {
+        transition:
+          transform 0.25s ease,
+          background 0.25s ease,
+          padding 0.25s ease;
+      }
+      .timeline li:hover {
+        transform: translateX(6px);
+      }
 
-.gallery{
-overflow:hidden}
-.gallery::after{
-content:"PORTRAITS";
-position:absolute;
-right:-.1em;
-top:2rem;
-font:italic clamp(5rem,18vw,17rem) Georgia,serif;
-letter-spacing:-.07em;
-color:rgba(158,121,71,.065);
-pointer-events:none;
-z-index:-1}
+      .gallery {
+        overflow: hidden;
+      }
+      .gallery::after {
+        content: "PORTRAITS";
+        position: absolute;
+        right: -0.1em;
+        top: 2rem;
+        font:
+          italic clamp(5rem, 18vw, 17rem) Georgia,
+          serif;
+        letter-spacing: -0.07em;
+        color: rgba(158, 121, 71, 0.065);
+        pointer-events: none;
+        z-index: -1;
+      }
 
-.gallery-strip{
-scroll-snap-type:x mandatory;
-scroll-padding-inline:16px}
-.portrait{
-scroll-snap-align:center;
-position:relative}
+      .gallery-strip {
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: 16px;
+      }
+      .portrait {
+        scroll-snap-align: center;
+        position: relative;
+      }
 
-.portrait::after{
-content:"VIEW PORTRAIT  ↗";
-position:absolute;
-right:12px;
-bottom:12px;
-background:rgba(25,23,21,.75);
-color:#f8ecd6;
-padding:10px 12px;
-font-size:10px;
-letter-spacing:.14em;
-pointer-events:none}
+      .portrait::after {
+        content: "VIEW PORTRAIT  ↗";
+        position: absolute;
+        right: 12px;
+        bottom: 12px;
+        background: rgba(25, 23, 21, 0.75);
+        color: #f8ecd6;
+        padding: 10px 12px;
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        pointer-events: none;
+      }
 
-.rsvp{
-overflow:hidden}
-.rsvp::before,.rsvp::after{
-content:"";
-position:absolute;
-width:clamp(190px,35vw,420px);
-aspect-ratio:1;
-border:1px solid rgba(186,150,88,.19);
-border-radius:50%;
-pointer-events:none;
-z-index:-1}
+      .rsvp {
+        overflow: hidden;
+      }
+      .rsvp::before,
+      .rsvp::after {
+        content: "";
+        position: absolute;
+        width: clamp(190px, 35vw, 420px);
+        aspect-ratio: 1;
+        border: 1px solid rgba(186, 150, 88, 0.19);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: -1;
+      }
 
-.rsvp::before{
-left:-16%;
-top:-8%}
-.rsvp::after{
-right:-18%;
-bottom:-12%}
+      .rsvp::before {
+        left: -16%;
+        top: -8%;
+      }
+      .rsvp::after {
+        right: -18%;
+        bottom: -12%;
+      }
 
-.rsvp-form{
-box-shadow:0 25px 70px rgba(17,15,12,.12);
-border:1px solid rgba(191,153,91,.35)}
+      .rsvp-form {
+        box-shadow: 0 25px 70px rgba(17, 15, 12, 0.12);
+        border: 1px solid rgba(191, 153, 91, 0.35);
+      }
 
-.closing{
-overflow:hidden}
-.closing::before{
-content:"✧";
-position:absolute;
-font-size:clamp(12rem,34vw,34rem);
-line-height:1;
-color:rgba(198,167,108,.075);
-left:-3%;
-top:5%;
-pointer-events:none}
+      .closing {
+        overflow: hidden;
+      }
+      .closing::before {
+        content: "✧";
+        position: absolute;
+        font-size: clamp(12rem, 34vw, 34rem);
+        line-height: 1;
+        color: rgba(198, 167, 108, 0.075);
+        left: -3%;
+        top: 5%;
+        pointer-events: none;
+      }
 
-/* A restrained editorial transition between chapters */
-.grand-chapter-divider{
-position:relative;
-display:flex;
-align-items:center;
-justify-content:center;
-min-height:clamp(240px,40vw,420px);
-overflow:hidden;
-background:#1c1b18;
-color:#f4e9d4;
-text-align:center}
+      /* A restrained editorial transition between chapters */
+      .grand-chapter-divider {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: clamp(240px, 40vw, 420px);
+        overflow: hidden;
+        background: #1c1b18;
+        color: #f4e9d4;
+        text-align: center;
+      }
 
-.grand-chapter-divider img{
-position:absolute;
-inset:0;
-width:100%;
-height:100%;
-object-fit:cover;
-filter:brightness(.43) saturate(.75);
-transform:scale(1.06);
-transition:transform 1.6s ease}
+      .grand-chapter-divider img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.43) saturate(0.75);
+        transform: scale(1.06);
+        transition: transform 1.6s ease;
+      }
 
-.grand-chapter-divider.in-view img{
-transform:scale(1)}
+      .grand-chapter-divider.in-view img {
+        transform: scale(1);
+      }
 
-.grand-chapter-divider .chapter-copy{
-position:relative;
-z-index:1;
-padding:3rem 1.25rem;
-text-shadow:0 2px 16px #0008}
+      .grand-chapter-divider .chapter-copy {
+        position: relative;
+        z-index: 1;
+        padding: 3rem 1.25rem;
+        text-shadow: 0 2px 16px #0008;
+      }
 
-.grand-chapter-divider .chapter-copy small{
-display:block;
-font-size:10px;
-letter-spacing:.32em;
-text-transform:uppercase;
-color:#e5c991;
-margin-bottom:1.25rem}
+      .grand-chapter-divider .chapter-copy small {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: #e5c991;
+        margin-bottom: 1.25rem;
+      }
 
-.grand-chapter-divider .chapter-copy p{
-font:italic clamp(2rem,6vw,4.6rem)/1.08 Georgia,serif;
-max-width:780px;
-margin:auto;
-text-wrap:balance}
+      .grand-chapter-divider .chapter-copy p {
+        font:
+          italic clamp(2rem, 6vw, 4.6rem)/1.08 Georgia,
+          serif;
+        max-width: 780px;
+        margin: auto;
+        text-wrap: balance;
+      }
 
-.grand-chapter-divider .chapter-copy span{
-display:block;
-font-size:11px;
-letter-spacing:.25em;
-margin-top:1.5rem;
-color:#e4d3b7}
+      .grand-chapter-divider .chapter-copy span {
+        display: block;
+        font-size: 11px;
+        letter-spacing: 0.25em;
+        margin-top: 1.5rem;
+        color: #e4d3b7;
+      }
 
-@media(max-width:700px){
-.story-chapter::before{
-display:none}
-.story-frame{
-border-width:5px}
-.grand-chapter-divider{
-min-height:320px}
-.grand-chapter-divider .chapter-copy p{
-font-size:clamp(2.1rem,9vw,3.1rem)}
-.programme-art{
-min-height:270px}
-.rsvp::before,.rsvp::after{
-opacity:.45}
-.gallery::after{
-top:5rem}
-}
+      @media (max-width: 700px) {
+        .story-chapter::before {
+          display: none;
+        }
+        .story-frame {
+          border-width: 5px;
+        }
+        .grand-chapter-divider {
+          min-height: 320px;
+        }
+        .grand-chapter-divider .chapter-copy p {
+          font-size: clamp(2.1rem, 9vw, 3.1rem);
+        }
+        .programme-art {
+          min-height: 270px;
+        }
+        .rsvp::before,
+        .rsvp::after {
+          opacity: 0.45;
+        }
+        .gallery::after {
+          top: 5rem;
+        }
+      }
 
-@media(prefers-reduced-motion:reduce){
-.story-frame img,.event-art img,.portrait img,.grand-chapter-divider img,.event-scene,.timeline li{
-transition:none!important;
-transform:none!important}
-}
+      @media (prefers-reduced-motion: reduce) {
+        .story-frame img,
+        .event-art img,
+        .portrait img,
+        .grand-chapter-divider img,
+        .event-scene,
+        .timeline li {
+          transition: none !important;
+          transform: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="lock">
+    <div
+      class="grand-gateway"
+      id="intro"
+      role="dialog"
+      aria-modal="true"
+      aria-label="The Grand Affair opening experience"
+    >
+      <div class="gateway-world" aria-hidden="true"></div>
+      <div class="gateway-hall" aria-hidden="true"></div>
+      <div class="gateway-doors" aria-hidden="true">
+        <div class="gateway-door gateway-left"></div>
+        <div class="gateway-door gateway-right"></div>
+      </div>
+      <div class="gateway-shade" aria-hidden="true"></div>
+      <div class="gateway-content">
+        <div class="gateway-top">
+          <span class="gateway-monogram">A <i>&amp;</i> M</span>
+          <span class="gateway-brand">VRAXISRSVP <small>THE GRAND AFFAIR</small> </span>
+        </div>
+        <div class="gateway-invite">
+          <span class="gateway-rule"> </span>
+          <p class="gateway-eyebrow">A PRIVATE WEDDING CELEBRATION</p>
+          <h1>
+            <span data-name="first">Alexander</span>
+            <em>&amp;</em>
+            <span data-name="second">Miranda</span>
+          </h1>
+          <p class="gateway-date" data-date>14 November 2026</p>
+          <button class="gateway-enter" id="enter" type="button">
+            <span>Open the palace doors</span>
+            <span aria-hidden="true">↗</span>
+          </button>
+          <button class="gateway-skip" id="skip" type="button">Skip entrance</button>
+        </div>
+        <div class="gateway-foot">A celebration of a lifetime <span>✦</span> You're invited</div>
+      </div>
+      <div class="gateway-welcome" aria-hidden="true">
+        <span>WELCOME TO THEIR CELEBRATION</span>
+        <strong>Let the magic begin.</strong>
+      </div>
+    </div>
+    <nav>
+      <a class="brand" href="#top">VRAXISRSVP<span>THE GRAND AFFAIR</span> </a>
+      <div class="navlinks">
+        <a href="#story">Our Story</a>
+        <a href="#details">Details</a>
+        <a href="#programme">Programme</a>
+        <a href="#gallery">Gallery</a>
+        <a class="nav-rsvp" href="#rsvp">RSVP</a>
+      </div>
+    </nav>
+    <main id="top">
+      <section class="hero">
+        <div class="hero-content">
+          <div class="eyebrow">The wedding of</div>
+          <h1>
+            <span data-name="first">Alexander</span>
+            <br />
+            <em>&amp;</em>
+            <span data-name="second">Miranda</span>
+          </h1>
+          <div class="hero-date" data-date="">14 November 2026</div>
+          <div class="goldline" style="margin-left: 0"></div>
+          <a class="btn light" href="#story" style="display: inline-block; text-decoration: none"
+            >Discover our story   ↓</a
+          >
+        </div>
+      </section>
+      <section aria-labelledby="storyHeading" class="story-odyssey" id="story">
+        <div class="story-prologue reveal">
+          <span class="eyebrow">Chapter II · The story of us</span>
+          <h2 id="storyHeading">
+            Before the grand affair,<br />
+            <em>there was us.</em>
+          </h2>
+          <p>
+            Every extraordinary celebration begins with an ordinary moment that changes everything.
+          </p>
+          <div class="story-scroll-hint">Scroll to discover our story <span>↓</span></div>
+          <div aria-hidden="true" class="story-progress">
+            <span> </span>
+            <span> </span>
+            <span> </span>
+          </div>
+        </div>
+        <div class="story-chapters">
+          <article class="story-chapter reveal">
+            <div class="story-frame">
+              <img
+                alt="A treasured memory from the couple's journey"
+                loading="lazy"
+                src="assets/images/002/embedded-05.webp"
+              />
+              <span class="frame-index">01 / THE BEGINNING</span>
+            </div>
+            <div class="story-words">
+              <span class="eyebrow">The first chapter</span>
+              <h3>It began with <em>hello.</em></h3>
+              <p>
+                One conversation became another. The hours slipped away, and somewhere between the
+                laughter and the little things, something beautiful began.
+              </p>
+              <span aria-hidden="true" class="story-ornament">✦</span>
+            </div>
+          </article>
+          <article class="story-chapter reverse reveal">
+            <div class="story-frame">
+              <img
+                alt="An intimate portrait of the couple"
+                loading="lazy"
+                src="assets/images/002/embedded-04.webp"
+              />
+              <span class="frame-index">02 / THE JOURNEY</span>
+            </div>
+            <div class="story-words">
+              <span class="eyebrow">Through every season</span>
+              <h3>A thousand little <em>moments.</em></h3>
+              <p>
+                The spontaneous adventures. The quiet evenings. The dreams we made together. Love
+                was never just one grand gesture—it was choosing each other, every day.
+              </p>
+              <span aria-hidden="true" class="story-ornament">✦</span>
+            </div>
+          </article>
+          <article class="story-chapter reveal">
+            <div class="story-frame story-final-frame">
+              <img
+                alt="An elegant setting for the next chapter"
+                loading="lazy"
+                src="assets/images/002/embedded-08.webp"
+              />
+              <span class="frame-index">03 / THE PROMISE</span>
+            </div>
+            <div class="story-words">
+              <span class="eyebrow">And now, forever</span>
+              <h3>The next chapter <em>is ours.</em></h3>
+              <p>
+                Our favourite story is still being written. We cannot imagine beginning this next
+                chapter without the people who have loved us along the way.
+              </p>
+              <a class="chapter-link" href="#details"
+                >Join us for the celebration <span>↗</span>
+              </a>
+            </div>
+          </article>
+        </div>
+        <div class="story-epilogue reveal">
+          <span class="eyebrow">Alexander &amp; Miranda</span>
+          <p>“The best part of our story is that we get to write the rest together.”</p>
+          <span aria-hidden="true" class="story-ornament">✧</span>
+        </div>
+      </section>
+      <section aria-labelledby="detailsHeading" class="grand-details" id="details">
+        <div class="details-heading reveal">
+          <span class="eyebrow">Chapter III · An invitation to celebrate</span>
+          <h2 id="detailsHeading">The Wedding <em>Day</em></h2>
+          <p>Two extraordinary moments. One unforgettable celebration.</p>
+        </div>
+        <div class="event-scenes">
+          <article class="event-scene ceremony-scene reveal">
+            <div class="event-art">
+              <img
+                alt="Romantic floral palace architecture"
+                loading="lazy"
+                src="assets/images/002/embedded-06.webp"
+              />
+              <div class="event-art-shade"></div>
+              <div class="event-art-word">I</div>
+            </div>
+            <div class="event-panel">
+              <div class="event-panel-inner">
+                <div class="event-kicker">
+                  <span class="event-number">01</span>
+                  <span class="eyebrow">The vows · Ceremony</span>
+                </div>
+                <div class="event-rule"></div>
+                <h3>
+                  Where forever<br />
+                  <em>begins.</em>
+                </h3>
+                <p class="event-description">
+                  With our families and dearest friends, we promise a lifetime of love.
+                </p>
+                <div class="event-time" data-ceremony-time="">14:00</div>
+                <div class="event-meta">
+                  <strong data-ceremony="">St. Augustine's Chapel</strong>
+                  <span data-ceremony-place="">Potchefstroom</span>
+                </div>
+                <a
+                  class="event-direction"
+                  href="https://www.google.com/maps/search/?api=1&amp;query=Potchefstroom"
+                  id="directions"
+                  rel="noopener"
+                  target="_blank"
+                  >View ceremony directions <span>↗</span>
+                </a>
+              </div>
+            </div>
+          </article>
+          <div class="interlude reveal">
+            <span class="interlude-star">✦</span>
+            <span>From sacred promises to a night of celebration</span>
+            <span class="interlude-star">✦</span>
+          </div>
+          <article class="event-scene reception-scene reveal">
+            <div class="event-art">
+              <img
+                alt="A candlelit grand ballroom prepared for a wedding reception"
+                loading="lazy"
+                src="assets/images/002/embedded-07.webp"
+              />
+              <div class="event-art-shade"></div>
+              <div class="event-art-word">II</div>
+            </div>
+            <div class="event-panel">
+              <div class="event-panel-inner">
+                <div class="event-kicker">
+                  <span class="event-number">02</span>
+                  <span class="eyebrow">The evening · Reception</span>
+                </div>
+                <div class="event-rule"></div>
+                <h3>
+                  Let the evening<br />
+                  <em>unfold.</em>
+                </h3>
+                <p class="event-description">
+                  An evening of candlelight, beautiful company, heartfelt toasts and dancing.
+                </p>
+                <div class="event-time" data-reception-time="">17:30</div>
+                <div class="event-meta">
+                  <strong data-reception="">The Grand Hall</strong>
+                  <span data-reception-place="">Riverside Estate</span>
+                </div>
+                <a
+                  class="event-direction"
+                  href="https://www.google.com/maps/search/?api=1&amp;query=Riverside%20Estate"
+                  id="receptionDirections"
+                  rel="noopener"
+                  target="_blank"
+                  >View reception directions <span>↗</span>
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="details-outro reveal">
+          <span class="eyebrow">The celebration continues</span>
+          <p>Every moment, thoughtfully planned for you.</p>
+          <a class="btn" href="#programme">Explore the programme   ↓</a>
+        </div>
+      </section>
+      <section class="grand-chapter-divider" aria-label="Wedding celebration interlude">
+        <img
+          src="assets/images/002/embedded-06.webp"
+          alt="A romantic palace wedding setting"
+          loading="lazy"
+        />
+        <div class="chapter-copy">
+          <small>Alexander &amp; Miranda · The Grand Affair</small>
+          <p>Some days are meant to be remembered forever.</p>
+          <span>14 NOVEMBER 2026</span>
+        </div>
+      </section>
+      <section class="section programme" id="programme">
+        <div>
+          <div class="eyebrow">Chapter IV · The celebration</div>
+          <h2>The Programme</h2>
+          <p class="bodycopy">An unforgettable day, thoughtfully composed.</p>
+          <ol class="timeline">
+            <li class="reveal">
+              <time>14:00</time>
+              <span class="dot"> </span>
+              <span>Ceremony</span>
+            </li>
+            <li class="reveal">
+              <time>15:30</time>
+              <span class="dot"> </span>
+              <span>Canapés &amp; Refreshments</span>
+            </li>
+            <li class="reveal">
+              <time>17:30</time>
+              <span class="dot"> </span>
+              <span>Reception &amp; Dinner</span>
+            </li>
+            <li class="reveal">
+              <time>19:00</time>
+              <span class="dot"> </span>
+              <span>Speeches</span>
+            </li>
+            <li class="reveal">
+              <time>20:00</time>
+              <span class="dot"> </span>
+              <span>First Dance</span>
+            </li>
+            <li class="reveal">
+              <time>21:00</time>
+              <span class="dot"> </span>
+              <span>Celebration Continues</span>
+            </li>
+          </ol>
+        </div>
+        <div aria-label="Candlelit palace reception" class="programme-art" role="img"></div>
+      </section>
+      <section class="section gallery" id="gallery">
+        <div class="eyebrow">Our journey</div>
+        <h2>The Portrait Gallery</h2>
+        <p class="bodycopy">A few of our favourite moments, held close forever.</p>
+        <div class="gallery-strip" id="galleryStrip">
+          <div
+            aria-label="Open portrait 1"
+            class="portrait"
+            data-caption="Our beginning"
+            role="button"
+            tabindex="0"
+          >
+            <img
+              alt="Wedding couple portrait"
+              loading="lazy"
+              src="assets/images/002/embedded-04.webp"
+            />
+          </div>
+          <div
+            aria-label="Open portrait 2"
+            class="portrait"
+            data-caption="The story unfolds"
+            role="button"
+            tabindex="0"
+          >
+            <img alt="Wedding memories" loading="lazy" src="assets/images/002/embedded-05.webp" />
+          </div>
+          <div
+            aria-label="Open portrait 3"
+            class="portrait"
+            data-caption="A day to remember"
+            role="button"
+            tabindex="0"
+          >
+            <img alt="Palace ballroom" loading="lazy" src="assets/images/002/embedded-03.webp" />
+          </div>
+          <div
+            aria-label="Open portrait 4"
+            class="portrait"
+            data-caption="Every little moment"
+            role="button"
+            tabindex="0"
+          >
+            <img
+              alt="Wedding floral arrangement"
+              loading="lazy"
+              src="assets/images/002/embedded-06.webp"
+            />
+          </div>
+          <div
+            aria-label="Open portrait 5"
+            class="portrait"
+            data-caption="Forever starts here"
+            role="button"
+            tabindex="0"
+          >
+            <img
+              alt="Reception candlelight"
+              loading="lazy"
+              src="assets/images/002/embedded-07.webp"
+            />
+          </div>
+        </div>
+        <div class="gallery-actions">
+          <button aria-label="Previous photo" id="prevPhoto" type="button">←</button>
+          <button aria-label="Next photo" id="nextPhoto" type="button">→</button>
+        </div>
+      </section>
+      <section class="section rsvp" id="rsvp">
+        <div aria-hidden="true" class="rsvp-crest">A <span>&amp;</span> M</div>
+        <div class="eyebrow">Chapter VI · The guest register</div>
+        <h2>The Guest Register</h2>
+        <p class="bodycopy">
+          We would be honoured to have you with us as we begin this new chapter.
+        </p>
+        <form class="rsvp-form" id="rsvpForm">
+          <label class="field">
+            <span>Your full name *</span>
+            <input
+              autocomplete="name"
+              maxlength="120"
+              name="guestName"
+              placeholder="Your name"
+              required=""
+            />
+          </label>
+          <div class="form-legend">Will you attend? *</div>
+          <div class="choices">
+            <label>
+              <input name="attendance" required="" type="radio" value="yes" /> Yes, I'll be
+              there</label
+            >
+            <label>
+              <input name="attendance" type="radio" value="no" /> Regretfully, I can't make
+              it</label
+            >
+          </div>
+          <div class="hidden" id="attendingFields">
+            <label class="field">
+              <span>Number of guests</span>
+              <select name="guestCount">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Dietary requirements (optional)</span>
+              <textarea
+                name="dietary"
+                placeholder="Let us know of any dietary needs"
+                rows="2"
+              ></textarea>
+            </label>
+          </div>
+          <label class="field">
+            <span>A message for the couple (optional)</span>
+            <textarea
+              maxlength="500"
+              name="message"
+              placeholder="Your wishes..."
+              rows="3"
+            ></textarea>
+          </label>
+          <button class="btn" style="width: 100%" type="submit">Send RSVP   ›</button>
+          <p aria-live="polite" class="form-message" id="formMessage"></p>
+        </form>
+      </section>
+      <section class="closing">
+        <div class="eyebrow" style="color: #d7b87d">With love</div>
+        <h2>Until we meet again</h2>
+        <div class="goldline"></div>
+        <p class="bodycopy">
+          <span data-name="first">Alexander</span> &amp; <span data-name="second">Miranda</span>
+        </p>
+        <p data-date="" style="font-size: 11px; letter-spacing: 0.19em">14 November 2026</p>
+      </section>
+    </main>
+    <footer class="footer">VRAXISRSVP   ·   THE GRAND AFFAIR   ·   PRESTIGE COLLECTION</footer>
+    <button aria-expanded="false" class="editor-toggle" id="editorToggle">
+      ✦ Personalise demo
+    </button>
+    <aside aria-label="Invitation personalisation" class="editor" id="editor">
+      <h3>Make it yours</h3>
+      <label>Partner one<input id="firstName" maxlength="30" value="Alexander" /> </label>
+      <label>Partner two<input id="secondName" maxlength="30" value="Miranda" /> </label>
+      <label>Wedding date<input id="weddingDate" type="date" value="2026-11-14" /> </label>
+      <label>Ceremony venue<input id="ceremonyVenue" value="St. Augustine's Chapel" /> </label>
+      <label>Ceremony location<input id="ceremonyPlace" value="Potchefstroom" /> </label>
+      <label>Reception venue<input id="receptionVenue" value="The Grand Hall" /> </label>
+      <label>Reception location<input id="receptionPlace" value="Riverside Estate" /> </label>
+      <p>
+        Changes preview instantly. This standalone prototype does not publish or store customer
+        edits. The RSVP currently confirms on this device only; the live platform will connect it to
+        the shared guest database.
+      </p>
+      <button class="btn" id="closeEditor">Done</button>
+    </aside>
+    <script>
+      (() => {
+        "use strict";
+        const $ = (s) => document.querySelector(s),
+          $$ = (s) => document.querySelectorAll(s);
+        let entering = false;
+        const intro = $("#intro");
+        let finishTimer = null;
+        function finish() {
+          if (finishTimer) clearTimeout(finishTimer);
+          intro.classList.add("done");
+          document.body.classList.remove("lock");
+          setTimeout(() => {
+            intro.hidden = true;
+          }, 700);
+        }
+        $("#enter").addEventListener("click", () => {
+          if (entering) return;
+          entering = true;
+          intro.classList.add("opening");
+          finishTimer = setTimeout(
+            finish,
+            matchMedia("(prefers-reduced-motion: reduce)").matches ? 400 : 3150,
+          );
+        });
+        $("#skip").addEventListener("click", finish);
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && !intro.hidden) finish();
+        });
+        const strip = $("#galleryStrip");
+        const move = (d) =>
+          strip.scrollBy({
+            left: d * strip.querySelector(".portrait").getBoundingClientRect().width + d * 20,
+            behavior: "smooth",
+          });
+        $("#prevPhoto").onclick = () => move(-1);
+        $("#nextPhoto").onclick = () => move(1);
+        $$('input[name="attendance"]').forEach((r) =>
+          r.addEventListener("change", () =>
+            $("#attendingFields").classList.toggle("hidden", r.value !== "yes"),
+          ),
+        );
+        $("#rsvpForm").addEventListener("submit", (e) => {
+          e.preventDefault();
+          const data = new FormData(e.currentTarget);
+          if (!data.get("attendance")) return;
+          $("#formMessage").textContent =
+            "Thank you, " +
+            data.get("guestName") +
+            ". Your " +
+            (data.get("attendance") === "yes" ? "attendance" : "regret") +
+            " has been recorded in this demo preview only. No RSVP has been sent to the organiser.";
+          e.currentTarget.querySelector('button[type="submit"]').textContent =
+            "Preview confirmed ✓";
+        });
+        const editor = $("#editor");
+        function toggle(v) {
+          editor.classList.toggle("active", v);
+          $("#editorToggle").setAttribute("aria-expanded", String(v));
+        }
+        $("#editorToggle").onclick = () => toggle(!editor.classList.contains("active"));
+        $("#closeEditor").onclick = () => toggle(false);
+        function bind(input, selector) {
+          $(input).addEventListener("input", (e) =>
+            $$(selector).forEach((el) => (el.textContent = e.target.value)),
+          );
+        }
+        bind("#firstName", '[data-name="first"]');
+        bind("#secondName", '[data-name="second"]');
+        bind("#ceremonyVenue", "[data-ceremony]");
+        bind("#ceremonyPlace", "[data-ceremony-place]");
+        bind("#receptionVenue", "[data-reception]");
+        bind("#receptionPlace", "[data-reception-place]");
+        $("#weddingDate").addEventListener("change", (e) => {
+          const v = e.target.value;
+          if (!v) return;
+          const d = new Date(v + "T12:00:00");
+          const text = d.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          });
+          $$("[data-date]").forEach((el) => (el.textContent = text));
+        });
+        $("#ceremonyPlace").addEventListener(
+          "input",
+          (e) =>
+            ($("#directions").href =
+              "https://www.google.com/maps/search/?api=1&query=" +
+              encodeURIComponent(e.target.value)),
+        );
+        $("#receptionPlace").addEventListener(
+          "input",
+          (e) =>
+            ($("#receptionDirections").href =
+              "https://www.google.com/maps/search/?api=1&query=" +
+              encodeURIComponent(e.target.value)),
+        );
+        const observed = $$(".reveal");
+        if ("IntersectionObserver" in window) {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("is-visible");
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.1, rootMargin: "0px 0px -30px 0px" },
+          );
+          observed.forEach((el) => observer.observe(el));
+        } else observed.forEach((el) => el.classList.add("is-visible"));
+      })();
 
-</style></head>
-<body class="lock">
-<div class="grand-gateway" id="intro" role="dialog" aria-modal="true" aria-label="The Grand Affair opening experience">
-<div class="gateway-world" aria-hidden="true">
-</div>
-<div class="gateway-hall" aria-hidden="true">
-</div>
-<div class="gateway-doors" aria-hidden="true">
-<div class="gateway-door gateway-left">
-</div>
-<div class="gateway-door gateway-right">
-</div>
-</div>
-<div class="gateway-shade" aria-hidden="true">
-</div>
-<div class="gateway-content">
-<div class="gateway-top">
-<span class="gateway-monogram">A <i>&amp;</i> M</span>
-<span class="gateway-brand">VRAXISRSVP <small>THE GRAND AFFAIR</small>
-</span>
-</div>
-<div class="gateway-invite">
-<span class="gateway-rule">
-</span>
-<p class="gateway-eyebrow">A PRIVATE WEDDING CELEBRATION</p>
-<h1>
-<span data-name="first">Alexander</span>
-<em>&amp;</em>
-<span data-name="second">Miranda</span>
-</h1>
-<p class="gateway-date" data-date>14 November 2026</p>
-<button class="gateway-enter" id="enter" type="button">
-<span>Open the palace doors</span>
-<span aria-hidden="true">↗</span>
-</button>
-<button class="gateway-skip" id="skip" type="button">Skip entrance</button>
-</div>
-<div class="gateway-foot">A celebration of a lifetime <span>✦</span> You're invited</div>
-</div>
-<div class="gateway-welcome" aria-hidden="true">
-<span>WELCOME TO THEIR CELEBRATION</span>
-<strong>Let the magic begin.</strong>
-</div>
-</div>
-<nav>
-<a class="brand" href="#top">VRAXISRSVP<span>THE GRAND AFFAIR</span>
-</a>
-<div class="navlinks">
-<a href="#story">Our Story</a>
-<a href="#details">Details</a>
-<a href="#programme">Programme</a>
-<a href="#gallery">Gallery</a>
-<a class="nav-rsvp" href="#rsvp">RSVP</a>
-</div>
-</nav>
-<main id="top">
-<section class="hero">
-<div class="hero-content">
-<div class="eyebrow">The wedding of</div>
-<h1>
-<span data-name="first">Alexander</span>
-<br/>
-<em>&amp;</em>
-<span data-name="second">Miranda</span>
-</h1>
-<div class="hero-date" data-date="">14 November 2026</div>
-<div class="goldline" style="margin-left:0">
-</div>
-<a class="btn light" href="#story" style="display:inline-block;text-decoration:none">Discover our story   ↓</a>
-</div>
-</section>
-<section aria-labelledby="storyHeading" class="story-odyssey" id="story">
-<div class="story-prologue reveal">
-<span class="eyebrow">Chapter II · The story of us</span>
-<h2 id="storyHeading">Before the grand affair,<br/>
-<em>there was us.</em>
-</h2>
-<p>Every extraordinary celebration begins with an ordinary moment that changes everything.</p>
-<div class="story-scroll-hint">Scroll to discover our story <span>↓</span>
-</div>
-<div aria-hidden="true" class="story-progress">
-<span>
-</span>
-<span>
-</span>
-<span>
-</span>
-</div>
-</div>
-<div class="story-chapters">
-<article class="story-chapter reveal">
-<div class="story-frame">
-<img alt="A treasured memory from the couple's journey" loading="lazy" src="assets/images/002/embedded-05.webp"/>
-<span class="frame-index">01 / THE BEGINNING</span>
-</div>
-<div class="story-words">
-<span class="eyebrow">The first chapter</span>
-<h3>It began with <em>hello.</em>
-</h3>
-<p>One conversation became another. The hours slipped away, and somewhere between the laughter and the little things, something beautiful began.</p>
-<span aria-hidden="true" class="story-ornament">✦</span>
-</div>
-</article>
-<article class="story-chapter reverse reveal">
-<div class="story-frame">
-<img alt="An intimate portrait of the couple" loading="lazy" src="assets/images/002/embedded-04.webp"/>
-<span class="frame-index">02 / THE JOURNEY</span>
-</div>
-<div class="story-words">
-<span class="eyebrow">Through every season</span>
-<h3>A thousand little <em>moments.</em>
-</h3>
-<p>The spontaneous adventures. The quiet evenings. The dreams we made together. Love was never just one grand gesture—it was choosing each other, every day.</p>
-<span aria-hidden="true" class="story-ornament">✦</span>
-</div>
-</article>
-<article class="story-chapter reveal">
-<div class="story-frame story-final-frame">
-<img alt="An elegant setting for the next chapter" loading="lazy" src="assets/images/002/embedded-08.webp"/>
-<span class="frame-index">03 / THE PROMISE</span>
-</div>
-<div class="story-words">
-<span class="eyebrow">And now, forever</span>
-<h3>The next chapter <em>is ours.</em>
-</h3>
-<p>Our favourite story is still being written. We cannot imagine beginning this next chapter without the people who have loved us along the way.</p>
-<a class="chapter-link" href="#details">Join us for the celebration <span>↗</span>
-</a>
-</div>
-</article>
-</div>
-<div class="story-epilogue reveal">
-<span class="eyebrow">Alexander &amp; Miranda</span>
-<p>“The best part of our story is that we get to write the rest together.”</p>
-<span aria-hidden="true" class="story-ornament">✧</span>
-</div>
-</section>
-<section aria-labelledby="detailsHeading" class="grand-details" id="details">
-<div class="details-heading reveal">
-<span class="eyebrow">Chapter III · An invitation to celebrate</span>
-<h2 id="detailsHeading">The Wedding <em>Day</em>
-</h2>
-<p>Two extraordinary moments. One unforgettable celebration.</p>
-</div>
-<div class="event-scenes">
-<article class="event-scene ceremony-scene reveal">
-<div class="event-art">
-<img alt="Romantic floral palace architecture" loading="lazy" src="assets/images/002/embedded-06.webp"/>
-<div class="event-art-shade">
-</div>
-<div class="event-art-word">I</div>
-</div>
-<div class="event-panel">
-<div class="event-panel-inner">
-<div class="event-kicker">
-<span class="event-number">01</span>
-<span class="eyebrow">The vows · Ceremony</span>
-</div>
-<div class="event-rule">
-</div>
-<h3>Where forever<br/>
-<em>begins.</em>
-</h3>
-<p class="event-description">With our families and dearest friends, we promise a lifetime of love.</p>
-<div class="event-time" data-ceremony-time="">14:00</div>
-<div class="event-meta">
-<strong data-ceremony="">St. Augustine's Chapel</strong>
-<span data-ceremony-place="">Potchefstroom</span>
-</div>
-<a class="event-direction" href="https://www.google.com/maps/search/?api=1&amp;query=Potchefstroom" id="directions" rel="noopener" target="_blank">View ceremony directions <span>↗</span>
-</a>
-</div>
-</div>
-</article>
-<div class="interlude reveal">
-<span class="interlude-star">✦</span>
-<span>From sacred promises to a night of celebration</span>
-<span class="interlude-star">✦</span>
-</div>
-<article class="event-scene reception-scene reveal">
-<div class="event-art">
-<img alt="A candlelit grand ballroom prepared for a wedding reception" loading="lazy" src="assets/images/002/embedded-07.webp"/>
-<div class="event-art-shade">
-</div>
-<div class="event-art-word">II</div>
-</div>
-<div class="event-panel">
-<div class="event-panel-inner">
-<div class="event-kicker">
-<span class="event-number">02</span>
-<span class="eyebrow">The evening · Reception</span>
-</div>
-<div class="event-rule">
-</div>
-<h3>Let the evening<br/>
-<em>unfold.</em>
-</h3>
-<p class="event-description">An evening of candlelight, beautiful company, heartfelt toasts and dancing.</p>
-<div class="event-time" data-reception-time="">17:30</div>
-<div class="event-meta">
-<strong data-reception="">The Grand Hall</strong>
-<span data-reception-place="">Riverside Estate</span>
-</div>
-<a class="event-direction" href="https://www.google.com/maps/search/?api=1&amp;query=Riverside%20Estate" id="receptionDirections" rel="noopener" target="_blank">View reception directions <span>↗</span>
-</a>
-</div>
-</div>
-</article>
-</div>
-<div class="details-outro reveal">
-<span class="eyebrow">The celebration continues</span>
-<p>Every moment, thoughtfully planned for you.</p>
-<a class="btn" href="#programme">Explore the programme   ↓</a>
-</div>
-</section>
-<section class="grand-chapter-divider" aria-label="Wedding celebration interlude">
-<img src="assets/images/002/embedded-06.webp" alt="A romantic palace wedding setting" loading="lazy">
-<div class="chapter-copy">
-<small>Alexander &amp; Miranda · The Grand Affair</small>
-<p>Some days are meant to be remembered forever.</p>
-<span>14 NOVEMBER 2026</span>
-</div>
-</section>
-<section class="section programme" id="programme">
-<div>
-<div class="eyebrow">Chapter IV · The celebration</div>
-<h2>The Programme</h2>
-<p class="bodycopy">An unforgettable day, thoughtfully composed.</p>
-<ol class="timeline">
-<li class="reveal">
-<time>14:00</time>
-<span class="dot">
-</span>
-<span>Ceremony</span>
-</li>
-<li class="reveal">
-<time>15:30</time>
-<span class="dot">
-</span>
-<span>Canapés &amp; Refreshments</span>
-</li>
-<li class="reveal">
-<time>17:30</time>
-<span class="dot">
-</span>
-<span>Reception &amp; Dinner</span>
-</li>
-<li class="reveal">
-<time>19:00</time>
-<span class="dot">
-</span>
-<span>Speeches</span>
-</li>
-<li class="reveal">
-<time>20:00</time>
-<span class="dot">
-</span>
-<span>First Dance</span>
-</li>
-<li class="reveal">
-<time>21:00</time>
-<span class="dot">
-</span>
-<span>Celebration Continues</span>
-</li>
-</ol>
-</div>
-<div aria-label="Candlelit palace reception" class="programme-art" role="img">
-</div>
-</section>
-<section class="section gallery" id="gallery">
-<div class="eyebrow">Our journey</div>
-<h2>The Portrait Gallery</h2>
-<p class="bodycopy">A few of our favourite moments, held close forever.</p>
-<div class="gallery-strip" id="galleryStrip">
-<div aria-label="Open portrait 1" class="portrait" data-caption="Our beginning" role="button" tabindex="0">
-<img alt="Wedding couple portrait" loading="lazy" src="assets/images/002/embedded-04.webp"/>
-</div>
-<div aria-label="Open portrait 2" class="portrait" data-caption="The story unfolds" role="button" tabindex="0">
-<img alt="Wedding memories" loading="lazy" src="assets/images/002/embedded-05.webp"/>
-</div>
-<div aria-label="Open portrait 3" class="portrait" data-caption="A day to remember" role="button" tabindex="0">
-<img alt="Palace ballroom" loading="lazy" src="assets/images/002/embedded-03.webp"/>
-</div>
-<div aria-label="Open portrait 4" class="portrait" data-caption="Every little moment" role="button" tabindex="0">
-<img alt="Wedding floral arrangement" loading="lazy" src="assets/images/002/embedded-06.webp"/>
-</div>
-<div aria-label="Open portrait 5" class="portrait" data-caption="Forever starts here" role="button" tabindex="0">
-<img alt="Reception candlelight" loading="lazy" src="assets/images/002/embedded-07.webp"/>
-</div>
-</div>
-<div class="gallery-actions">
-<button aria-label="Previous photo" id="prevPhoto" type="button">←</button>
-<button aria-label="Next photo" id="nextPhoto" type="button">→</button>
-</div>
-</section>
-<section class="section rsvp" id="rsvp">
-<div aria-hidden="true" class="rsvp-crest">A <span>&amp;</span> M</div>
-<div class="eyebrow">Chapter VI · The guest register</div>
-<h2>The Guest Register</h2>
-<p class="bodycopy">We would be honoured to have you with us as we begin this new chapter.</p>
-<form class="rsvp-form" id="rsvpForm">
-<label class="field">
-<span>Your full name *</span>
-<input autocomplete="name" maxlength="120" name="guestName" placeholder="Your name" required=""/>
-</label>
-<div class="form-legend">Will you attend? *</div>
-<div class="choices">
-<label>
-<input name="attendance" required="" type="radio" value="yes"/> Yes, I'll be there</label>
-<label>
-<input name="attendance" type="radio" value="no"/> Regretfully, I can't make it</label>
-</div>
-<div class="hidden" id="attendingFields">
-<label class="field">
-<span>Number of guests</span>
-<select name="guestCount">
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
-<option value="4">4</option>
-</select>
-</label>
-<label class="field">
-<span>Dietary requirements (optional)</span>
-<textarea name="dietary" placeholder="Let us know of any dietary needs" rows="2">
-</textarea>
-</label>
-</div>
-<label class="field">
-<span>A message for the couple (optional)</span>
-<textarea maxlength="500" name="message" placeholder="Your wishes..." rows="3">
-</textarea>
-</label>
-<button class="btn" style="width:100%" type="submit">Send RSVP   ›</button>
-<p aria-live="polite" class="form-message" id="formMessage">
-</p>
-</form>
-</section>
-<section class="closing">
-<div class="eyebrow" style="color:#d7b87d">With love</div>
-<h2>Until we meet again</h2>
-<div class="goldline">
-</div>
-<p class="bodycopy">
-<span data-name="first">Alexander</span> &amp; <span data-name="second">Miranda</span>
-</p>
-<p data-date="" style="font-size:11px;letter-spacing:.19em">14 November 2026</p>
-</section>
-</main>
-<footer class="footer">VRAXISRSVP   ·   THE GRAND AFFAIR   ·   PRESTIGE COLLECTION</footer>
-<button aria-expanded="false" class="editor-toggle" id="editorToggle">✦ Personalise demo</button>
-<aside aria-label="Invitation personalisation" class="editor" id="editor">
-<h3>Make it yours</h3>
-<label>Partner one<input id="firstName" maxlength="30" value="Alexander"/>
-</label>
-<label>Partner two<input id="secondName" maxlength="30" value="Miranda"/>
-</label>
-<label>Wedding date<input id="weddingDate" type="date" value="2026-11-14"/>
-</label>
-<label>Ceremony venue<input id="ceremonyVenue" value="St. Augustine's Chapel"/>
-</label>
-<label>Ceremony location<input id="ceremonyPlace" value="Potchefstroom"/>
-</label>
-<label>Reception venue<input id="receptionVenue" value="The Grand Hall"/>
-</label>
-<label>Reception location<input id="receptionPlace" value="Riverside Estate"/>
-</label>
-<p>Changes preview instantly. This standalone prototype does not publish or store customer edits. The RSVP currently confirms on this device only; the live platform will connect it to the shared guest database.</p>
-<button class="btn" id="closeEditor">Done</button>
-</aside>
-<script>
-(()=>{'use strict';const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);let entering=false;const intro=$('#intro');let finishTimer=null;function finish(){if(finishTimer)clearTimeout(finishTimer);intro.classList.add('done');document.body.classList.remove('lock');setTimeout(()=>{intro.hidden=true},700)}$('#enter').addEventListener('click',()=>{if(entering)return;entering=true;intro.classList.add('opening');finishTimer=setTimeout(finish,matchMedia('(prefers-reduced-motion: reduce)').matches?400:3150)});$('#skip').addEventListener('click',finish);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!intro.hidden)finish()});const strip=$('#galleryStrip');const move=d=>strip.scrollBy({left:d*strip.querySelector('.portrait').getBoundingClientRect().width+ d*20,behavior:'smooth'});$('#prevPhoto').onclick=()=>move(-1);$('#nextPhoto').onclick=()=>move(1);$$('input[name="attendance"]').forEach(r=>r.addEventListener('change',()=>$('#attendingFields').classList.toggle('hidden',r.value!=='yes')));$('#rsvpForm').addEventListener('submit',e=>{e.preventDefault();const data=new FormData(e.currentTarget);if(!data.get('attendance'))return;$('#formMessage').textContent='Thank you, '+data.get('guestName')+'. Your '+(data.get('attendance')==='yes'?'attendance':'regret')+' has been recorded in this demo preview only. No RSVP has been sent to the organiser.';e.currentTarget.querySelector('button[type="submit"]').textContent='Preview confirmed ✓'});const editor=$('#editor');function toggle(v){editor.classList.toggle('active',v);$('#editorToggle').setAttribute('aria-expanded',String(v))}$('#editorToggle').onclick=()=>toggle(!editor.classList.contains('active'));$('#closeEditor').onclick=()=>toggle(false);function bind(input,selector){$(input).addEventListener('input',e=>$$(selector).forEach(el=>el.textContent=e.target.value))}bind('#firstName','[data-name="first"]');bind('#secondName','[data-name="second"]');bind('#ceremonyVenue','[data-ceremony]');bind('#ceremonyPlace','[data-ceremony-place]');bind('#receptionVenue','[data-reception]');bind('#receptionPlace','[data-reception-place]');$('#weddingDate').addEventListener('change',e=>{const v=e.target.value;if(!v)return;const d=new Date(v+'T12:00:00');const text=d.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});$$('[data-date]').forEach(el=>el.textContent=text)});$('#ceremonyPlace').addEventListener('input',e=>$('#directions').href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(e.target.value));$('#receptionPlace').addEventListener('input',e=>$('#receptionDirections').href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(e.target.value));const observed=$$('.reveal');if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target)}})},{threshold:.1,rootMargin:'0px 0px -30px 0px'});observed.forEach(el=>observer.observe(el))}else observed.forEach(el=>el.classList.add('is-visible')); })();
-
-// V1.2 portrait exhibition and accessible navigation\n(()=>{const portraits=[...document.querySelectorAll('.portrait')],box=document.getElementById('portraitLightbox'),pic=document.getElementById('lightboxImage'),caption=document.getElementById('lightboxCaption');let active=0,returnFocus=null;function show(i){active=(i+portraits.length)%portraits.length;pic.src=portraits[active].querySelector('img').src;pic.alt=portraits[active].querySelector('img').alt;caption.textContent=portraits[active].dataset.caption}function open(i){returnFocus=document.activeElement;show(i);box.hidden=false;document.body.style.overflow='hidden';document.getElementById('lightboxClose').focus()}function close(){box.hidden=true;document.body.style.overflow='';returnFocus?.focus()}portraits.forEach((p,i)=>{p.addEventListener('click',()=>open(i));p.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open(i)}})});document.getElementById('lightboxClose').onclick=close;document.getElementById('lightboxPrev').onclick=()=>show(active-1);document.getElementById('lightboxNext').onclick=()=>show(active+1);box.addEventListener('click',e=>{if(e.target===box)close()});document.addEventListener('keydown',e=>{if(box.hidden)return;if(e.key==='Escape')close();if(e.key==='ArrowRight')show(active+1);if(e.key==='ArrowLeft')show(active-1)});})();
-</script><div aria-label="Portrait viewer" aria-modal="true" class="portrait-lightbox" hidden="" id="portraitLightbox" role="dialog">
-<button aria-label="Close gallery" class="lightbox-close" id="lightboxClose">×</button>
-<button aria-label="Previous portrait" class="lightbox-arrow left" id="lightboxPrev">‹</button>
-<figure>
-<img alt="Selected portrait" id="lightboxImage"/>
-<figcaption id="lightboxCaption">
-</figcaption>
-</figure>
-<button aria-label="Next portrait" class="lightbox-arrow right" id="lightboxNext">›</button>
-</div><script>(function(){const el=document.querySelector('.grand-chapter-divider');if(!el)return;if(!('IntersectionObserver' in window)){el.classList.add('in-view');return;}const ob=new IntersectionObserver(es=>{for(const e of es)if(e.isIntersecting){e.target.classList.add('in-view');ob.unobserve(e.target)}},{threshold:.12});ob.observe(el)})();</script></body>
+      // V1.2 portrait exhibition and accessible navigation\n(()=>{const portraits=[...document.querySelectorAll('.portrait')],box=document.getElementById('portraitLightbox'),pic=document.getElementById('lightboxImage'),caption=document.getElementById('lightboxCaption');let active=0,returnFocus=null;function show(i){active=(i+portraits.length)%portraits.length;pic.src=portraits[active].querySelector('img').src;pic.alt=portraits[active].querySelector('img').alt;caption.textContent=portraits[active].dataset.caption}function open(i){returnFocus=document.activeElement;show(i);box.hidden=false;document.body.style.overflow='hidden';document.getElementById('lightboxClose').focus()}function close(){box.hidden=true;document.body.style.overflow='';returnFocus?.focus()}portraits.forEach((p,i)=>{p.addEventListener('click',()=>open(i));p.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open(i)}})});document.getElementById('lightboxClose').onclick=close;document.getElementById('lightboxPrev').onclick=()=>show(active-1);document.getElementById('lightboxNext').onclick=()=>show(active+1);box.addEventListener('click',e=>{if(e.target===box)close()});document.addEventListener('keydown',e=>{if(box.hidden)return;if(e.key==='Escape')close();if(e.key==='ArrowRight')show(active+1);if(e.key==='ArrowLeft')show(active-1)});})();
+    </script>
+    <div
+      aria-label="Portrait viewer"
+      aria-modal="true"
+      class="portrait-lightbox"
+      hidden=""
+      id="portraitLightbox"
+      role="dialog"
+    >
+      <button aria-label="Close gallery" class="lightbox-close" id="lightboxClose">×</button>
+      <button aria-label="Previous portrait" class="lightbox-arrow left" id="lightboxPrev">
+        ‹
+      </button>
+      <figure>
+        <img alt="Selected portrait" id="lightboxImage" />
+        <figcaption id="lightboxCaption"></figcaption>
+      </figure>
+      <button aria-label="Next portrait" class="lightbox-arrow right" id="lightboxNext">›</button>
+    </div>
+    <script>
+      (function () {
+        const el = document.querySelector(".grand-chapter-divider");
+        if (!el) return;
+        if (!("IntersectionObserver" in window)) {
+          el.classList.add("in-view");
+          return;
+        }
+        const ob = new IntersectionObserver(
+          (es) => {
+            for (const e of es)
+              if (e.isIntersecting) {
+                e.target.classList.add("in-view");
+                ob.unobserve(e.target);
+              }
+          },
+          { threshold: 0.12 },
+        );
+        ob.observe(el);
+      })();
+    </script>
+  </body>
 </html>

@@ -1,105 +1,798 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Your dashboard | VraxisRSVP</title><style>:root{--ink:#222c27;--cream:#f7f3ec;--line:#e1ddd4;--accent:#335547}*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:Arial,sans-serif}header{padding:22px 5%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}a{color:inherit}header a{text-decoration:none}header strong{font:26px Georgia,serif}nav{display:flex;gap:20px}main{max-width:1180px;margin:auto;padding:48px 5%}h1,h2{font-family:Georgia,serif;font-weight:400}h1{font-size:clamp(38px,6vw,70px);line-height:1.08;margin:10px 0 20px}h2{font-size:32px}p{line-height:1.6;color:#656d65}.eyebrow{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#a16e50}.btn,button{background:var(--accent);color:white;border:0;padding:15px 22px;cursor:pointer;text-decoration:none;display:inline-block;font-size:14px}.ghost{background:transparent;border:1px solid var(--ink);color:var(--ink)}.panel{background:white;border:1px solid var(--line);padding:28px}.layout{display:grid;grid-template-columns:1fr 1fr;gap:28px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:flex;flex-direction:column;gap:8px;margin:0 0 18px}.field.full{grid-column:1/-1}label{font-size:13px;font-weight:600}input,textarea,select{border:1px solid #d9d9d0;border-radius:0;background:#fff;padding:14px;width:100%;font:inherit}input[type=file]{font-size:12px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.preview{width:100%;height:650px;border:1px solid var(--line);background:#fff}.hint{font-size:12px}.tile{background:#fff;border:1px solid var(--line);padding:22px;margin:12px 0;display:flex;justify-content:space-between;align-items:center;gap:18px}.tile strong{font-family:Georgia,serif;font-size:23px}.empty{padding:60px 20px;text-align:center;border:1px dashed #c9c9c0}.step{display:inline-block;border:1px solid #ddd;padding:9px 12px;margin:0 6px 12px 0;font-size:12px}.active{background:#335547;color:white}.loading{position:fixed;inset:0;background:#f7f3ec;display:none;align-items:center;justify-content:center;z-index:99;text-align:center}.loading.show{display:flex}.spinner{width:46px;height:46px;border:3px solid #ddd;border-top-color:#335547;border-radius:50%;animation:spin .9s linear infinite;margin:0 auto 22px}@keyframes spin{to{transform:rotate(360deg)}}@media(max-width:800px){nav{gap:12px;font-size:12px}.layout,.fields{grid-template-columns:1fr}.preview{height:520px}main{padding:30px 5%}.panel{padding:20px}.tile{align-items:flex-start;flex-direction:column}}.tile{border-radius:5px;box-shadow:0 8px 25px #192c2410}.tile strong{line-height:1.3}.tile p{text-transform:capitalize;font-size:13px}.tile .actions{margin-top:0}header{background:#fff}main>h1{letter-spacing:-.035em}.actions .btn{transition:filter .2s}.actions .btn:hover{filter:brightness(.92)}.panel{border-radius:4px}@media(max-width:800px){.tile .actions{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px}.tile .actions>*{font-size:12px;padding:13px 9px;text-align:center}.tile strong{font-size:24px}} .payment-banner{background:#e7eee7;border:1px solid #b1c5b5;padding:25px 26px;margin-bottom:30px}.payment-banner strong{display:block;font:normal 30px Georgia,serif;margin-bottom:8px}.payment-banner p{margin:0;font-size:14px}.payment-banner a{display:inline-block;margin-top:15px;font-size:13px;font-weight:700}.payment-banner.waiting{background:#fff8e9;border-color:#e7d5aa}</style><style>@media(max-width:700px){main{padding:26px 5% 60px}h1{font-size:42px}.tile{padding:18px!important}.tile .actions{gap:8px;flex-wrap:wrap}.tile .btn{padding:12px 14px;font-size:13px}nav{gap:10px;font-size:12px}}</style><style>
-.dashboard-overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:#dedbd2;border:1px solid #dedbd2;margin:30px 0 36px}
-.dashboard-overview[hidden]{display:none}.dashboard-overview>div{background:#fff;padding:23px 20px;display:flex;flex-direction:column;gap:10px}
-.dashboard-overview span{color:#6c766c;font-size:12px}.dashboard-overview strong{font:normal 42px Georgia,serif}
-.project-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:24px}
-.project-heading h2{font-size:30px;margin:0}.project-filters{display:flex;gap:4px;overflow:auto}
-.project-filters button{background:transparent;color:#3a493e;border:1px solid transparent;padding:10px 13px;white-space:nowrap;font-size:12px}
-.project-filters button[aria-pressed=true]{border-color:#385247;background:#e9eee8}
-.tile{border-radius:0;box-shadow:none;align-items:center;padding:24px;margin:10px 0}
-.tile>div:first-child{min-width:0}.tile strong{display:block;font-size:25px;margin:8px 0 3px;overflow-wrap:anywhere}
-.tile p{text-transform:none;color:#7b8179;margin:0}
-.project-state{display:inline-block;font:700 10px Arial,sans-serif;letter-spacing:.09em;text-transform:uppercase;color:#677569}
-.project-state.published{color:#2b6547}.project-state.paid{color:#95683f}
-.tile .actions{display:flex;align-items:center;gap:8px;margin:0;flex-wrap:wrap}
-.tile .actions .btn{padding:12px 15px;font-size:12px}.tile .actions .ghost{background:transparent}
-@media(max-width:700px){.dashboard-overview{grid-template-columns:repeat(2,minmax(0,1fr));margin:22px 0}.dashboard-overview>div{padding:17px}.dashboard-overview strong{font-size:34px}.project-heading{align-items:flex-start;flex-direction:column}.project-filters{width:100%}.tile{align-items:stretch}.tile .actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}.tile .actions>*{min-width:0;text-align:center;font-size:12px;padding:13px 7px}}
-</style></head><body><header><a href="index.html"><strong>vraxisRSVP</strong></a><nav><a href="catalogue.html">Collection</a><a href="dashboard.html">My dashboard</a></nav></header><main><div id="payment-banner" role="status" style="display:none" class="payment-banner"></div><div class="eyebrow">YOUR CREATIVE SPACE</div><h1>Your invitations.</h1><p>Create, share and manage your invitations in one place.</p><div class="actions"><a class="btn" href="catalogue.html">+ Create a new invitation</a><a class="btn ghost" href="template-manager.html" id="templateManagerLink" hidden>Manage template photography ↗</a></div><section class="dashboard-overview" id="overview" hidden aria-label="Invitation overview"><div><span>All invitations</span><strong id="stat-all">0</strong></div><div><span>Live invitations</span><strong id="stat-live">0</strong></div><div><span>Ready to publish</span><strong id="stat-paid">0</strong></div><div><span>Drafts</span><strong id="stat-draft">0</strong></div></section><div class="project-heading"><h2>Your events</h2><div class="project-filters" role="group" aria-label="Filter invitations"><button type="button" data-status="all" aria-pressed="true">All</button><button type="button" data-status="published" aria-pressed="false">Live</button><button type="button" data-status="paid" aria-pressed="false">Ready</button><button type="button" data-status="draft" aria-pressed="false">Drafts</button></div></div><div id="projects"></div></main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script><script src="assets/backend.js"></script><script>
-const list=document.getElementById('projects');
-let allInvitations=[],activeFilter='all';
-function updateOverview(items){document.getElementById('overview').hidden=false;for(const [name,number] of Object.entries({all:items.length,live:items.filter(x=>x.status==='published').length,paid:items.filter(x=>x.status==='paid').length,draft:items.filter(x=>x.status==='draft').length})){document.getElementById('stat-'+name).textContent=number}}
-document.querySelectorAll('[data-status]').forEach(btn=>btn.addEventListener('click',()=>{activeFilter=btn.dataset.status;document.querySelectorAll('[data-status]').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));render(allInvitations.filter(x=>activeFilter==='all'||x.status===activeFilter))}));
-const names=['The Heirloom','The Grand Affair','The Modern Vow','Midnight Club','The Social Edit','After Hours','The Little Garden','Moonlit Lullaby','The Big Little Secret','Little Wonderland','Sunday, With Love','The Bridal Edit','Something Sweet'];
-function render(items){
- list.replaceChildren();
- if(!items.length){list.innerHTML=allInvitations.length?'<div class="empty"><h2>Nothing in this category yet</h2><p>Try another filter to find your invitations.</p></div>':'<div class="empty"><h2>Your first invitation starts here.</h2><p>Choose a design, personalise it and make it yours.</p><a class="btn" href="choose.html">Explore invitations</a></div>';return}
- for(const x of items){
-  const el=document.createElement('div');el.className='tile';const left=document.createElement('div'),h=document.createElement('strong'),p=document.createElement('p');
-  h.textContent=x.title||names[Number(x.template_id)-1]||'Invitation';p.textContent=(names[Number(x.template_id)-1]||'Template')+' · Updated '+new Date(x.updated_at).toLocaleDateString();const state=document.createElement('span');state.className='project-state '+x.status;state.textContent=({published:'Live',paid:'Ready to publish',draft:'Draft'}[x.status]||x.status);left.append(state,h,p);
-  const actions=document.createElement('div');actions.className='actions';
-  const open=document.createElement('button');open.className='btn';open.textContent='Edit invitation';open.onclick=async()=>{
-   const id=x.template_id;
-   const prefix='vraxis_draft_'+x.id+'_';
-   localStorage.setItem(prefix+'details',JSON.stringify(x.event_data||{}));
-   const restoredEdits=JSON.parse(JSON.stringify(x.design_data?.tap_edits||{}));
-   restoredEdits.text=restoredEdits.text||{};
-   restoredEdits.images=restoredEdits.images||{};
-   const editedPaths=x.design_data?.tap_image_paths||{};
-   if(Object.keys(editedPaths).length){open.disabled=true;open.textContent='Restoring edited photos…'}
-   for(const [selector,path] of Object.entries(editedPaths)){
-    if(typeof path!=='string')continue;
-    const {data:signed,error}=await vraxisDB.storage.from('invitation-photos').createSignedUrl(path,3600);
-    if(error||!signed?.signedUrl){open.disabled=false;open.textContent='Edit invitation';alert('Could not restore an edited photo. Please retry.');return}
-    restoredEdits.images[selector]=signed.signedUrl;
-   }
-   localStorage.setItem(prefix+'tap',JSON.stringify(restoredEdits));
-   const paths=x.design_data?.photo_paths||[];
-   if(paths.length){open.disabled=true;open.textContent='Loading your photos…';const urls=[];for(const path of paths){const {data,error}=await vraxisDB.storage.from('invitation-photos').createSignedUrl(path,3600);if(error){open.disabled=false;open.textContent='Open invitation';alert('Could not load a photo: '+error.message);return}urls.push(data.signedUrl)}localStorage.setItem(prefix+'photos',JSON.stringify(urls))}else localStorage.removeItem(prefix+'photos');
-   let local=[];try{local=JSON.parse(localStorage.getItem('vraxis_projects')||'[]')}catch{}
-   const old=local.find(p=>p.cloudId===x.id);if(old){old.cloudId=x.id;old.details=x.event_data;old.photoPaths=paths}else local.unshift({id,cloudId:x.id,details:x.event_data,photoPaths:paths,updated:Date.now()});
-   localStorage.setItem('vraxis_projects',JSON.stringify(local));
-   location.href='ready.html?template='+id+'&project='+encodeURIComponent(x.id)+'&draft='+encodeURIComponent(x.id);
-  };
-  actions.append(open);
-  if(x.status==='paid'||x.status==='published'){
-   const publish=document.createElement('button');publish.className='btn';publish.textContent=x.status==='published'?'Copy guest link':'Publish invitation';
-   publish.onclick=async()=>{
-    publish.disabled=true;
-    try{
-     let link;
-     if(x.status==='published'&&x.slug)link='https://vraxisrsvp.online/invite.html?slug='+encodeURIComponent(x.slug);
-     else{
-      const {data:{session}}=await vraxisDB.auth.getSession();
-      if(!session?.access_token)throw new Error('Sign in again');
-      const res=await fetch('https://ogmlfnmdhmrbbmxnxwqw.supabase.co/functions/v1/publish-invitation',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.access_token,'apikey':'sb_publishable_K8hadrdvJiqCRB3eXs9tHg_0kUXl9Ry'},body:JSON.stringify({invitation_id:x.id})});
-      const body=await res.json();if(!res.ok)throw new Error(body.error||'Could not publish');link='https://vraxisrsvp.online/invite.html?slug='+encodeURIComponent(new URL(body.url).searchParams.get('slug'));
-     }
-     try{await navigator.clipboard.writeText(link);alert('Guest link copied! You can copy it again any time from your dashboard.')}catch{prompt('Copy your invitation link:',link)}publish.disabled=false;publish.textContent='Copy guest link';x.status='published';x.slug=new URL(link).searchParams.get('slug');
-    }catch(e){alert('Could not finish: '+e.message);publish.disabled=false}
-   };actions.append(publish);
-  }
-  if(x.status==='published'||x.status==='paid'){
-   const manage=document.createElement('a');manage.className='btn ghost';manage.href='manage.html?id='+encodeURIComponent(x.id);manage.textContent='Guest responses';actions.append(manage);
-  }
-    if(x.status==='draft'){
-   const pay=document.createElement('button');pay.className='btn';const price=['002','005','010','012'].includes(x.template_id)?'$24.00':'$15.99';pay.textContent='Checkout · '+price;
-   pay.onclick=async()=>{
-    pay.disabled=true;pay.textContent='Preparing secure checkout…';
-    try{
-     const {data:{session},error:sessionError}=await vraxisDB.auth.getSession();
-     if(sessionError||!session?.access_token)throw new Error('Please sign in again');
-     const response=await fetch('https://ogmlfnmdhmrbbmxnxwqw.supabase.co/functions/v1/create-checkout',{method:'POST',headers:{'Content-Type':'application/json','apikey':'sb_publishable_K8hadrdvJiqCRB3eXs9tHg_0kUXl9Ry','Authorization':'Bearer '+session.access_token},body:JSON.stringify({invitation_id:x.id})});
-     const body=await response.json();if(!response.ok)throw new Error(body.error||'Could not start checkout');
-     if(!body.url||!body.url.startsWith('https://'))throw new Error('Invalid checkout URL');
-     localStorage.setItem('vraxis_checkout_invitation',x.id);location.assign(body.url);
-    }catch(err){alert(err.message);pay.disabled=false;pay.textContent='Checkout · '+price}
-   };actions.append(pay);
-  }
-  el.append(left,actions);list.append(el)
- }
-}
-(async()=>{
- list.textContent='Loading your invitations…';
- const user=await vraxisRequireAuth();if(user?.app_metadata?.template_admin===true)document.getElementById("templateManagerLink").hidden=false;if(!user)return;
- const signout=document.createElement('button');signout.className='ghost';signout.textContent='Sign out';signout.onclick=async()=>{await vraxisDB.auth.signOut();location.href='account.html'};document.querySelector('main .actions').append(signout);
- const {data,error}=await vraxisDB.from('invitations').select('id,template_id,title,status,slug,event_data,design_data,updated_at').order('updated_at',{ascending:false});
- if(error){list.textContent='Could not load invitations: '+error.message;return}allInvitations=data||[];updateOverview(allInvitations);render(allInvitations);
- if(new URLSearchParams(location.search).get('payment')==='return'){
-  const banner=document.getElementById('payment-banner');banner.style.display='block';
-  const checkoutId=localStorage.getItem('vraxis_checkout_invitation');const paid=(data||[]).filter(x=>x.id===checkoutId&&(x.status==='paid'||x.status==='published'));
-  const title=document.createElement('strong'),message=document.createElement('p');
-  if(paid.length){title.textContent='Your invitation is ready for the next chapter.';message.textContent='Payment confirmed. Publish your invitation to unlock its guest link and begin receiving RSVPs.';localStorage.removeItem('vraxis_checkout_invitation');const next=document.createElement('a');next.href='manage.html?id='+encodeURIComponent(paid[0].id);next.textContent='Open your event control centre →';banner.append(title,message,next)}
-  else{banner.classList.add('waiting');title.textContent='Back from checkout';message.textContent='Your payment confirmation is still being checked. Refresh the dashboard shortly. Do not pay a second time.';banner.append(title,message)}
- }
-})();
-</script><script src="assets/site-nav.js" defer></script></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Your dashboard | VraxisRSVP</title>
+    <style>
+      :root {
+        --ink: #222c27;
+        --cream: #f7f3ec;
+        --line: #e1ddd4;
+        --accent: #335547;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--cream);
+        color: var(--ink);
+        font-family: Arial, sans-serif;
+      }
+      header {
+        padding: 22px 5%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--line);
+      }
+      a {
+        color: inherit;
+      }
+      header a {
+        text-decoration: none;
+      }
+      header strong {
+        font:
+          26px Georgia,
+          serif;
+      }
+      nav {
+        display: flex;
+        gap: 20px;
+      }
+      main {
+        max-width: 1180px;
+        margin: auto;
+        padding: 48px 5%;
+      }
+      h1,
+      h2 {
+        font-family: Georgia, serif;
+        font-weight: 400;
+      }
+      h1 {
+        font-size: clamp(38px, 6vw, 70px);
+        line-height: 1.08;
+        margin: 10px 0 20px;
+      }
+      h2 {
+        font-size: 32px;
+      }
+      p {
+        line-height: 1.6;
+        color: #656d65;
+      }
+      .eyebrow {
+        font-size: 12px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #a16e50;
+      }
+      .btn,
+      button {
+        background: var(--accent);
+        color: white;
+        border: 0;
+        padding: 15px 22px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+      }
+      .ghost {
+        background: transparent;
+        border: 1px solid var(--ink);
+        color: var(--ink);
+      }
+      .panel {
+        background: white;
+        border: 1px solid var(--line);
+        padding: 28px;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+      }
+      .fields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin: 0 0 18px;
+      }
+      .field.full {
+        grid-column: 1/-1;
+      }
+      label {
+        font-size: 13px;
+        font-weight: 600;
+      }
+      input,
+      textarea,
+      select {
+        border: 1px solid #d9d9d0;
+        border-radius: 0;
+        background: #fff;
+        padding: 14px;
+        width: 100%;
+        font: inherit;
+      }
+      input[type="file"] {
+        font-size: 12px;
+      }
+      .actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 22px;
+      }
+      .preview {
+        width: 100%;
+        height: 650px;
+        border: 1px solid var(--line);
+        background: #fff;
+      }
+      .hint {
+        font-size: 12px;
+      }
+      .tile {
+        background: #fff;
+        border: 1px solid var(--line);
+        padding: 22px;
+        margin: 12px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 18px;
+      }
+      .tile strong {
+        font-family: Georgia, serif;
+        font-size: 23px;
+      }
+      .empty {
+        padding: 60px 20px;
+        text-align: center;
+        border: 1px dashed #c9c9c0;
+      }
+      .step {
+        display: inline-block;
+        border: 1px solid #ddd;
+        padding: 9px 12px;
+        margin: 0 6px 12px 0;
+        font-size: 12px;
+      }
+      .active {
+        background: #335547;
+        color: white;
+      }
+      .loading {
+        position: fixed;
+        inset: 0;
+        background: #f7f3ec;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 99;
+        text-align: center;
+      }
+      .loading.show {
+        display: flex;
+      }
+      .spinner {
+        width: 46px;
+        height: 46px;
+        border: 3px solid #ddd;
+        border-top-color: #335547;
+        border-radius: 50%;
+        animation: spin 0.9s linear infinite;
+        margin: 0 auto 22px;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @media (max-width: 800px) {
+        nav {
+          gap: 12px;
+          font-size: 12px;
+        }
+        .layout,
+        .fields {
+          grid-template-columns: 1fr;
+        }
+        .preview {
+          height: 520px;
+        }
+        main {
+          padding: 30px 5%;
+        }
+        .panel {
+          padding: 20px;
+        }
+        .tile {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+      .tile {
+        border-radius: 5px;
+        box-shadow: 0 8px 25px #192c2410;
+      }
+      .tile strong {
+        line-height: 1.3;
+      }
+      .tile p {
+        text-transform: capitalize;
+        font-size: 13px;
+      }
+      .tile .actions {
+        margin-top: 0;
+      }
+      header {
+        background: #fff;
+      }
+      main > h1 {
+        letter-spacing: -0.035em;
+      }
+      .actions .btn {
+        transition: filter 0.2s;
+      }
+      .actions .btn:hover {
+        filter: brightness(0.92);
+      }
+      .panel {
+        border-radius: 4px;
+      }
+      @media (max-width: 800px) {
+        .tile .actions {
+          width: 100%;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+        }
+        .tile .actions > * {
+          font-size: 12px;
+          padding: 13px 9px;
+          text-align: center;
+        }
+        .tile strong {
+          font-size: 24px;
+        }
+      }
+      .payment-banner {
+        background: #e7eee7;
+        border: 1px solid #b1c5b5;
+        padding: 25px 26px;
+        margin-bottom: 30px;
+      }
+      .payment-banner strong {
+        display: block;
+        font:
+          normal 30px Georgia,
+          serif;
+        margin-bottom: 8px;
+      }
+      .payment-banner p {
+        margin: 0;
+        font-size: 14px;
+      }
+      .payment-banner a {
+        display: inline-block;
+        margin-top: 15px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .payment-banner.waiting {
+        background: #fff8e9;
+        border-color: #e7d5aa;
+      }
+    </style>
+    <style>
+      @media (max-width: 700px) {
+        main {
+          padding: 26px 5% 60px;
+        }
+        h1 {
+          font-size: 42px;
+        }
+        .tile {
+          padding: 18px !important;
+        }
+        .tile .actions {
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+        .tile .btn {
+          padding: 12px 14px;
+          font-size: 13px;
+        }
+        nav {
+          gap: 10px;
+          font-size: 12px;
+        }
+      }
+    </style>
+    <style>
+      .dashboard-overview {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1px;
+        background: #dedbd2;
+        border: 1px solid #dedbd2;
+        margin: 30px 0 36px;
+      }
+      .dashboard-overview[hidden] {
+        display: none;
+      }
+      .dashboard-overview > div {
+        background: #fff;
+        padding: 23px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .dashboard-overview span {
+        color: #6c766c;
+        font-size: 12px;
+      }
+      .dashboard-overview strong {
+        font:
+          normal 42px Georgia,
+          serif;
+      }
+      .project-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 24px;
+      }
+      .project-heading h2 {
+        font-size: 30px;
+        margin: 0;
+      }
+      .project-filters {
+        display: flex;
+        gap: 4px;
+        overflow: auto;
+      }
+      .project-filters button {
+        background: transparent;
+        color: #3a493e;
+        border: 1px solid transparent;
+        padding: 10px 13px;
+        white-space: nowrap;
+        font-size: 12px;
+      }
+      .project-filters button[aria-pressed="true"] {
+        border-color: #385247;
+        background: #e9eee8;
+      }
+      .tile {
+        border-radius: 0;
+        box-shadow: none;
+        align-items: center;
+        padding: 24px;
+        margin: 10px 0;
+      }
+      .tile > div:first-child {
+        min-width: 0;
+      }
+      .tile strong {
+        display: block;
+        font-size: 25px;
+        margin: 8px 0 3px;
+        overflow-wrap: anywhere;
+      }
+      .tile p {
+        text-transform: none;
+        color: #7b8179;
+        margin: 0;
+      }
+      .project-state {
+        display: inline-block;
+        font:
+          700 10px Arial,
+          sans-serif;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: #677569;
+      }
+      .project-state.published {
+        color: #2b6547;
+      }
+      .project-state.paid {
+        color: #95683f;
+      }
+      .tile .actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0;
+        flex-wrap: wrap;
+      }
+      .tile .actions .btn {
+        padding: 12px 15px;
+        font-size: 12px;
+      }
+      .tile .actions .ghost {
+        background: transparent;
+      }
+      @media (max-width: 700px) {
+        .dashboard-overview {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          margin: 22px 0;
+        }
+        .dashboard-overview > div {
+          padding: 17px;
+        }
+        .dashboard-overview strong {
+          font-size: 34px;
+        }
+        .project-heading {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+        .project-filters {
+          width: 100%;
+        }
+        .tile {
+          align-items: stretch;
+        }
+        .tile .actions {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          width: 100%;
+        }
+        .tile .actions > * {
+          min-width: 0;
+          text-align: center;
+          font-size: 12px;
+          padding: 13px 7px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="index.html"><strong>vraxisRSVP</strong></a>
+      <nav><a href="catalogue.html">Collection</a><a href="dashboard.html">My dashboard</a></nav>
+    </header>
+    <main>
+      <div id="payment-banner" role="status" style="display: none" class="payment-banner"></div>
+      <div class="eyebrow">YOUR CREATIVE SPACE</div>
+      <h1>Your invitations.</h1>
+      <p>Create, share and manage your invitations in one place.</p>
+      <div class="actions">
+        <a class="btn" href="catalogue.html">+ Create a new invitation</a
+        ><a class="btn ghost" href="template-manager.html" id="templateManagerLink" hidden
+          >Manage template photography ↗</a
+        >
+      </div>
+      <section class="dashboard-overview" id="overview" hidden aria-label="Invitation overview">
+        <div><span>All invitations</span><strong id="stat-all">0</strong></div>
+        <div><span>Live invitations</span><strong id="stat-live">0</strong></div>
+        <div><span>Ready to publish</span><strong id="stat-paid">0</strong></div>
+        <div><span>Drafts</span><strong id="stat-draft">0</strong></div>
+      </section>
+      <div class="project-heading">
+        <h2>Your events</h2>
+        <div class="project-filters" role="group" aria-label="Filter invitations">
+          <button type="button" data-status="all" aria-pressed="true">All</button
+          ><button type="button" data-status="published" aria-pressed="false">Live</button
+          ><button type="button" data-status="paid" aria-pressed="false">Ready</button
+          ><button type="button" data-status="draft" aria-pressed="false">Drafts</button>
+        </div>
+      </div>
+      <div id="projects"></div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script>
+    <script src="assets/backend.js"></script>
+    <script>
+      const list = document.getElementById("projects");
+      let allInvitations = [],
+        activeFilter = "all";
+      function updateOverview(items) {
+        document.getElementById("overview").hidden = false;
+        for (const [name, number] of Object.entries({
+          all: items.length,
+          live: items.filter((x) => x.status === "published").length,
+          paid: items.filter((x) => x.status === "paid").length,
+          draft: items.filter((x) => x.status === "draft").length,
+        })) {
+          document.getElementById("stat-" + name).textContent = number;
+        }
+      }
+      document.querySelectorAll("[data-status]").forEach((btn) =>
+        btn.addEventListener("click", () => {
+          activeFilter = btn.dataset.status;
+          document
+            .querySelectorAll("[data-status]")
+            .forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+          render(allInvitations.filter((x) => activeFilter === "all" || x.status === activeFilter));
+        }),
+      );
+      const names = [
+        "The Heirloom",
+        "The Grand Affair",
+        "The Modern Vow",
+        "Midnight Club",
+        "The Social Edit",
+        "After Hours",
+        "The Little Garden",
+        "Moonlit Lullaby",
+        "The Big Little Secret",
+        "Little Wonderland",
+        "Sunday, With Love",
+        "The Bridal Edit",
+        "Something Sweet",
+      ];
+      function render(items) {
+        list.replaceChildren();
+        if (!items.length) {
+          list.innerHTML = allInvitations.length
+            ? '<div class="empty"><h2>Nothing in this category yet</h2><p>Try another filter to find your invitations.</p></div>'
+            : '<div class="empty"><h2>Your first invitation starts here.</h2><p>Choose a design, personalise it and make it yours.</p><a class="btn" href="choose.html">Explore invitations</a></div>';
+          return;
+        }
+        for (const x of items) {
+          const el = document.createElement("div");
+          el.className = "tile";
+          const left = document.createElement("div"),
+            h = document.createElement("strong"),
+            p = document.createElement("p");
+          h.textContent = x.title || names[Number(x.template_id) - 1] || "Invitation";
+          p.textContent =
+            (names[Number(x.template_id) - 1] || "Template") +
+            " · Updated " +
+            new Date(x.updated_at).toLocaleDateString();
+          const state = document.createElement("span");
+          state.className = "project-state " + x.status;
+          state.textContent =
+            { published: "Live", paid: "Ready to publish", draft: "Draft" }[x.status] || x.status;
+          left.append(state, h, p);
+          const actions = document.createElement("div");
+          actions.className = "actions";
+          const open = document.createElement("button");
+          open.className = "btn";
+          open.textContent = "Edit invitation";
+          open.onclick = async () => {
+            const id = x.template_id;
+            const prefix = "vraxis_draft_" + x.id + "_";
+            localStorage.setItem(prefix + "details", JSON.stringify(x.event_data || {}));
+            const restoredEdits = JSON.parse(JSON.stringify(x.design_data?.tap_edits || {}));
+            restoredEdits.text = restoredEdits.text || {};
+            restoredEdits.images = restoredEdits.images || {};
+            const editedPaths = x.design_data?.tap_image_paths || {};
+            if (Object.keys(editedPaths).length) {
+              open.disabled = true;
+              open.textContent = "Restoring edited photos…";
+            }
+            for (const [selector, path] of Object.entries(editedPaths)) {
+              if (typeof path !== "string") continue;
+              const { data: signed, error } = await vraxisDB.storage
+                .from("invitation-photos")
+                .createSignedUrl(path, 3600);
+              if (error || !signed?.signedUrl) {
+                open.disabled = false;
+                open.textContent = "Edit invitation";
+                alert("Could not restore an edited photo. Please retry.");
+                return;
+              }
+              restoredEdits.images[selector] = signed.signedUrl;
+            }
+            localStorage.setItem(prefix + "tap", JSON.stringify(restoredEdits));
+            const paths = x.design_data?.photo_paths || [];
+            if (paths.length) {
+              open.disabled = true;
+              open.textContent = "Loading your photos…";
+              const urls = [];
+              for (const path of paths) {
+                const { data, error } = await vraxisDB.storage
+                  .from("invitation-photos")
+                  .createSignedUrl(path, 3600);
+                if (error) {
+                  open.disabled = false;
+                  open.textContent = "Open invitation";
+                  alert("Could not load a photo: " + error.message);
+                  return;
+                }
+                urls.push(data.signedUrl);
+              }
+              localStorage.setItem(prefix + "photos", JSON.stringify(urls));
+            } else localStorage.removeItem(prefix + "photos");
+            let local = [];
+            try {
+              local = JSON.parse(localStorage.getItem("vraxis_projects") || "[]");
+            } catch {}
+            const old = local.find((p) => p.cloudId === x.id);
+            if (old) {
+              old.cloudId = x.id;
+              old.details = x.event_data;
+              old.photoPaths = paths;
+            } else
+              local.unshift({
+                id,
+                cloudId: x.id,
+                details: x.event_data,
+                photoPaths: paths,
+                updated: Date.now(),
+              });
+            localStorage.setItem("vraxis_projects", JSON.stringify(local));
+            location.href =
+              "ready.html?template=" +
+              id +
+              "&project=" +
+              encodeURIComponent(x.id) +
+              "&draft=" +
+              encodeURIComponent(x.id);
+          };
+          actions.append(open);
+          if (x.status === "paid" || x.status === "published") {
+            const publish = document.createElement("button");
+            publish.className = "btn";
+            publish.textContent =
+              x.status === "published" ? "Copy guest link" : "Publish invitation";
+            publish.onclick = async () => {
+              publish.disabled = true;
+              try {
+                let link;
+                if (x.status === "published" && x.slug)
+                  link = "https://vraxisrsvp.online/invite.html?slug=" + encodeURIComponent(x.slug);
+                else {
+                  const {
+                    data: { session },
+                  } = await vraxisDB.auth.getSession();
+                  if (!session?.access_token) throw new Error("Sign in again");
+                  const res = await fetch(
+                    "https://ogmlfnmdhmrbbmxnxwqw.supabase.co/functions/v1/publish-invitation",
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + session.access_token,
+                        apikey: "sb_publishable_K8hadrdvJiqCRB3eXs9tHg_0kUXl9Ry",
+                      },
+                      body: JSON.stringify({ invitation_id: x.id }),
+                    },
+                  );
+                  const body = await res.json();
+                  if (!res.ok) throw new Error(body.error || "Could not publish");
+                  link =
+                    "https://vraxisrsvp.online/invite.html?slug=" +
+                    encodeURIComponent(new URL(body.url).searchParams.get("slug"));
+                }
+                try {
+                  await navigator.clipboard.writeText(link);
+                  alert("Guest link copied! You can copy it again any time from your dashboard.");
+                } catch {
+                  prompt("Copy your invitation link:", link);
+                }
+                publish.disabled = false;
+                publish.textContent = "Copy guest link";
+                x.status = "published";
+                x.slug = new URL(link).searchParams.get("slug");
+              } catch (e) {
+                alert("Could not finish: " + e.message);
+                publish.disabled = false;
+              }
+            };
+            actions.append(publish);
+          }
+          if (x.status === "published" || x.status === "paid") {
+            const manage = document.createElement("a");
+            manage.className = "btn ghost";
+            manage.href = "manage.html?id=" + encodeURIComponent(x.id);
+            manage.textContent = "Guest responses";
+            actions.append(manage);
+          }
+          if (x.status === "draft") {
+            const pay = document.createElement("button");
+            pay.className = "btn";
+            const price = ["002", "005", "010", "012"].includes(x.template_id)
+              ? "$24.00"
+              : "$15.99";
+            pay.textContent = "Checkout · " + price;
+            pay.onclick = async () => {
+              pay.disabled = true;
+              pay.textContent = "Preparing secure checkout…";
+              try {
+                const {
+                  data: { session },
+                  error: sessionError,
+                } = await vraxisDB.auth.getSession();
+                if (sessionError || !session?.access_token) throw new Error("Please sign in again");
+                const response = await fetch(
+                  "https://ogmlfnmdhmrbbmxnxwqw.supabase.co/functions/v1/create-checkout",
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      apikey: "sb_publishable_K8hadrdvJiqCRB3eXs9tHg_0kUXl9Ry",
+                      Authorization: "Bearer " + session.access_token,
+                    },
+                    body: JSON.stringify({ invitation_id: x.id }),
+                  },
+                );
+                const body = await response.json();
+                if (!response.ok) throw new Error(body.error || "Could not start checkout");
+                if (!body.url || !body.url.startsWith("https://"))
+                  throw new Error("Invalid checkout URL");
+                localStorage.setItem("vraxis_checkout_invitation", x.id);
+                location.assign(body.url);
+              } catch (err) {
+                alert(err.message);
+                pay.disabled = false;
+                pay.textContent = "Checkout · " + price;
+              }
+            };
+            actions.append(pay);
+          }
+          el.append(left, actions);
+          list.append(el);
+        }
+      }
+      (async () => {
+        list.textContent = "Loading your invitations…";
+        const user = await vraxisRequireAuth();
+        if (user?.app_metadata?.template_admin === true)
+          document.getElementById("templateManagerLink").hidden = false;
+        if (!user) return;
+        const signout = document.createElement("button");
+        signout.className = "ghost";
+        signout.textContent = "Sign out";
+        signout.onclick = async () => {
+          await vraxisDB.auth.signOut();
+          location.href = "account.html";
+        };
+        document.querySelector("main .actions").append(signout);
+        const { data, error } = await vraxisDB
+          .from("invitations")
+          .select("id,template_id,title,status,slug,event_data,design_data,updated_at")
+          .order("updated_at", { ascending: false });
+        if (error) {
+          list.textContent = "Could not load invitations: " + error.message;
+          return;
+        }
+        allInvitations = data || [];
+        updateOverview(allInvitations);
+        render(allInvitations);
+        if (new URLSearchParams(location.search).get("payment") === "return") {
+          const banner = document.getElementById("payment-banner");
+          banner.style.display = "block";
+          const checkoutId = localStorage.getItem("vraxis_checkout_invitation");
+          const paid = (data || []).filter(
+            (x) => x.id === checkoutId && (x.status === "paid" || x.status === "published"),
+          );
+          const title = document.createElement("strong"),
+            message = document.createElement("p");
+          if (paid.length) {
+            title.textContent = "Your invitation is ready for the next chapter.";
+            message.textContent =
+              "Payment confirmed. Publish your invitation to unlock its guest link and begin receiving RSVPs.";
+            localStorage.removeItem("vraxis_checkout_invitation");
+            const next = document.createElement("a");
+            next.href = "manage.html?id=" + encodeURIComponent(paid[0].id);
+            next.textContent = "Open your event control centre →";
+            banner.append(title, message, next);
+          } else {
+            banner.classList.add("waiting");
+            title.textContent = "Back from checkout";
+            message.textContent =
+              "Your payment confirmation is still being checked. Refresh the dashboard shortly. Do not pay a second time.";
+            banner.append(title, message);
+          }
+        }
+      })();
+    </script>
+    <script src="assets/site-nav.js" defer></script>
+  </body>
+</html>

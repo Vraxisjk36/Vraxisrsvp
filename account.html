@@ -1,7 +1,144 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Account | VraxisRSVP</title><style>*{box-sizing:border-box}body{background:#f6f2eb;color:#273b32;font-family:Arial,sans-serif;margin:0}header{padding:24px 5%;border-bottom:1px solid #ddd9cf}header a{font:27px Georgia,serif;color:inherit;text-decoration:none}main{max-width:460px;margin:8vh auto;padding:35px;background:#fff;border:1px solid #ddd9cf}h1{font:42px Georgia,serif;margin:0 0 10px}p{color:#667268;line-height:1.6}label{display:block;margin:20px 0 7px;font-size:13px}input{width:100%;padding:14px;border:1px solid #ccc;font:inherit}button{padding:15px;background:#273b32;color:white;border:0;cursor:pointer;width:100%;margin-top:18px;font:inherit}.secondary{background:white;color:#273b32;border:1px solid #273b32}#message{min-height:25px;font-size:14px}a{color:inherit}</style></head><body><header><a href="index.html">vraxisRSVP</a></header><main><h1>Your account.</h1><p>Sign in to securely save your invitations and return to them on another device.</p><form id="form"><label for="email">Email address</label><input type="email" id="email" autocomplete="email" required><label for="password">Password (at least 8 characters)</label><input type="password" id="password" autocomplete="current-password" minlength="8" required><button id="signin" type="submit">Sign in</button><button class="secondary" id="signup" type="button">Create account</button></form><p id="message" role="status" aria-live="polite"></p><p><a href="dashboard.html">Back to dashboard</a></p></main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script><script src="assets/backend.js"></script><script>
-const message=document.getElementById('message'),form=document.getElementById('form'),email=document.getElementById('email'),password=document.getElementById('password');
-const q=new URLSearchParams(location.search),next=q.get('next')||'dashboard.html';
-function safeNext(){return /^(dashboard|ready|start)\.html(?:\?[^#]*)?$/.test(next)?next:'dashboard.html'}
-async function run(mode){message.textContent='Please wait…';const credentials={email:email.value.trim(),password:password.value};const {data,error}=mode==='signup'?await vraxisDB.auth.signUp({ ...credentials,options:{emailRedirectTo:new URL('account.html',location.href).href}}):await vraxisDB.auth.signInWithPassword(credentials);if(error){message.textContent=error.message;return}if(data.session){location.href=safeNext()}else message.textContent='Check your email to confirm your account, then sign in.'}
-form.addEventListener('submit',e=>{e.preventDefault();run('signin')});document.getElementById('signup').onclick=()=>{if(form.reportValidity())run('signup')};vraxisAuth().then(u=>{if(u)location.href=safeNext()});
-</script><script src="assets/site-nav.js" defer></script></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Account | VraxisRSVP</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        background: #f6f2eb;
+        color: #273b32;
+        font-family: Arial, sans-serif;
+        margin: 0;
+      }
+      header {
+        padding: 24px 5%;
+        border-bottom: 1px solid #ddd9cf;
+      }
+      header a {
+        font:
+          27px Georgia,
+          serif;
+        color: inherit;
+        text-decoration: none;
+      }
+      main {
+        max-width: 460px;
+        margin: 8vh auto;
+        padding: 35px;
+        background: #fff;
+        border: 1px solid #ddd9cf;
+      }
+      h1 {
+        font:
+          42px Georgia,
+          serif;
+        margin: 0 0 10px;
+      }
+      p {
+        color: #667268;
+        line-height: 1.6;
+      }
+      label {
+        display: block;
+        margin: 20px 0 7px;
+        font-size: 13px;
+      }
+      input {
+        width: 100%;
+        padding: 14px;
+        border: 1px solid #ccc;
+        font: inherit;
+      }
+      button {
+        padding: 15px;
+        background: #273b32;
+        color: white;
+        border: 0;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 18px;
+        font: inherit;
+      }
+      .secondary {
+        background: white;
+        color: #273b32;
+        border: 1px solid #273b32;
+      }
+      #message {
+        min-height: 25px;
+        font-size: 14px;
+      }
+      a {
+        color: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <header><a href="index.html">vraxisRSVP</a></header>
+    <main>
+      <h1>Your account.</h1>
+      <p>Sign in to securely save your invitations and return to them on another device.</p>
+      <form id="form">
+        <label for="email">Email address</label
+        ><input type="email" id="email" autocomplete="email" required /><label for="password"
+          >Password (at least 8 characters)</label
+        ><input
+          type="password"
+          id="password"
+          autocomplete="current-password"
+          minlength="8"
+          required
+        /><button id="signin" type="submit">Sign in</button
+        ><button class="secondary" id="signup" type="button">Create account</button>
+      </form>
+      <p id="message" role="status" aria-live="polite"></p>
+      <p><a href="dashboard.html">Back to dashboard</a></p>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script>
+    <script src="assets/backend.js"></script>
+    <script>
+      const message = document.getElementById("message"),
+        form = document.getElementById("form"),
+        email = document.getElementById("email"),
+        password = document.getElementById("password");
+      const q = new URLSearchParams(location.search),
+        next = q.get("next") || "dashboard.html";
+      function safeNext() {
+        return /^(dashboard|ready|start)\.html(?:\?[^#]*)?$/.test(next) ? next : "dashboard.html";
+      }
+      async function run(mode) {
+        message.textContent = "Please wait…";
+        const credentials = { email: email.value.trim(), password: password.value };
+        const { data, error } =
+          mode === "signup"
+            ? await vraxisDB.auth.signUp({
+                ...credentials,
+                options: { emailRedirectTo: new URL("account.html", location.href).href },
+              })
+            : await vraxisDB.auth.signInWithPassword(credentials);
+        if (error) {
+          message.textContent = error.message;
+          return;
+        }
+        if (data.session) {
+          location.href = safeNext();
+        } else message.textContent = "Check your email to confirm your account, then sign in.";
+      }
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        run("signin");
+      });
+      document.getElementById("signup").onclick = () => {
+        if (form.reportValidity()) run("signup");
+      };
+      vraxisAuth().then((u) => {
+        if (u) location.href = safeNext();
+      });
+    </script>
+    <script src="assets/site-nav.js" defer></script>
+  </body>
+</html>

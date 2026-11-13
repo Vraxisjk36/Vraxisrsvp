@@ -1,9 +1,566 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Event management | VraxisRSVP</title><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet"><style>
-:root{--ink:#24382f;--paper:#f7f3ed;--line:#ddd9d1;--muted:#687268;--accent:#9e7860}*{box-sizing:border-box}body{margin:0;background:var(--paper);font-family:'DM Sans',sans-serif;color:var(--ink)}a{color:inherit}header{background:#fff;border-bottom:1px solid var(--line);padding:20px 5%;display:flex;align-items:center;gap:22px}header a{text-decoration:none}.logo{font:25px Georgia,serif;margin-right:auto}.logo em{color:var(--accent);font-style:normal}main{max-width:1160px;margin:auto;padding:52px 5% 100px}.eyebrow{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);font-weight:700}h1{font:normal clamp(42px,6vw,70px)/1.1 'Playfair Display',Georgia,serif;margin:12px 0}h2{font:normal 31px Georgia,serif;margin:0 0 20px}p{color:var(--muted);line-height:1.6}.actions{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 35px}.btn,button{background:var(--ink);color:#fff;border:1px solid var(--ink);padding:13px 17px;font:600 13px 'DM Sans',sans-serif;cursor:pointer;text-decoration:none;min-height:47px}.btn.light{background:transparent;color:var(--ink)}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin:35px 0}.stat,.panel{background:white;border:1px solid var(--line);padding:25px}.stat .val{font:normal 45px Georgia,serif;margin:12px 0}.stat .key{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.layout{display:grid;grid-template-columns:minmax(0,1fr) 295px;gap:18px}.panel{min-width:0}.guest{padding:19px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:15px}.guest strong{font-size:15px}.guest p{margin:6px 0;font-size:13px}.guest small{font-size:12px;color:#7c877e}.state{font-size:11px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;color:#53715e;font-weight:700}.state.no{color:#a25e4a}.state.maybe{color:#9f8751}.empty{padding:35px 8px;color:var(--muted);font-size:14px}.meta{padding:17px 0;border-bottom:1px solid var(--line)}.meta small{display:block;color:var(--muted);margin-bottom:6px}.meta b{font-weight:500;white-space:pre-wrap;overflow-wrap:anywhere}.search{width:100%;padding:13px;border:1px solid var(--line);margin-bottom:10px;font:14px 'DM Sans',sans-serif}#status{font-size:13px}@media(max-width:850px){.stats{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.stat{padding:18px}.stat .val{font-size:36px}main{padding:35px 17px 70px}.panel{padding:21px}}@media(max-width:430px){header{padding:17px 15px;gap:10px}.logo{font-size:21px}}
-</style><style>.response-heading{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px}.response-heading h2{margin:0}.response-tabs{display:flex;gap:3px;overflow-x:auto;max-width:100%}.response-tabs .tab{min-height:38px;background:transparent;color:var(--ink);border:1px solid transparent;padding:9px 11px;font-size:12px}.response-tabs .tab.active{background:#eaf0e9;border-color:#bdcbbf}.guest{align-items:flex-start}.guest>div{min-width:0}.guest p{overflow-wrap:anywhere}.stat .val{font-variant-numeric:tabular-nums}#status:empty{display:none}.actions{margin-bottom:16px}@media(max-width:700px){.response-heading{display:block}.response-tabs{margin:12px 0 0}.stats{gap:8px;margin:22px 0}.stat{padding:15px}.stat .val{font-size:34px}.panel{padding:18px}.guest{gap:8px}.state{font-size:10px}}</style></head><body><header><a class="logo" href="index.html">vraxis<em>RSVP</em></a><a href="dashboard.html">← Dashboard</a></header><main><div class="eyebrow">YOUR EVENT CONTROL CENTRE</div><h1 id="event-name">Loading your event…</h1><p id="event-subtitle">Guest responses, important dates and your invitation link — everything in one place.</p><div class="actions"><button id="copy" disabled>Copy guest link</button><a id="preview" class="btn light" href="dashboard.html">View invitation</a><button id="export" class="btn light" disabled>Export guest list</button></div><p id="status" role="status"></p><div class="stats"><div class="stat"><div class="key">Attending guests</div><div class="val" id="yes">0</div><small id="yes-count">0 replies</small></div><div class="stat"><div class="key">Not attending</div><div class="val" id="no">0</div><small>Responses declined</small></div><div class="stat"><div class="key">Undecided</div><div class="val" id="maybe">0</div><small>Responses pending decision</small></div><div class="stat"><div class="key">RSVP deadline</div><div class="val" id="deadline" style="font-size:24px">Not set</div><small id="closing"></small></div></div><div class="layout"><section class="panel"><div class="response-heading"><h2>Guest responses <span id="total" style="font:13px Arial;color:#777"></span></h2><div class="response-tabs" role="group" aria-label="Filter guest responses"><button type="button" class="tab active" data-response="all" aria-pressed="true">All</button><button type="button" class="tab" data-response="yes" aria-pressed="false">Attending</button><button type="button" class="tab" data-response="no" aria-pressed="false">Declined</button><button type="button" class="tab" data-response="maybe" aria-pressed="false">Maybe</button></div></div><input id="search" class="search" placeholder="Search guests or messages" aria-label="Search responses"><div id="guests"><div class="empty">Loading responses…</div></div></section><aside class="panel"><h2>Event details</h2><div id="details"></div></aside></div></main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script><script src="assets/backend.js"></script><script src="assets/site-nav.js" defer></script><script>
-const p=new URLSearchParams(location.search),id=p.get('id');const status=document.getElementById('status');let guests=[],item=null;const byId=x=>document.getElementById(x);
-let responseFilter='all';function renderGuests(term=''){const container=byId('guests');container.replaceChildren();const rows=guests.filter(x=>(responseFilter==='all'||x.response===responseFilter)&&[x.guest_name,x.guest_email,x.note].join(' ').toLowerCase().includes(term.toLowerCase()));byId('total').textContent='('+rows.length+')';if(!rows.length){const empty=document.createElement('div');empty.className='empty';empty.textContent=guests.length?'No matching guests.':'No guest responses yet. Share your invitation to start receiving RSVPs.';container.append(empty);return}for(const x of rows){const el=document.createElement('div');el.className='guest';const a=document.createElement('div');const n=document.createElement('strong');n.textContent=x.guest_name;const detail=document.createElement('p');detail.textContent=(x.guest_email||'No email')+(x.response==='yes'?' · '+x.party_size+' attending':'');a.append(n,detail);if(x.note){const msg=document.createElement('p');msg.textContent=x.note;a.append(msg)}const time=document.createElement('small');time.textContent=new Date(x.created_at).toLocaleDateString();a.append(time);const state=document.createElement('span');state.className='state '+x.response;state.textContent=x.response==='yes'?'Attending':x.response==='no'?'Not attending':'Maybe';el.append(a,state);container.append(el)}}
-function csvCell(v){let s=String(v??'');if(/^[=+\-@]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"'}
-async function copy(text){try{await navigator.clipboard.writeText(text);status.textContent='Guest link copied — you can share it as often as you like.'}catch{window.prompt('Copy your link:',text)}}
-(async()=>{if(!/^[0-9a-f-]{36}$/i.test(id||'')){status.textContent='Invalid invitation. Return to your dashboard.';return}const user=await vraxisRequireAuth();if(!user)return;const {data:inv,error}=await vraxisDB.from('invitations').select('id,title,status,slug,event_data,template_id').eq('id',id).single();if(error||!inv){status.textContent='Invitation not found or access denied.';return}item=inv;byId('event-name').textContent=inv.event_data?.openingTitle||inv.event_data?.names||inv.title;byId('event-subtitle').textContent=(inv.event_data?.date||'Date to be confirmed')+' · '+(inv.event_data?.venue||'Venue to be confirmed');const deadline=inv.event_data?.deadline||inv.event_data?.rsvpDeadline||inv.event_data?.rsvpDate;byId('deadline').textContent=deadline?new Date(deadline+'T12:00:00').toLocaleDateString('en-ZA',{day:'numeric',month:'short'}):'Not set';byId('closing').textContent=deadline?(Date.now()>new Date(deadline+'T23:59:59+02:00').getTime()?'RSVP closed':'Accepting RSVPs'):'Set a deadline in personalisation';const details=byId('details');for(const [label,key] of [['Event date','date'],['Time','time'],['Venue','venue'],['Address','address'],['Dress code','dress'],['RSVP deadline','deadline']]){if(!inv.event_data?.[key])continue;const row=document.createElement('div');row.className='meta';const small=document.createElement('small');small.textContent=label;const strong=document.createElement('b');strong.textContent=inv.event_data[key];row.append(small,strong);details.append(row)}if(inv.status==='published'&&inv.slug){const link='https://vraxisrsvp.online/invite.html?slug='+encodeURIComponent(inv.slug);byId('copy').disabled=false;byId('copy').onclick=()=>copy(link);byId('preview').href='invite.html?slug='+encodeURIComponent(inv.slug)}else{status.textContent='Publish this invitation from your dashboard before sharing.';byId('preview').href='dashboard.html'}const {data,error:rsvpError}=await vraxisDB.from('rsvps').select('guest_name,guest_email,response,party_size,note,created_at').eq('invitation_id',id).order('created_at',{ascending:false});if(rsvpError){status.textContent='Could not load RSVPs: '+rsvpError.message;return}guests=data||[];byId('yes').textContent=guests.filter(x=>x.response==='yes').reduce((sum,x)=>sum+x.party_size,0);byId('yes-count').textContent=guests.filter(x=>x.response==='yes').length+' attending responses';byId('no').textContent=guests.filter(x=>x.response==='no').length;byId('maybe').textContent=guests.filter(x=>x.response==='maybe').length;byId('export').disabled=false;byId('export').onclick=()=>{const rows=[['Name','Email','Response','Party size','Message','Submitted'],...guests.map(x=>[x.guest_name,x.guest_email,x.response,x.party_size,x.note,x.created_at])];const blob=new Blob([rows.map(x=>x.map(csvCell).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='vraxisrsvp-guests.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000)};byId('search').oninput=e=>renderGuests(e.target.value);document.querySelectorAll('[data-response]').forEach(button=>button.addEventListener('click',()=>{responseFilter=button.dataset.response;document.querySelectorAll('[data-response]').forEach(b=>{b.classList.toggle('active',b===button);b.setAttribute('aria-pressed',String(b===button))});renderGuests(byId('search').value)}));renderGuests()})();
-</script></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Event management | VraxisRSVP</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #24382f;
+        --paper: #f7f3ed;
+        --line: #ddd9d1;
+        --muted: #687268;
+        --accent: #9e7860;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        font-family: "DM Sans", sans-serif;
+        color: var(--ink);
+      }
+      a {
+        color: inherit;
+      }
+      header {
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        padding: 20px 5%;
+        display: flex;
+        align-items: center;
+        gap: 22px;
+      }
+      header a {
+        text-decoration: none;
+      }
+      .logo {
+        font:
+          25px Georgia,
+          serif;
+        margin-right: auto;
+      }
+      .logo em {
+        color: var(--accent);
+        font-style: normal;
+      }
+      main {
+        max-width: 1160px;
+        margin: auto;
+        padding: 52px 5% 100px;
+      }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+      }
+      h1 {
+        font:
+          normal clamp(42px, 6vw, 70px)/1.1 "Playfair Display",
+          Georgia,
+          serif;
+        margin: 12px 0;
+      }
+      h2 {
+        font:
+          normal 31px Georgia,
+          serif;
+        margin: 0 0 20px;
+      }
+      p {
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 22px 0 35px;
+      }
+      .btn,
+      button {
+        background: var(--ink);
+        color: #fff;
+        border: 1px solid var(--ink);
+        padding: 13px 17px;
+        font:
+          600 13px "DM Sans",
+          sans-serif;
+        cursor: pointer;
+        text-decoration: none;
+        min-height: 47px;
+      }
+      .btn.light {
+        background: transparent;
+        color: var(--ink);
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 13px;
+        margin: 35px 0;
+      }
+      .stat,
+      .panel {
+        background: white;
+        border: 1px solid var(--line);
+        padding: 25px;
+      }
+      .stat .val {
+        font:
+          normal 45px Georgia,
+          serif;
+        margin: 12px 0;
+      }
+      .stat .key {
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 295px;
+        gap: 18px;
+      }
+      .panel {
+        min-width: 0;
+      }
+      .guest {
+        padding: 19px 0;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+      }
+      .guest strong {
+        font-size: 15px;
+      }
+      .guest p {
+        margin: 6px 0;
+        font-size: 13px;
+      }
+      .guest small {
+        font-size: 12px;
+        color: #7c877e;
+      }
+      .state {
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        color: #53715e;
+        font-weight: 700;
+      }
+      .state.no {
+        color: #a25e4a;
+      }
+      .state.maybe {
+        color: #9f8751;
+      }
+      .empty {
+        padding: 35px 8px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .meta {
+        padding: 17px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .meta small {
+        display: block;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+      .meta b {
+        font-weight: 500;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      .search {
+        width: 100%;
+        padding: 13px;
+        border: 1px solid var(--line);
+        margin-bottom: 10px;
+        font:
+          14px "DM Sans",
+          sans-serif;
+      }
+      #status {
+        font-size: 13px;
+      }
+      @media (max-width: 850px) {
+        .stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        .stat {
+          padding: 18px;
+        }
+        .stat .val {
+          font-size: 36px;
+        }
+        main {
+          padding: 35px 17px 70px;
+        }
+        .panel {
+          padding: 21px;
+        }
+      }
+      @media (max-width: 430px) {
+        header {
+          padding: 17px 15px;
+          gap: 10px;
+        }
+        .logo {
+          font-size: 21px;
+        }
+      }
+    </style>
+    <style>
+      .response-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .response-heading h2 {
+        margin: 0;
+      }
+      .response-tabs {
+        display: flex;
+        gap: 3px;
+        overflow-x: auto;
+        max-width: 100%;
+      }
+      .response-tabs .tab {
+        min-height: 38px;
+        background: transparent;
+        color: var(--ink);
+        border: 1px solid transparent;
+        padding: 9px 11px;
+        font-size: 12px;
+      }
+      .response-tabs .tab.active {
+        background: #eaf0e9;
+        border-color: #bdcbbf;
+      }
+      .guest {
+        align-items: flex-start;
+      }
+      .guest > div {
+        min-width: 0;
+      }
+      .guest p {
+        overflow-wrap: anywhere;
+      }
+      .stat .val {
+        font-variant-numeric: tabular-nums;
+      }
+      #status:empty {
+        display: none;
+      }
+      .actions {
+        margin-bottom: 16px;
+      }
+      @media (max-width: 700px) {
+        .response-heading {
+          display: block;
+        }
+        .response-tabs {
+          margin: 12px 0 0;
+        }
+        .stats {
+          gap: 8px;
+          margin: 22px 0;
+        }
+        .stat {
+          padding: 15px;
+        }
+        .stat .val {
+          font-size: 34px;
+        }
+        .panel {
+          padding: 18px;
+        }
+        .guest {
+          gap: 8px;
+        }
+        .state {
+          font-size: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a class="logo" href="index.html">vraxis<em>RSVP</em></a
+      ><a href="dashboard.html">← Dashboard</a>
+    </header>
+    <main>
+      <div class="eyebrow">YOUR EVENT CONTROL CENTRE</div>
+      <h1 id="event-name">Loading your event…</h1>
+      <p id="event-subtitle">
+        Guest responses, important dates and your invitation link — everything in one place.
+      </p>
+      <div class="actions">
+        <button id="copy" disabled>Copy guest link</button
+        ><a id="preview" class="btn light" href="dashboard.html">View invitation</a
+        ><button id="export" class="btn light" disabled>Export guest list</button>
+      </div>
+      <p id="status" role="status"></p>
+      <div class="stats">
+        <div class="stat">
+          <div class="key">Attending guests</div>
+          <div class="val" id="yes">0</div>
+          <small id="yes-count">0 replies</small>
+        </div>
+        <div class="stat">
+          <div class="key">Not attending</div>
+          <div class="val" id="no">0</div>
+          <small>Responses declined</small>
+        </div>
+        <div class="stat">
+          <div class="key">Undecided</div>
+          <div class="val" id="maybe">0</div>
+          <small>Responses pending decision</small>
+        </div>
+        <div class="stat">
+          <div class="key">RSVP deadline</div>
+          <div class="val" id="deadline" style="font-size: 24px">Not set</div>
+          <small id="closing"></small>
+        </div>
+      </div>
+      <div class="layout">
+        <section class="panel">
+          <div class="response-heading">
+            <h2>Guest responses <span id="total" style="font: 13px Arial; color: #777"></span></h2>
+            <div class="response-tabs" role="group" aria-label="Filter guest responses">
+              <button type="button" class="tab active" data-response="all" aria-pressed="true">
+                All</button
+              ><button type="button" class="tab" data-response="yes" aria-pressed="false">
+                Attending</button
+              ><button type="button" class="tab" data-response="no" aria-pressed="false">
+                Declined</button
+              ><button type="button" class="tab" data-response="maybe" aria-pressed="false">
+                Maybe
+              </button>
+            </div>
+          </div>
+          <input
+            id="search"
+            class="search"
+            placeholder="Search guests or messages"
+            aria-label="Search responses"
+          />
+          <div id="guests"><div class="empty">Loading responses…</div></div>
+        </section>
+        <aside class="panel">
+          <h2>Event details</h2>
+          <div id="details"></div>
+        </aside>
+      </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script>
+    <script src="assets/backend.js"></script>
+    <script src="assets/site-nav.js" defer></script>
+    <script>
+      const p = new URLSearchParams(location.search),
+        id = p.get("id");
+      const status = document.getElementById("status");
+      let guests = [],
+        item = null;
+      const byId = (x) => document.getElementById(x);
+      let responseFilter = "all";
+      function renderGuests(term = "") {
+        const container = byId("guests");
+        container.replaceChildren();
+        const rows = guests.filter(
+          (x) =>
+            (responseFilter === "all" || x.response === responseFilter) &&
+            [x.guest_name, x.guest_email, x.note]
+              .join(" ")
+              .toLowerCase()
+              .includes(term.toLowerCase()),
+        );
+        byId("total").textContent = "(" + rows.length + ")";
+        if (!rows.length) {
+          const empty = document.createElement("div");
+          empty.className = "empty";
+          empty.textContent = guests.length
+            ? "No matching guests."
+            : "No guest responses yet. Share your invitation to start receiving RSVPs.";
+          container.append(empty);
+          return;
+        }
+        for (const x of rows) {
+          const el = document.createElement("div");
+          el.className = "guest";
+          const a = document.createElement("div");
+          const n = document.createElement("strong");
+          n.textContent = x.guest_name;
+          const detail = document.createElement("p");
+          detail.textContent =
+            (x.guest_email || "No email") +
+            (x.response === "yes" ? " · " + x.party_size + " attending" : "");
+          a.append(n, detail);
+          if (x.note) {
+            const msg = document.createElement("p");
+            msg.textContent = x.note;
+            a.append(msg);
+          }
+          const time = document.createElement("small");
+          time.textContent = new Date(x.created_at).toLocaleDateString();
+          a.append(time);
+          const state = document.createElement("span");
+          state.className = "state " + x.response;
+          state.textContent =
+            x.response === "yes" ? "Attending" : x.response === "no" ? "Not attending" : "Maybe";
+          el.append(a, state);
+          container.append(el);
+        }
+      }
+      function csvCell(v) {
+        let s = String(v ?? "");
+        if (/^[=+\-@]/.test(s)) s = "'" + s;
+        return '"' + s.replace(/"/g, '""') + '"';
+      }
+      async function copy(text) {
+        try {
+          await navigator.clipboard.writeText(text);
+          status.textContent = "Guest link copied — you can share it as often as you like.";
+        } catch {
+          window.prompt("Copy your link:", text);
+        }
+      }
+      (async () => {
+        if (!/^[0-9a-f-]{36}$/i.test(id || "")) {
+          status.textContent = "Invalid invitation. Return to your dashboard.";
+          return;
+        }
+        const user = await vraxisRequireAuth();
+        if (!user) return;
+        const { data: inv, error } = await vraxisDB
+          .from("invitations")
+          .select("id,title,status,slug,event_data,template_id")
+          .eq("id", id)
+          .single();
+        if (error || !inv) {
+          status.textContent = "Invitation not found or access denied.";
+          return;
+        }
+        item = inv;
+        byId("event-name").textContent =
+          inv.event_data?.openingTitle || inv.event_data?.names || inv.title;
+        byId("event-subtitle").textContent =
+          (inv.event_data?.date || "Date to be confirmed") +
+          " · " +
+          (inv.event_data?.venue || "Venue to be confirmed");
+        const deadline =
+          inv.event_data?.deadline || inv.event_data?.rsvpDeadline || inv.event_data?.rsvpDate;
+        byId("deadline").textContent = deadline
+          ? new Date(deadline + "T12:00:00").toLocaleDateString("en-ZA", {
+              day: "numeric",
+              month: "short",
+            })
+          : "Not set";
+        byId("closing").textContent = deadline
+          ? Date.now() > new Date(deadline + "T23:59:59+02:00").getTime()
+            ? "RSVP closed"
+            : "Accepting RSVPs"
+          : "Set a deadline in personalisation";
+        const details = byId("details");
+        for (const [label, key] of [
+          ["Event date", "date"],
+          ["Time", "time"],
+          ["Venue", "venue"],
+          ["Address", "address"],
+          ["Dress code", "dress"],
+          ["RSVP deadline", "deadline"],
+        ]) {
+          if (!inv.event_data?.[key]) continue;
+          const row = document.createElement("div");
+          row.className = "meta";
+          const small = document.createElement("small");
+          small.textContent = label;
+          const strong = document.createElement("b");
+          strong.textContent = inv.event_data[key];
+          row.append(small, strong);
+          details.append(row);
+        }
+        if (inv.status === "published" && inv.slug) {
+          const link = "https://vraxisrsvp.online/invite.html?slug=" + encodeURIComponent(inv.slug);
+          byId("copy").disabled = false;
+          byId("copy").onclick = () => copy(link);
+          byId("preview").href = "invite.html?slug=" + encodeURIComponent(inv.slug);
+        } else {
+          status.textContent = "Publish this invitation from your dashboard before sharing.";
+          byId("preview").href = "dashboard.html";
+        }
+        const { data, error: rsvpError } = await vraxisDB
+          .from("rsvps")
+          .select("guest_name,guest_email,response,party_size,note,created_at")
+          .eq("invitation_id", id)
+          .order("created_at", { ascending: false });
+        if (rsvpError) {
+          status.textContent = "Could not load RSVPs: " + rsvpError.message;
+          return;
+        }
+        guests = data || [];
+        byId("yes").textContent = guests
+          .filter((x) => x.response === "yes")
+          .reduce((sum, x) => sum + x.party_size, 0);
+        byId("yes-count").textContent =
+          guests.filter((x) => x.response === "yes").length + " attending responses";
+        byId("no").textContent = guests.filter((x) => x.response === "no").length;
+        byId("maybe").textContent = guests.filter((x) => x.response === "maybe").length;
+        byId("export").disabled = false;
+        byId("export").onclick = () => {
+          const rows = [
+            ["Name", "Email", "Response", "Party size", "Message", "Submitted"],
+            ...guests.map((x) => [
+              x.guest_name,
+              x.guest_email,
+              x.response,
+              x.party_size,
+              x.note,
+              x.created_at,
+            ]),
+          ];
+          const blob = new Blob([rows.map((x) => x.map(csvCell).join(",")).join("\r\n")], {
+            type: "text/csv;charset=utf-8",
+          });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "vraxisrsvp-guests.csv";
+          a.click();
+          setTimeout(() => URL.revokeObjectURL(url), 2000);
+        };
+        byId("search").oninput = (e) => renderGuests(e.target.value);
+        document.querySelectorAll("[data-response]").forEach((button) =>
+          button.addEventListener("click", () => {
+            responseFilter = button.dataset.response;
+            document.querySelectorAll("[data-response]").forEach((b) => {
+              b.classList.toggle("active", b === button);
+              b.setAttribute("aria-pressed", String(b === button));
+            });
+            renderGuests(byId("search").value);
+          }),
+        );
+        renderGuests();
+      })();
+    </script>
+  </body>
+</html>
