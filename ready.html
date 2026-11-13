@@ -54,7 +54,7 @@ body.studio-open{overflow:hidden}
  const params=new URLSearchParams(location.search),id=params.get('template');
  const projectId=/^[0-9a-f-]{36}$/i.test(params.get('project')||'')?params.get('project'):null;let existingStatus=null;
  if(!/^0(0[1-9]|1[0-3])$/.test(id||'')){location.replace('catalogue.html');return}
- const names=['The Heirloom','The Grand Affair','The Modern Vow','Midnight Club','The Social Edit','After Hours','The Little Garden','Moonlit Lullaby','The Big Little Secret','Little Wonderland','Sunday, With Love','The Bridal Edit','Something Sweet'];
+ const names=['The Heirloom','The Grand Affair','The Modern Vow','Midnight Club','The Social Edit','After Hours','The Little Garden','Moonlit Lullaby','The Big Little Secret','Little Wonderland','Sunday, With Love','The Bridal Edit','Something Sweet','The Last Fling','The Brotherhood'];
  const get=k=>{try{return JSON.parse(localStorage.getItem(k)||'{}')}catch{return {}}};
  const d=vraxisDraft.read('details',{});
  document.getElementById('templateLabel').textContent=names[Number(id)-1];
