@@ -46,12 +46,12 @@ function render(items){
     publish.disabled=true;
     try{
      let link;
-     if(x.status==='published'&&x.slug)link='https://ogmlfnmdhmrbbmxnxwqw.supabase.co/functions/v1/invitation-share?slug='+encodeURIComponent(x.slug);
+     if(x.status==='published'&&x.slug)link='https://vraxisrsvp.online/invite.html?slug='+encodeURIComponent(x.slug);
      else{
       const {data:{session}}=await vraxisDB.auth.getSession();
       if(!session?.access_token)throw new Error('Sign in again');
       const res=await fetch('https://ogmlfnmdhmrbbmxnxwqw.supabase.co/functions/v1/publish-invitation',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.access_token,'apikey':'sb_publishable_K8hadrdvJiqCRB3eXs9tHg_0kUXl9Ry'},body:JSON.stringify({invitation_id:x.id})});
-      const body=await res.json();if(!res.ok)throw new Error(body.error||'Could not publish');link='https://ogmlfnmdhmrbbmxnxwqw.supabase.co/functions/v1/invitation-share?slug='+encodeURIComponent(new URL(body.url).searchParams.get('slug'));
+      const body=await res.json();if(!res.ok)throw new Error(body.error||'Could not publish');link='https://vraxisrsvp.online/invite.html?slug='+encodeURIComponent(new URL(body.url).searchParams.get('slug'));
      }
      try{await navigator.clipboard.writeText(link);alert('Guest link copied! You can copy it again any time from your dashboard.')}catch{prompt('Copy your invitation link:',link)}publish.disabled=false;publish.textContent='Copy guest link';x.status='published';x.slug=new URL(link).searchParams.get('slug');
     }catch(e){alert('Could not finish: '+e.message);publish.disabled=false}
