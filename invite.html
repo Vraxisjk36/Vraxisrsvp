@@ -4,9 +4,9 @@
 
 function mountTemplate(data,eventData){
  const value=String(data.template_id||data.templateId||'');
- const match=value.match(/^0*(1[0-5]|[1-9])$/);
+ const match=value.match(/^0*(20|1[0-9]|[1-9])$/);
  if(!match)return;
- const num=Number(match[1]);if(num<1||num>15)return;
+ const num=Number(match[1]);if(num<1||num>20)return;
  const frame=document.getElementById('template-frame');
  const edits=data.design_data?.tap_edits||data.design?.tap_edits||data.tap_edits||{};
  const profile={first:(eventData.names||'').split(/\\s+(?:and|&)\\s+|,/i)[0],second:(eventData.names||'').split(/\\s+(?:and|&)\\s+|,/i)[1]||'',names:eventData.openingTitle||eventData.names,date:eventData.date,time:eventData.time,venue:eventData.venue,address:eventData.address,dress:eventData.dress||eventData.dressCode,message:eventData.introParagraph||eventData.message,age:eventData.age,child:eventData.child,deadline:eventData.deadline,title:eventData.openingTitle||eventData.title,tribute:eventData.story||eventData.introParagraph||eventData.message};
