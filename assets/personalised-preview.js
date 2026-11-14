@@ -128,7 +128,7 @@ function applyDoc(doc){
   chip.style.cssText='margin:25px auto;padding:10px 18px;max-width:420px;text-align:center;font:600 13px Arial,sans-serif;letter-spacing:.04em;background:#f7f3ecd9;color:#283e32;border:1px solid #d3c9bd';
   if(anchor?.parentElement)anchor.parentElement.insertBefore(chip,anchor);else doc.body.append(chip);
  }
- status('Preview loaded · '+(nativeCount+textCount)+' personalised fields'+(photoCount?' · '+photoCount+' photos':'')+'. Changes are saved on this device.');
+ status('Your invitation preview is ready. Changes are saved on this device.');
  applied=true;
 }
 function bindInner(host){

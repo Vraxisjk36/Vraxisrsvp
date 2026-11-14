@@ -1,13 +1,15 @@
 import { createClient } from "npm:@supabase/supabase-js@2.57.0";
-const origin="https://vraxisrsvp.online";
-const headers={"Access-Control-Allow-Origin":origin,"Access-Control-Allow-Headers":"authorization,apikey,content-type","Access-Control-Allow-Methods":"POST,OPTIONS","Content-Type":"application/json"};
 const tiers:Record<string,"signature"|"prestige">={"001":"signature","002":"prestige","003":"signature","004":"signature","005":"prestige","006":"signature","007":"signature","008":"signature","009":"signature","010":"prestige","011":"signature","012":"prestige","013":"signature","014":"prestige","015":"signature","016":"signature","017":"prestige","018":"signature","019":"signature","020":"signature"};
 const products={signature:{variant:"2369889",amount:1599},prestige:{variant:"2369903",amount:2400}};
-const json=(body:unknown,status=200)=>new Response(JSON.stringify(body),{status,headers});
+const sites:Record<string,string>={"https://vraxisrsvp.online":"https://vraxisrsvp.online","https://vraxisjk36.github.io":"https://vraxisjk36.github.io/Vraxisrsvp"};
 Deno.serve(async req=>{
+ const origin=req.headers.get("origin")||"";
+ const siteBase=Object.hasOwn(sites,origin)?sites[origin]:null;
+ const headers={"Access-Control-Allow-Headers":"authorization,apikey,content-type","Access-Control-Allow-Methods":"POST,OPTIONS","Content-Type":"application/json","Vary":"Origin",...(siteBase?{"Access-Control-Allow-Origin":origin}:{})};
+ const json=(body:unknown,status=200)=>new Response(JSON.stringify(body),{status,headers});
+ if(!siteBase)return json({error:"Origin not allowed"},403);
  if(req.method==="OPTIONS")return new Response(null,{status:204,headers});
  if(req.method!=="POST")return json({error:"Method not allowed"},405);
- if(req.headers.get("origin")!==origin)return json({error:"Origin not allowed"},403);
  const key=Deno.env.get("LEMON_SQUEEZY_API_KEY"),storeId=Deno.env.get("LEMON_SQUEEZY_STORE_ID"),secret=Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"),url=Deno.env.get("SUPABASE_URL"),pub=Deno.env.get("SUPABASE_ANON_KEY");
  if(!key||!storeId||!secret||!url||!pub)return json({error:"Checkout configuration is not complete"},503);
  const bearer=req.headers.get("authorization")||"";
@@ -27,7 +29,7 @@ Deno.serve(async req=>{
  const p=products[tier];
  const {data:paid}=await admin.from("orders").select("id").eq("invitation_id",inv.id).eq("status","paid").limit(1);
  if(paid?.length)return json({error:"This invitation is already paid"},409);
- const requestBody={data:{type:"checkouts",attributes:{custom_price:p.amount,test_mode:Deno.env.get("LEMON_SQUEEZY_TEST_MODE")!=="false",product_options:{enabled_variants:[Number(p.variant)],redirect_url:origin+"/dashboard.html?payment=return"},checkout_options:{embed:false},checkout_data:{email:user.email,custom:{invitation_id:inv.id,user_id:user.id,tier}}},relationships:{store:{data:{type:"stores",id:storeId}},variant:{data:{type:"variants",id:p.variant}}}}};
+ const requestBody={data:{type:"checkouts",attributes:{custom_price:p.amount,test_mode:Deno.env.get("LEMON_SQUEEZY_TEST_MODE")!=="false",product_options:{enabled_variants:[Number(p.variant)],redirect_url:siteBase+"/dashboard.html?payment=return"},checkout_options:{embed:false},checkout_data:{email:user.email,custom:{invitation_id:inv.id,user_id:user.id,tier}}},relationships:{store:{data:{type:"stores",id:storeId}},variant:{data:{type:"variants",id:p.variant}}}}};
  try{
   const response=await fetch("https://api.lemonsqueezy.com/v1/checkouts",{method:"POST",headers:{Accept:"application/vnd.api+json","Content-Type":"application/vnd.api+json",Authorization:"Bearer "+key},body:JSON.stringify(requestBody)});
   const result=await response.json();

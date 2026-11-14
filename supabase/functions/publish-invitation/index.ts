@@ -1,0 +1,32 @@
+import {createClient} from "npm:@supabase/supabase-js@2.57.0";
+const sites:Record<string,string>={"https://vraxisrsvp.online":"https://vraxisrsvp.online","https://vraxisjk36.github.io":"https://vraxisjk36.github.io/Vraxisrsvp"};
+Deno.serve(async req=>{
+ const origin=req.headers.get("origin")||"";
+ const siteBase=Object.hasOwn(sites,origin)?sites[origin]:null;
+ const h={"Content-Type":"application/json","Access-Control-Allow-Headers":"authorization,apikey,content-type","Access-Control-Allow-Methods":"POST,OPTIONS","Vary":"Origin",...(siteBase?{"Access-Control-Allow-Origin":origin}:{})};
+ const out=(v:unknown,s=200)=>new Response(JSON.stringify(v),{status:s,headers:h});
+ if(!siteBase)return out({error:"Origin not allowed"},403);
+ if(req.method==="OPTIONS")return new Response(null,{status:204,headers:h});
+ if(req.method!=="POST")return out({error:"Method not allowed"},405);
+ const token=(req.headers.get("authorization")||"").replace(/^Bearer /,"");
+ if(!token)return out({error:"Sign in required"},401);
+ const url=Deno.env.get("SUPABASE_URL")!,service=Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,pub=Deno.env.get("SUPABASE_ANON_KEY")!;
+ const client=createClient(url,pub);
+ const {data:{user},error}=await client.auth.getUser(token);
+ if(error||!user)return out({error:"Invalid session"},401);
+ let body;try{body=await req.json()}catch{return out({error:"Invalid JSON"},400)}
+ const id=body?.invitation_id;
+ if(typeof id!=="string"||!/^[0-9a-f-]{36}$/i.test(id))return out({error:"Invalid invitation ID"},400);
+ const db=createClient(url,service,{auth:{persistSession:false,autoRefreshToken:false}});
+ const {data:inv}=await db.from("invitations").select("id,status,slug").eq("id",id).eq("owner_id",user.id).maybeSingle();
+ if(!inv)return out({error:"Invitation not found"},404);
+ if(inv.status==="published")return out({url:siteBase+"/invite.html?slug="+encodeURIComponent(inv.slug)});
+ if(inv.status!=="paid")return out({error:"Invitation must be paid before publishing"},403);
+ const {data:orders}=await db.from("orders").select("id").eq("invitation_id",id).eq("owner_id",user.id).eq("status","paid").limit(1);
+ if(!orders?.length)return out({error:"Verified payment not found"},403);
+ const slug=inv.slug||"inv-"+crypto.randomUUID().replaceAll("-","").slice(0,20);
+ const {data:updated,error:updateError}=await db.from("invitations").update({status:"published",slug,published_at:new Date().toISOString()}).eq("id",id).eq("owner_id",user.id).eq("status","paid").select("slug").maybeSingle();
+ if(updateError)return out({error:"Could not publish invitation"},500);
+ if(!updated)return out({error:"Invitation changed; refresh and try again"},409);
+ return out({url:siteBase+"/invite.html?slug="+encodeURIComponent(updated.slug)});
+});
