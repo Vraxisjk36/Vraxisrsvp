@@ -1,2 +1,64 @@
 /* Public collection cover/video overrides, managed by the owner. */
-(()=>{'use strict';const endpoint='https://ogmlfnmdhmrbbmxnxwqw.supabase.co/rest/v1/template_collection_media?select=*';const headers={'apikey':'sb_publishable_K8hadrdvJiqCRB3eXs9tHg_0kUXl9Ry'};fetch(endpoint,{headers,cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Collection media unavailable');return r.json()}).then(rows=>{const media=new Map(rows.map(x=>[x.template_id,x]));document.querySelectorAll('#catalogue > [data-category]').forEach(card=>{const a=card.querySelector('a[href^="preview-"]');const id=a?.getAttribute('href')?.match(/preview-(\d{3})/)?.[1];const cfg=media.get(id)||{};const curated=window.VRAXIS_CURATED_MEDIA?.[id];if(!cfg.cover_url&&!curated)return;const art=card.querySelector('.tile-art');const img=art?.querySelector('img');if(!img)return;if(cfg.cover_url||curated?.photo){const original=img.src;const next=cfg.cover_url||curated.photo;img.onerror=()=>{img.onerror=null;img.src=original};img.src=next;}img.style.objectFit=cfg.fit_mode==='contain'?'contain':'cover';img.style.objectPosition=(cfg.pos_x??50)+'% '+(cfg.pos_y??50)+'%';if(cfg.fit_mode==='manual'&&Number(cfg.zoom)>1){img.style.transform='scale('+cfg.zoom+')';img.style.transformOrigin=(cfg.pos_x??50)+'% '+(cfg.pos_y??50)+'%'}if(cfg.video_url&&!matchMedia('(prefers-reduced-motion: reduce)').matches){const video=document.createElement('video');video.src=cfg.video_url;video.muted=true;video.loop=true;video.autoplay=true;video.playsInline=true;video.preload='metadata';video.poster=img.src;video.setAttribute('aria-hidden','true');video.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:'+(cfg.pos_x??50)+'% '+(cfg.pos_y??50)+'%;pointer-events:none';img.style.visibility='hidden';art.insertBefore(video,img.nextSibling);video.play().catch(()=>{video.remove();img.style.visibility='visible'})}})}).catch(e=>console.warn('Collection media:',e.message))})();
+(() => {
+  "use strict";
+  const endpoint =
+    "https://ogmlfnmdhmrbbmxnxwqw.supabase.co/rest/v1/template_collection_media?select=*";
+  const headers = { apikey: "sb_publishable_K8hadrdvJiqCRB3eXs9tHg_0kUXl9Ry" };
+  fetch(endpoint, { headers, cache: "no-store" })
+    .then((r) => {
+      if (!r.ok) throw Error("Collection media unavailable");
+      return r.json();
+    })
+    .then((rows) => {
+      const media = new Map(rows.map((x) => [x.template_id, x]));
+      document.querySelectorAll("#catalogue > [data-category]").forEach((card) => {
+        const a = card.querySelector('a[href^="preview-"]');
+        const id = a?.getAttribute("href")?.match(/preview-(\d{3})/)?.[1];
+        const cfg = media.get(id) || {};
+        const curated = window.VRAXIS_CURATED_MEDIA?.[id];
+        if (!cfg.cover_url && !curated) return;
+        const art = card.querySelector(".tile-art");
+        const img = art?.querySelector("img");
+        if (!img) return;
+        if (cfg.cover_url || curated?.photo) {
+          const original = img.src;
+          const next = cfg.cover_url || curated.photo;
+          img.onerror = () => {
+            img.onerror = null;
+            img.src = original;
+          };
+          img.src = next;
+        }
+        img.style.objectFit = cfg.fit_mode === "contain" ? "contain" : "cover";
+        img.style.objectPosition = (cfg.pos_x ?? 50) + "% " + (cfg.pos_y ?? 50) + "%";
+        if (cfg.fit_mode === "manual" && Number(cfg.zoom) > 1) {
+          img.style.transform = "scale(" + cfg.zoom + ")";
+          img.style.transformOrigin = (cfg.pos_x ?? 50) + "% " + (cfg.pos_y ?? 50) + "%";
+        }
+        if (cfg.video_url && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          const video = document.createElement("video");
+          video.src = cfg.video_url;
+          video.muted = true;
+          video.loop = true;
+          video.autoplay = true;
+          video.playsInline = true;
+          video.preload = "metadata";
+          video.poster = img.src;
+          video.setAttribute("aria-hidden", "true");
+          video.style.cssText =
+            "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:" +
+            (cfg.pos_x ?? 50) +
+            "% " +
+            (cfg.pos_y ?? 50) +
+            "%;pointer-events:none";
+          img.style.visibility = "hidden";
+          art.insertBefore(video, img.nextSibling);
+          video.play().catch(() => {
+            video.remove();
+            img.style.visibility = "visible";
+          });
+        }
+      });
+    })
+    .catch((e) => console.warn("Collection media:", e.message));
+})();

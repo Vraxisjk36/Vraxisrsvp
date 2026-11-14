@@ -1,0 +1,31 @@
+name: Localize and format template sources
+on:
+  push:
+    branches:
+      - refactor/readable-template-interiors-20261113
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  convert:
+    if: "!contains(github.event.head_commit.message, '[media-format-complete]')"
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: node scripts/localize-and-format.mjs
+      - name: Commit localized media and readable source
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Localize template media and format all HTML [media-format-complete]"
+            git push
+          fi
