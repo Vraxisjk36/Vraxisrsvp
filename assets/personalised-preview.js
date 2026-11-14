@@ -4,7 +4,7 @@
 (()=>{
 "use strict";
 const params=new URLSearchParams(location.search);
-const id=/^0(0[1-9]|1[0-5])$/.test(params.get('template')||'')?params.get('template'):'001';
+const id=/^0(0[1-9]|1[0-9]|20)$/.test(params.get('template')||'')?params.get('template'):'001';
 const hosts=[document.getElementById('frame'),document.getElementById('studioFrame')].filter(Boolean); if(!hosts.length)return;
 const get=(k,fallback={})=>{try{return JSON.parse(localStorage.getItem(k)||'null')??fallback}catch{return fallback}};
 const details=vraxisDraft.read('details',{}),studio=vraxisDraft.read('studio',{}),photos=vraxisDraft.read('photos',[]);
@@ -97,7 +97,7 @@ function applyDoc(doc){
  if(id==='011'&&Array.isArray(photos)){[...doc.querySelectorAll('[data-img]')].forEach((img,i)=>{if(image(photos[i])){img.src=photos[i];photoCount++}})}
  if(id==='009'&&image(photos?.[0])){const img=doc.getElementById('heroImg');if(img){img.src=photos[0];photoCount++}}
  // Make the invitation's people/event the main title, never the catalogue template's name.
- const templateNames=['The Heirloom','The Grand Affair','The Modern Vow','Midnight Club','The Social Edit','After Hours','The Little Garden','Moonlit Lullaby','The Big Little Secret','Little Wonderland','Sunday, With Love','The Bridal Edit','Something Sweet'];
+ const templateNames=['The Heirloom','The Grand Affair','The Modern Vow','Midnight Club','The Social Edit','After Hours','The Little Garden','Moonlit Lullaby','The Big Little Secret','Little Wonderland','Sunday, With Love','The Bridal Edit','Something Sweet','The Last Fling','The Brotherhood',"After the Rain","Midnight Garden","Love in Bloom","Leo’s Birthday Fair","Captain Ethan’s Superhero Birthday"];
  const original=templateNames[Number(id)-1];
  const preferred=details.openingTitle||details.names||details.title;
  if(filled(preferred)){
