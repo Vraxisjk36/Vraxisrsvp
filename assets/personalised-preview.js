@@ -18,6 +18,7 @@ const profile={
 };
 const map={
  '001':{text:{first:'first',second:'second',date:'date',ceremonyTime:'time',ceremonyVenue:'venue',ceremonyLocation:'address',receptionTime:'time',receptionVenue:'venue',dress:'dress',letter:'message'}},
+ '002':{input:{firstName:'first',secondName:'second',weddingDate:'date',ceremonyVenue:'venue',ceremonyPlace:'address',receptionVenue:'venue',receptionPlace:'address'}},
  '003':{input:{editName1:'first',editName2:'second',editDate:'date',editCeremony:'venue',editReception:'venue',editCeremonyTime:'time',editReceptionTime:'time'}},
  '004':{input:{edName:'names',edAge:'age',edDate:'date',edTime:'time',edVenue:'venue',edAddress:'address'}},
  '005':{input:{edName:'names',edAge:'age',edDate:'date',edTime:'time',edVenue:'venue',edCity:'address',edDress:'dress',edIntro:'message'}},
@@ -27,7 +28,7 @@ const map={
  '009':{input:{'edit-parents':'names','edit-date':'date','edit-dateShort':'date','edit-time':'time','edit-venue':'venue','edit-location':'address','edit-dress':'dress','edit-story':'message'}},
  '010':{input:{editParents:'names',editDate:'date',editTime:'time',editVenue:'venue',editAddress:'address',editDress:'dress',editParentStory:'message'}},
  '011':{text:{parents:'names',dateDisplay:'date',time:'time',venue:'venue',address:'address',dress:'dress',letter1:'message'}},
- '012':{text:{bride:'names',tribute:'message',invite:'message'}},
+ '012':{text:{bride:'names',tribute:'message',invite:'message',invitation:'message',dateDisplay:'date',time:'time',venue:'venue',address:'address',dress:'dress'}},
  '013':{input:{editBride:'names',editLetter:'message',editDate:'date',editTime:'time',editVenue:'venue',editAddress:'address',editDress:'dress'},text:{bride:'names'} },
  '014':{text:{bride:'names',date:'date',city:'address',tribute:'message',venue:'venue',message:'message'}},
  '015':{text:{groom:'names',tagline:'title',tribute:'message',quote:'letter',date:'date',time:'time',venue:'venue',address:'address'}}
@@ -46,11 +47,14 @@ function applyDoc(doc){
  if(!doc||!doc.body)return;
  if(activeDoc!==doc){activeDoc=doc;applied=false}
  const conf=map[id]||{};
+ window.vraxisApplyTemplateProfile?.(doc,id,profile);
  const text=Object.assign({},studio.text||{});
  for(const [field,key] of Object.entries(conf.text||{})){if(filled(profile[key]))text[field]=(field==='dateDisplay'&&/^\d{4}-\d{2}-\d{2}$/.test(profile[key]))?new Date(profile[key]+'T12:00:00').toLocaleDateString('en-ZA',{day:'numeric',month:'long',year:'numeric'}):profile[key]}
  // Apply native editable controls first: their existing input/change handlers redraw the template.
  let nativeCount=0;
  for(const [field,key] of Object.entries(conf.input||{})){let v=profile[key];if(id==='009'&&field==='edit-date'&&filled(v))v=new Date(v+'T12:00:00').toLocaleDateString('en-ZA',{weekday:'long',day:'numeric',month:'long',year:'numeric'});if(id==='009'&&field==='edit-dateShort'&&filled(v))v=new Date(v+'T12:00:00').toLocaleDateString('en-ZA',{day:'numeric',month:'long',year:'numeric'}).toUpperCase();if(setValue(doc.getElementById(field),v))nativeCount++}
+ if(nativeCount&&id==='003')doc.getElementById('applyEdits')?.click();
+ if(nativeCount&&id==='004')doc.getElementById('saveEd')?.click();
  for(const [k,v] of Object.entries(studio.fields||{})){
   const el=doc.getElementById(k)||doc.querySelector('[name="'+CSS.escape(k)+'"]');
   if(!el||el.type==='file'||el.type==='password'||el.type==='radio')continue;
