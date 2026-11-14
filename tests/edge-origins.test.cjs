@@ -80,9 +80,9 @@ test('RSVP requests from both sites reach validation and storage logic',async()=
     assert.equal(sent[0].data.party_size,2);
   }
 });
-test('share pages default to the working GitHub Pages address',async()=>{
+test('legacy share links redirect to named guest pages',async()=>{
   const {handler}=load('invitation-share');
   const response=await handler(new Request('https://functions.example.invalid/share?slug=inv-0123456789abcdef0123'));
-  assert.equal(response.status,200);
-  assert.match(await response.text(),/https:\/\/vraxisjk36\.github\.io\/Vraxisrsvp\/invite\.html\?slug=/);
+  assert.equal(response.status,302);
+  assert.match(response.headers.get('location'),/^https:\/\/our-moment-invitations\.fernyplatypus32\.chatgpt\.site\/your-invitation\/inv-/);
 });

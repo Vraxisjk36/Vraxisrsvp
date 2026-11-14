@@ -35,7 +35,7 @@ body.studio-open{overflow:hidden}
 .studio-bottom{display:flex;gap:8px;justify-content:space-between;align-items:center;padding:9px 12px max(9px,env(safe-area-inset-bottom));background:#fff;border-top:1px solid #ddd9cf;font:12px Arial,sans-serif;color:#56645b}
 .studio-bottom button{border:1px solid #263a30;background:#fff;color:#263a30;padding:10px 12px;font-weight:700;min-height:42px}
 @media(min-width:850px){.studio-canvas{padding:14px 10vw}#studioFrame{max-width:950px;margin:auto;box-shadow:0 8px 35px #1a2c2530}}
-#studioShell .studio-top,#studioShell .studio-bottom{display:none!important}#studioShell .studio-canvas{position:absolute;inset:0;padding:0!important}#studioShell #studioFrame{position:absolute;inset:0;width:100%;height:100%;max-width:none;margin:0;box-shadow:none}#studioShell{height:100dvh;width:100vw}#studioExit{position:absolute;z-index:10;top:12px;right:12px;border:0;border-radius:50%;background:#1c3029c9;color:#fff;width:40px;height:40px;font-size:24px}#helper[hidden]{display:none!important}@media(max-width:760px){main{padding-top:24px!important}.grid{gap:18px!important}.sidebar{padding:20px!important}}</style></head><body>
+#studioShell{height:100dvh;width:100vw}#studioExit{position:absolute;z-index:10;top:12px;right:12px;border:0;border-radius:50%;background:#1c3029c9;color:#fff;width:40px;height:40px;font-size:24px}#helper[hidden]{display:none!important}@media(max-width:760px){main{padding-top:24px!important}.grid{gap:18px!important}.sidebar{padding:20px!important}}</style><link rel="stylesheet" href="assets/experience.css?v=1"><link rel="stylesheet" href="assets/editor.css?v=1"></head><body>
 <header><a class="logo" href="index.html">vraxis<em>RSVP</em></a><nav class="links"><a href="catalogue.html">Collection</a><a href="dashboard.html">Dashboard</a></nav></header>
 <main><div class="kicker">FINAL PREVIEW</div><h1>It's yours. Take a look.</h1><p>Review your design, make any final changes, then continue.</p><div class="progress"></div>
 <div class="grid">
@@ -47,12 +47,12 @@ body.studio-open{overflow:hidden}
 <a class="btn light" id="back">← Change event details</a>
 <p class="note">Your design is saved before checkout. You can edit it again later.</p>
 </section>
-<div class="device"><div class="device-label"><span>Guest preview <span id="templateLabel" hidden>your design</span></span><span id="modeLabel">Guest preview</span></div><iframe id="frame" title="Your personalised invitation"></iframe><p id="renderStatus" aria-live="polite">Preparing your personalised invitation…</p></div>
+<div class="device"><div class="device-label"><span>Guest preview <span id="templateLabel" hidden>your design</span></span><span id="modeLabel">Guest preview</span><div class="preview-sizes" role="group" aria-label="Preview size"><button type="button" data-preview-size="wide" aria-pressed="true">Wide</button><button type="button" data-preview-size="phone" aria-pressed="false">Phone</button></div></div><iframe id="frame" title="Your personalised invitation"></iframe><p id="renderStatus" aria-live="polite">Preparing your personalised invitation…</p></div>
 </div></main>
-<section id="studioShell" hidden aria-label="Full screen invitation editor"><div class="studio-top"><strong>Invitation studio</strong><div style="display:flex;gap:8px"><button id="studioBack" class="secondary" type="button">← Preview</button><button id="studioDone" type="button">✓ Done editing</button></div></div><div class="studio-canvas"><iframe id="studioFrame" title="Full screen invitation editor"></iframe></div><button id="studioExit" type="button" aria-label="Close full screen editor">×</button><div class="studio-bottom"><span>Tap any heading, paragraph or photo</span><button id="studioEditDetails" type="button">Edit event details</button></div></section><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script><script src="assets/backend.js"></script><script src="assets/draft.js"></script><script>
+<section id="studioShell" hidden aria-label="Full screen invitation editor"><div class="studio-top"><strong>Invitation studio</strong><div style="display:flex;gap:8px"><button id="studioBack" class="secondary" type="button">← Preview</button><button id="studioDone" type="button">✓ Done editing</button></div></div><div class="studio-canvas"><iframe id="studioFrame" title="Full screen invitation editor"></iframe></div><button id="studioExit" type="button" aria-label="Close full screen editor">×</button><div class="studio-bottom"><span>Tap text or a photograph to edit it.</span><button id="studioEditDetails" type="button">Edit event details</button></div></section><script src="assets/vendor/supabase-2.57.0.min.js"></script><script src="assets/backend.js"></script><script src="assets/draft.js"></script><script src="assets/editor-utils.js"></script><script src="assets/photographs.js"></script><script>
 (function(){
  const params=new URLSearchParams(location.search),id=params.get('template');
- const projectId=/^[0-9a-f-]{36}$/i.test(params.get('project')||'')?params.get('project'):null;let existingStatus=null;
+ let projectId=/^[0-9a-f-]{36}$/i.test(params.get('project')||'')?params.get('project'):null;let existingStatus=null;
  if(!/^0(0[1-9]|1[0-9]|20)$/.test(id||'')){location.replace('catalogue.html');return}
  const names=['The Heirloom','The Grand Affair','The Modern Vow','Midnight Club','The Social Edit','After Hours','The Little Garden','Moonlit Lullaby','The Big Little Secret','Little Wonderland','Sunday, With Love','The Bridal Edit','Something Sweet','The Last Fling','The Brotherhood',"After the Rain","Midnight Garden","Love in Bloom","Leo’s Birthday Fair","Captain Ethan’s Superhero Birthday"];
  const get=k=>{try{return JSON.parse(localStorage.getItem(k)||'{}')}catch{return {}}};
@@ -61,26 +61,31 @@ body.studio-open{overflow:hidden}
  document.getElementById('summary').textContent=[d.names,d.title,d.date,d.time,d.venue,d.address].filter(Boolean).join(' · ')||'No event details saved. Please complete the guided steps.';
  document.getElementById('back').href=vraxisDraft.url('start.html',{step:'1'});
  document.getElementById('frame').src='preview-'+id+'.html';
+ document.querySelectorAll('[data-preview-size]').forEach(button=>button.onclick=()=>{document.getElementById('frame').dataset.size=button.dataset.previewSize;document.querySelectorAll('[data-preview-size]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)))})
  if(projectId){(async()=>{const user=await vraxisAuth();if(!user)return;const {data}=await vraxisDB.from('invitations').select('status').eq('id',projectId).eq('owner_id',user.id).maybeSingle();existingStatus=data?.status||null;if(existingStatus==='paid'||existingStatus==='published')document.getElementById('done').textContent='Save changes to my invitation →'})()}
  const studioShell=document.getElementById('studioShell'),studioFrame=document.getElementById('studioFrame');
- const previewFrame=document.getElementById('frame');
+ const previewFrame=document.getElementById('frame');studioShell.querySelector('.studio-top').append(document.getElementById('studioExit'));
+ let editing=true;
+ const setStudioMode=value=>{editing=value;const toggle=document.getElementById('studioBack');toggle.textContent=value?'Explore':'Edit';toggle.setAttribute('aria-pressed',String(!value));toggle.setAttribute('aria-label',value?'Switch to explore mode':'Switch to edit mode');studioShell.querySelector('.studio-bottom>span').textContent=value?'Tap text or a photograph to edit it.':'Explore the invitation. Choose Edit to make changes.';window.dispatchEvent(new CustomEvent('vraxis-edit-mode',{detail:{enabled:value}}))};
+ document.getElementById('studioDone').textContent='Done';
  const openStudio=()=>{
-  studioShell.hidden=false;document.body.classList.add('studio-open');
+  studioShell.hidden=false;document.body.classList.add('studio-open');document.getElementById('studioDone').focus();
   // Reuse the same preview URL, so the full-screen view has the same personalisation.
   studioFrame.src=previewFrame.src||('preview-'+id+'.html');
   document.getElementById('customise').setAttribute('aria-pressed','true');
-  window.dispatchEvent(new CustomEvent('vraxis-edit-mode',{detail:{enabled:true}}));
+  setStudioMode(true);
  };
  const closeStudio=()=>{
   window.dispatchEvent(new CustomEvent('vraxis-edit-mode',{detail:{enabled:false}}));
   studioShell.hidden=true;document.body.classList.remove('studio-open');
   document.getElementById('customise').setAttribute('aria-pressed','false');
-  studioFrame.removeAttribute('src');
+  studioFrame.removeAttribute('src');document.getElementById('customise').focus();
   // Refresh the guest preview to apply edits made in the full-screen studio.
   previewFrame.src=previewFrame.src;
  };
+ window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!studioShell.hidden&&document.getElementById('vraxisTextDialog')?.hidden!==false)closeStudio()});
  document.getElementById('customise').onclick=openStudio;
- document.getElementById('studioBack').onclick=closeStudio;
+ document.getElementById('studioBack').onclick=()=>setStudioMode(!editing);
  document.getElementById('studioDone').onclick=closeStudio;
  document.getElementById('studioExit').onclick=closeStudio;
  document.getElementById('studioEditDetails').onclick=()=>{closeStudio();location.href=vraxisDraft.url('start.html',{step:'1'})};
@@ -93,55 +98,59 @@ body.studio-open{overflow:hidden}
    let existing=projectId?projects.find(x=>x.cloudId===projectId):null,cloudId=projectId;
    const edits=vraxisDraft.read('tap',{});
    // Upload tap-to-replace images as private objects; never publish browser-local data URLs.
-   const publishedEdits={text:{...(edits.text||{})},images:{}};
+   const publishedEdits={text:{...(edits.text||{})},images:{},backgrounds:{}};
    const record={owner_id:user.id,template_id:id,title:d.title||d.names||names[Number(id)-1],event_data:d,design_data:{tap_edits:edits}};
    let result;
    if(cloudId){result=await vraxisDB.from('invitations').update({title:record.title,event_data:record.event_data}).eq('id',cloudId).eq('owner_id',user.id).select('id').single()}
    else{result=await vraxisDB.from('invitations').insert(record).select('id').single()}
    if(result.error)throw result.error;
-   cloudId=result.data.id;
+   cloudId=result.data.id;projectId=cloudId;vraxisDraft.project=cloudId;const savedURL=new URL(location.href);savedURL.searchParams.set('project',cloudId);history.replaceState(null,'',savedURL);
+   const uploadCache=vraxisDraft.read('uploads',{});
+   async function uploadPhoto(src,edited=false){
+    const bytes=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(src));const hash=Array.from(new Uint8Array(bytes)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    const cached=uploadCache[hash];if(typeof cached==='string'&&cached.startsWith(user.id+'/'+cloudId+'/'))return cached;
+    const blob=await(await fetch(src)).blob();if(blob.size>8*1024*1024)throw new Error('A photograph exceeds the 8 MB limit.');
+    const mime=blob.type==='image/png'?'image/png':blob.type==='image/webp'?'image/webp':'image/jpeg';const ext=mime==='image/png'?'png':mime==='image/webp'?'webp':'jpg';
+    const path=user.id+'/'+cloudId+'/'+(edited?'edited-':'')+crypto.randomUUID()+'.'+ext;
+    const upload=await vraxisDB.storage.from('invitation-photos').upload(path,blob,{contentType:mime,upsert:false});if(upload.error)throw upload.error;
+    uploadCache[hash]=path;try{vraxisDraft.write('uploads',uploadCache)}catch{}return path;
+   }
    const photos=vraxisDraft.read('photos',[]);
    const paths=[];
    if(Array.isArray(photos)&&photos.length){status.textContent='Uploading your photos securely…';for(let n=0;n<photos.length;n++){
-    const dataUrl=photos[n];if(typeof dataUrl!=='string'||!dataUrl.startsWith('data:image/'))continue;
-    const blob=await (await fetch(dataUrl)).blob();
-    const path=user.id+'/'+cloudId+'/'+crypto.randomUUID()+'.jpg';
-    const uploaded=await vraxisDB.storage.from('invitation-photos').upload(path,blob,{contentType:'image/jpeg',upsert:false});
-    if(uploaded.error)throw uploaded.error;paths.push(path);
+    const dataUrl=photos[n];if(typeof dataUrl!=='string')continue;
+    if(dataUrl.startsWith('https://')){try{const url=new URL(dataUrl),prefix='/storage/v1/object/sign/invitation-photos/';if(url.origin==='https://ogmlfnmdhmrbbmxnxwqw.supabase.co'&&url.pathname.startsWith(prefix)){const path=decodeURIComponent(url.pathname.slice(prefix.length));if(path.startsWith(user.id+'/'+cloudId+'/'))paths.push(path)}}catch{}continue}
+    if(!dataUrl.startsWith('data:image/'))continue;
+    paths.push(await uploadPhoto(dataUrl));
    }}
    // Keep previous cloud image references, replacing only edited image slots.
-   const prior=await vraxisDB.from('invitations').select('design_data').eq('id',cloudId).eq('owner_id',user.id).single();
+   const prior=await vraxisDB.from('invitations').select('design_data,status').eq('id',cloudId).eq('owner_id',user.id).single();
    if(prior.error)throw prior.error;
-   const previousDesign=prior.data.design_data||{};
-   const oldImages=previousDesign.tap_edits?.images||{};
+   const previousDesign=prior.data.design_data||{};existingStatus=prior.data.status;
+   const oldImages=previousDesign.tap_edits?.images||{};const oldBackgrounds=previousDesign.tap_edits?.backgrounds||{};
    const oldImagePaths=previousDesign.tap_image_paths||{};
    const imagePaths={...oldImagePaths};
-   for(const [selector,src] of Object.entries(edits.images||{})){
+   for(const [selector,src] of Object.entries({...edits.images,...edits.backgrounds})){
     if(typeof src!=='string')continue;
     if(src.startsWith('data:image/')){
      status.textContent='Saving your edited photographs…';
-     const blob=await(await fetch(src)).blob();
-     if(blob.size>8*1024*1024)throw new Error('An edited photo exceeds the 8 MB limit.');
-     const mime=blob.type==='image/png'?'image/png':blob.type==='image/webp'?'image/webp':'image/jpeg';
-     const ext=mime==='image/png'?'png':mime==='image/webp'?'webp':'jpg';
-     const path=user.id+'/'+cloudId+'/edited-'+crypto.randomUUID()+'.'+ext;
-     const upload=await vraxisDB.storage.from('invitation-photos').upload(path,blob,{contentType:mime,upsert:false});
-     if(upload.error)throw upload.error;
-     imagePaths[selector]=path;
-    }else if(typeof oldImagePaths[selector]==='string'){
-     imagePaths[selector]=oldImagePaths[selector];
+     imagePaths[selector]=await uploadPhoto(src,true);
     }else if(src.startsWith('https://')){
-     publishedEdits.images[selector]=src;
+     let storedPath=null;try{const url=new URL(src),prefix='/storage/v1/object/sign/invitation-photos/';if(url.origin==='https://ogmlfnmdhmrbbmxnxwqw.supabase.co'&&url.pathname.startsWith(prefix)){const path=decodeURIComponent(url.pathname.slice(prefix.length));if(path.startsWith(user.id+'/'+cloudId+'/'))storedPath=path}}catch{}
+     if(storedPath)imagePaths[selector]=storedPath;
+     else{delete imagePaths[selector];(Object.hasOwn(edits.backgrounds||{},selector)?publishedEdits.backgrounds:publishedEdits.images)[selector]=src;}
     }
    }
+   for(const [selector,src] of Object.entries(edits.backgrounds||{})){if(imagePaths[selector])publishedEdits.backgrounds[selector]=''}
+   for(const [selector,src] of Object.entries(oldBackgrounds)){if(!(selector in (edits.backgrounds||{}))&&typeof src==='string'&&src.startsWith('https://'))publishedEdits.backgrounds[selector]=src}
    for(const [selector,src] of Object.entries(oldImages)){if(!(selector in (edits.images||{}))&&typeof src==='string'&&src.startsWith('https://'))publishedEdits.images[selector]=src}
-   let photoPaths=paths.length?paths:(existing?.photoPaths||[]);
-   if(!paths.length&&!photoPaths.length&&cloudId){const previous=await vraxisDB.from('invitations').select('design_data').eq('id',cloudId).single();if(!previous.error)photoPaths=previous.data.design_data?.photo_paths||[];}
+   const hasPhotoDraft=localStorage.getItem('vraxis_draft_'+vraxisDraft.id+'_photos')!==null;
+   const photoPaths=hasPhotoDraft&&Array.isArray(photos)?paths:(previousDesign.photo_paths||[]);
    const saved=await vraxisDB.from('invitations').update({design_data:{...previousDesign,tap_edits:publishedEdits,tap_image_paths:imagePaths,photo_paths:photoPaths}}).eq('id',cloudId).eq('owner_id',user.id);
    if(saved.error)throw saved.error;
    if(existing){existing.details=d;existing.updated=Date.now();existing.cloudId=cloudId;existing.photoPaths=photoPaths}
    else projects.unshift({id,details:d,updated:Date.now(),cloudId,photoPaths});
-   localStorage.setItem(key,JSON.stringify(projects));
+   try{localStorage.setItem(key,JSON.stringify(projects))}catch{}
    if(existingStatus==='paid'||existingStatus==='published'){status.textContent='Your invitation changes have been saved.';location.href='dashboard.html';return}
    status.textContent='Saved successfully. Preparing secure checkout…';
    const {data:{session}}=await vraxisDB.auth.getSession();
@@ -153,5 +162,5 @@ body.studio-open{overflow:hidden}
   }catch(e){status.textContent=e.message+' You can return to My Dashboard to continue.';button.disabled=false}
  };
 })();
-</script><script src="assets/template-personalisation.js"></script><script src="assets/personalised-preview.js?v=github-origin-1" defer></script><script src="assets/tap-editor.js" defer></script>
+</script><script src="assets/template-personalisation.js"></script><script src="assets/personalised-preview.js?v=polish-1" defer></script><script src="assets/tap-editor.js?v=2" defer></script>
 <script src="assets/site-nav.js" defer></script></body></html>

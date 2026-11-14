@@ -11,7 +11,7 @@ const details=vraxisDraft.read('details',{}),studio=vraxisDraft.read('studio',{}
 const names=(details.names||'').split(/\s+(?:and|&)\s+|\s*,\s*/i).map(x=>x.trim()).filter(Boolean);
 const name1=names[0]||details.names||'',name2=names[1]||'';
 const profile={
- names:details.openingTitle||details.names,first:name1,second:name2,person:details.names,parents:details.names,
+ names:details.names||details.openingTitle,first:name1,second:name2,person:details.names,parents:details.names,
  date:details.date,time:details.time,venue:details.venue,address:details.address,city:details.address,
  dress:details.dress,message:details.introParagraph||details.message,letter:details.story||details.message,title:details.openingTitle||details.title,
  deadline:details.deadline,contact:details.contact,age:details.age,child:details.child
@@ -45,6 +45,7 @@ function image(src){return typeof src==='string'&&(src.startsWith('data:image/')
 function status(msg){const el=document.getElementById('renderStatus');if(el)el.textContent=msg}
 function applyDoc(doc){
  if(!doc||!doc.body)return;
+ VraxisPhotographs.prepare(doc);
  if(activeDoc!==doc){activeDoc=doc;applied=false}
  const conf=map[id]||{};
  window.vraxisApplyTemplateProfile?.(doc,id,profile);
@@ -100,6 +101,7 @@ function applyDoc(doc){
  }
  if(id==='011'&&Array.isArray(photos)){[...doc.querySelectorAll('[data-img]')].forEach((img,i)=>{if(image(photos[i])){img.src=photos[i];photoCount++}})}
  if(id==='009'&&image(photos?.[0])){const img=doc.getElementById('heroImg');if(img){img.src=photos[0];photoCount++}}
+ VraxisPhotographs.apply(doc,id,photos);
  // Make the invitation's people/event the main title, never the catalogue template's name.
  const templateNames=['The Heirloom','The Grand Affair','The Modern Vow','Midnight Club','The Social Edit','After Hours','The Little Garden','Moonlit Lullaby','The Big Little Secret','Little Wonderland','Sunday, With Love','The Bridal Edit','Something Sweet','The Last Fling','The Brotherhood',"After the Rain","Midnight Garden","Love in Bloom","Leo’s Birthday Fair","Captain Ethan’s Superhero Birthday"];
  const original=templateNames[Number(id)-1];

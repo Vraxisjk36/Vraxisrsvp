@@ -8,5 +8,5 @@
  const prefix='vraxis_draft_'+draft+'_';
  const read=(name,fallback)=>{try{return JSON.parse(localStorage.getItem(prefix+name)||'null')??fallback}catch{return fallback}};
  const write=(name,value)=>localStorage.setItem(prefix+name,JSON.stringify(value));
- window.vraxisDraft={id:draft,project,read,write,url:(page,extra={})=>{const params=new URLSearchParams({template:q.get('template')||'001',draft,...(project?{project}:{}),...extra});return page+'?'+params.toString()}};
+ window.vraxisDraft={id:draft,project,read,write,url:(page,extra={})=>{const params=new URLSearchParams({template:q.get('template')||'001',draft,...(window.vraxisDraft?.project?{project:window.vraxisDraft.project}:{}),...extra});return page+'?'+params.toString()}};
 })();
