@@ -1,28 +1,25 @@
-# Founding 20 integration — architecture audit (2026-11-14)
+# Founding 20 Integration — status on 14 November 2026
 
-Status: **audit completed; integration not yet applied**. Work on this branch only; do not alter main or existing previews before approved assets are mapped.
+## GitHub branch
+`integration/founding-20-approved-interiors-20261114`
 
-## Existing customer journey (verified against main)
-- index.html -> choose.html / catalogue.html -> preview-NNN.html -> personalise.html -> ready.html -> dashboard.html / manage.html -> invite.html?slug=...
-- preview-NNN.html contains a TEMPLATE HTML string and renders it into iframe#invitation using srcdoc.
-- ready.html embeds preview-NNN.html in iframe#frame, and offers studio editing. It uses assets/draft.js, assets/personalised-preview.js, assets/tap-editor.js.
-- invite.html renders preview-NNN.html into iframe#template-frame and applies published edits.
-- assets/backend.js initializes Supabase client; account.html, dashboard.html, ready.html, manage.html, invite.html use it.
-- assets/personalised-preview.js and assets/tap-editor.js manage browser-side changes. Publishing/storage behaviour must be end-to-end tested.
-- catalogue.html lists 20 preview links and USD prices.
-- Lemon Squeezy integration has NOT been verified in inspected frontend files; do not claim payment is working.
+**Do not merge or deploy without a final review.**
 
-## Integration invariants
-1. Use approved interior HTML per ID 001-020; never overwrite it with earlier ZIP drafts.
-2. Preserve existing wrapper pages and routes (preview-NNN.html), template IDs, customisation hooks, published invitation renderer, and dashboard links.
-3. Replace the embedded TEMPLATE string in each wrapper, not the outer preview application.
-4. Escape embedded HTML safely when serializing into JS; preserve script execution within srcdoc.
-5. Embed or host reliable images, avoid duplicate/off-event photos; do not cross-reference other templates' assets.
-6. Verify personalisation edits propagate to the preview AND public published invitation, including image upload.
-7. Test mobile, desktop, RSVP and auth; preserve published customer data and RLS.
-8. Confirm checkout/provider integration separately; do not invent Lemon Squeezy keys or endpoints.
-9. Compare branches feature/vscode-local-template-media-20261113, fix/manual-template-image-uploads-20261113, fix/template-media-quality-20261113 and refactor/readable-template-interiors-20261113 before merging.
-10. No deployment/merge without explicit verification.
+- Founding 20 catalogue extended with 016–020.
+- New preview routes 016–020 added.
+- Approved HTML committed to previews 001, 007–015, and 016–020 (15 of 20 total).
+- Outstanding direct GitHub preview replacements: **002, 003, 004, 005, 006**. Large image-embedded HTML content hit connector transport limitations.
+- Corrected template IDs in start.html, ready.html, assets/personalised-preview.js and invite.html so 016–020 can progress from preview to edit and published renderer.
+- Existing Supabase / create-checkout integration and browser storage workflows left intact; no live auth, checkout, webhook, published-RSVP or permission tests performed.
+- Complete local review bundle with all approved 20 templates generated as `VraxisRSVP_Founding20_Integrated_Site_REVIEW.zip`. It is based on the user-supplied prior `Vraxisrsvp-main.zip`; compare against live main before replacing the repository.
 
-## Next technical step
-Collect the exact final approved 20 files and create a mapping manifest with file hashes. Diff current wrapper inner TEMPLATE versus approved HTML. Update one preview on this branch, test personalisation and published renderer, then batch remaining templates. Never deploy on assumption.
+## Risks
+1. Templates 002–006 should be updated from the exact approved files before merging.
+2. Template media is very heavy (more than 140 MB of combined preview HTML before ZIP compression). Optimise without changing visuals; test mobile, bandwidth, caches.
+3. Some invitation interiors include native RSVP forms that may show browser-only confirmations; verify the canonical public RSVP endpoint in invite.html is the actual persisted submission path.
+4. Template 013 includes a remote Pexels image; test load and licence.
+5. Ensure customer edits appear identically on `ready.html` and `invite.html` and photo objects survive cross-device publishing.
+6. Check Supabase RLS, Lemon Squeezy edge function, webhook, price tier mapping ($15.99/$24.00), payments and hosted public links.
+
+## Source-of-truth preservation
+Approved interiors are held in the review ZIP. Main stays unchanged. Never overwrite newer main commits with the older archive.
