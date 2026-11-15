@@ -10,7 +10,7 @@
   }
   const backgrounds={
     '002':[['.hero',0],['.story-image',1]],
-    '003':[['.mv-intro-photo',0],['.mv-reveal-photo',0]],
+    '003':[['.mv-intro-photo',0],['.mv-reveal-photo',1]],
     '004':[['.hero-photo',0],['.mc-birthday-portrait',0],['#mcGate .mc-bg',0],['.intro-photo',1]],
     '005':[['.se-res-photo',0]],
     '006':[['.hero::before',0],['.honour-hero-image',0],['.photo-statement .photo',1]],

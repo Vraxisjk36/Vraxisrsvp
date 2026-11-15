@@ -1,0 +1,21 @@
+name: Invitation media source audit
+on:
+  pull_request:
+    paths:
+      - 'preview-*.html'
+      - 'assets/**'
+      - 'scripts/audit-template-media.mjs'
+      - '.github/workflows/invitation-media-audit.yml'
+  workflow_dispatch:
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Audit invitation interior media
+        run: node scripts/audit-template-media.mjs

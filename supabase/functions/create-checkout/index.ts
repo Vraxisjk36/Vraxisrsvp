@@ -1,7 +1,7 @@
 import { createClient } from "npm:@supabase/supabase-js@2.57.0";
 const tiers:Record<string,"signature"|"prestige">={"001":"signature","002":"prestige","003":"signature","004":"signature","005":"prestige","006":"signature","007":"signature","008":"signature","009":"signature","010":"prestige","011":"signature","012":"prestige","013":"signature","014":"prestige","015":"signature","016":"signature","017":"prestige","018":"signature","019":"signature","020":"signature","021":"prestige","022":"prestige","023":"prestige","024":"prestige","025":"prestige"};
-const products={signature:{variant:"2369889",amount:1599},prestige:{variant:"2369903",amount:2400}};
-const sites:Record<string,string>={"https://vraxisrsvp.online":"https://vraxisrsvp.online","https://vraxisjk36.github.io":"https://vraxisjk36.github.io/Vraxisrsvp","https://vraxisrsvp.kazadijoel36.workers.dev":"https://vraxisrsvp.kazadijoel36.workers.dev"};
+const products={signature:{variant:"2369916",amount:1599},prestige:{variant:"2369915",amount:2400}};
+const sites:Record<string,string>={"https://vraxisrsvp.kazadijoel36.workers.dev":"https://vraxisrsvp.kazadijoel36.workers.dev"};
 Deno.serve(async req=>{
  const origin=req.headers.get("origin")||"";
  const siteBase=Object.hasOwn(sites,origin)?sites[origin]:null;
@@ -11,7 +11,7 @@ Deno.serve(async req=>{
  if(req.method==="OPTIONS")return new Response(null,{status:204,headers});
  if(req.method!=="POST")return json({error:"Method not allowed"},405);
  const key=Deno.env.get("LEMON_SQUEEZY_API_KEY"),storeId=Deno.env.get("LEMON_SQUEEZY_STORE_ID"),secret=Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"),url=Deno.env.get("SUPABASE_URL"),pub=Deno.env.get("SUPABASE_ANON_KEY");
- if(!key||!storeId||!secret||!url||!pub)return json({error:"Checkout configuration is not complete"},503);
+ if(!key||!storeId||!secret||!url||!pub||Deno.env.get("LEMON_SQUEEZY_TEST_MODE")!=="false")return json({error:"Live checkout is not configured"},503);
  const bearer=req.headers.get("authorization")||"";
  if(!bearer.startsWith("Bearer "))return json({error:"Sign in required"},401);
  const auth=createClient(url,pub,{global:{headers:{Authorization:bearer}}});
@@ -29,14 +29,16 @@ Deno.serve(async req=>{
  const p=products[tier];
  const {data:paid}=await admin.from("orders").select("id").eq("invitation_id",inv.id).eq("status","paid").limit(1);
  if(paid?.length)return json({error:"This invitation is already paid"},409);
- const requestBody={data:{type:"checkouts",attributes:{custom_price:p.amount,test_mode:Deno.env.get("LEMON_SQUEEZY_TEST_MODE")!=="false",product_options:{enabled_variants:[Number(p.variant)],redirect_url:siteBase+"/dashboard.html?payment=return"},checkout_options:{embed:false},checkout_data:{email:user.email,custom:{invitation_id:inv.id,user_id:user.id,tier}}},relationships:{store:{data:{type:"stores",id:storeId}},variant:{data:{type:"variants",id:p.variant}}}}};
+ const attemptId=crypto.randomUUID();
+ const requestBody={data:{type:"checkouts",attributes:{custom_price:p.amount,test_mode:Deno.env.get("LEMON_SQUEEZY_TEST_MODE")!=="false",product_options:{enabled_variants:[Number(p.variant)],redirect_url:siteBase+"/dashboard.html?payment=return"},checkout_options:{embed:false},checkout_data:{email:user.email,custom:{invitation_id:inv.id,user_id:user.id,tier,attempt_id:attemptId}}},relationships:{store:{data:{type:"stores",id:storeId}},variant:{data:{type:"variants",id:p.variant}}}}};
  try{
   const response=await fetch("https://api.lemonsqueezy.com/v1/checkouts",{method:"POST",headers:{Accept:"application/vnd.api+json","Content-Type":"application/vnd.api+json",Authorization:"Bearer "+key},body:JSON.stringify(requestBody)});
   const result=await response.json();
   if(!response.ok)return json({error:"Checkout provider rejected the request",detail:result?.errors?.[0]?.detail||"Check store and variant configuration"},502);
   const checkoutId=result?.data?.id,checkoutUrl=result?.data?.attributes?.url;
+  if(result?.data?.attributes?.test_mode!==false)return json({error:"Checkout provider returned test mode"},502);
   if(!checkoutId||typeof checkoutUrl!=="string"||!checkoutUrl.startsWith("https://"))return json({error:"Invalid checkout response"},502);
-  const {error:saveError}=await admin.from("orders").insert({owner_id:user.id,invitation_id:inv.id,provider:"lemonsqueezy",provider_checkout_id:checkoutId,provider_variant_id:p.variant,tier,currency:"USD",amount_minor:p.amount,status:"pending",checkout_url:checkoutUrl});
+  const {error:saveError}=await admin.from("orders").insert({id:attemptId,owner_id:user.id,invitation_id:inv.id,provider:"lemonsqueezy",provider_checkout_id:checkoutId,provider_variant_id:p.variant,tier,currency:"USD",amount_minor:p.amount,status:"pending",checkout_url:checkoutUrl});
   if(saveError)return json({error:"Could not record checkout"},500);
   return json({url:checkoutUrl,checkout_id:checkoutId,tier,test_mode:requestBody.data.attributes.test_mode});
  }catch{return json({error:"Checkout service temporarily unavailable"},502)}
