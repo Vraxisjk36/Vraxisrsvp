@@ -7,7 +7,7 @@ create or replace function public.apply_verified_lemon_event(
 ) returns text language plpgsql security definer set search_path='' as $$
 declare v public.orders%rowtype; v_inv public.invitations%rowtype;
 begin
- if current_user <> 'service_role' then raise exception 'service_role only'; end if;
+ if current_setting('request.jwt.claim.role',true) is distinct from 'service_role' then raise exception 'service_role only'; end if;
  if p_event not in ('order_created','order_refunded') or p_order_id !~ '^[0-9]+$' then raise exception 'invalid event'; end if;
  select * into v from public.orders where id=p_attempt_id for update;
  if not found or v.invitation_id<>p_invitation_id or v.owner_id<>p_owner_id or v.provider_variant_id<>p_variant
