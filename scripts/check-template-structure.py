@@ -10,7 +10,7 @@ class Structure(HTMLParser):
   if tag in ['script','style']:self.skip+=1;return
   if not self.body:return
   if self.skip or tag=='link':return
-  attrs=[(k,v) for k,v in attrs if k not in ['src','srcset','sizes','loading','decoding','data-fallback']]
+  attrs=[(k,v) for k,v in attrs if k not in ['src','srcset','sizes','loading','decoding','data-fallback','alt','fetchpriority']]
   self.events.append(('start',tag,attrs))
  def handle_endtag(self,tag):
   if tag in ['img','input','br','hr','meta','link','source','wbr']:return

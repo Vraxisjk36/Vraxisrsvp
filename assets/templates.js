@@ -7,8 +7,8 @@ window.VRAXIS_TEMPLATES=Object.freeze([
     "description": "A love letter worth keeping.",
     "tier": "Signature",
     "price": 15.99,
-    "cover": "assets/covers/001.webp",
-    "source": "templates/001.html?v=5cee72c2fe5d"
+    "cover": "assets/covers/heirloom-1752ad4f598d4642.webp",
+    "source": "templates/001.html?v=9ef627fae72b"
   },
   {
     "id": "002",

@@ -3148,5 +3148,215 @@
         "bytes": 31142
       }
     ]
+  },
+  "1d7ff28e61ed7bf066d3ecfe": {
+    "path": "assets/media/21f88a116be1b306c3d718a4-960.webp",
+    "width": 960,
+    "height": 640,
+    "bytes": 118224,
+    "originalBytes": 2877090,
+    "originalWidth": 1536,
+    "originalHeight": 1024,
+    "variants": [
+      {
+        "path": "assets/media/2bc1b2d7ff07c59a265325ee-319.webp",
+        "width": 319,
+        "height": 213,
+        "bytes": 15094
+      },
+      {
+        "path": "assets/media/cf31bf4c15260a512a8bd7a1-640.webp",
+        "width": 640,
+        "height": 427,
+        "bytes": 53592
+      },
+      {
+        "path": "assets/media/21f88a116be1b306c3d718a4-960.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 118224
+      },
+      {
+        "path": "assets/media/9a79f2863e7df90c3adeeddf-1440.webp",
+        "width": 1440,
+        "height": 960,
+        "bytes": 225732
+      },
+      {
+        "path": "assets/media/e206ffc0c03dfa7b84cc65eb-1536.webp",
+        "width": 1536,
+        "height": 1024,
+        "bytes": 265522
+      }
+    ],
+    "provenance": "Original generated Heirloom wedding imagery, 2026-11-15"
+  },
+  "51f5e72c6fbea998a2b34f13": {
+    "path": "assets/media/8c9ac373905f4fc364a71924-960.webp",
+    "width": 960,
+    "height": 640,
+    "bytes": 171448,
+    "originalBytes": 2829464,
+    "originalWidth": 1536,
+    "originalHeight": 1024,
+    "variants": [
+      {
+        "path": "assets/media/45f44c140582d89204c34547-319.webp",
+        "width": 319,
+        "height": 213,
+        "bytes": 27310
+      },
+      {
+        "path": "assets/media/5e0fa05f292656b41d62014d-640.webp",
+        "width": 640,
+        "height": 427,
+        "bytes": 93282
+      },
+      {
+        "path": "assets/media/8c9ac373905f4fc364a71924-960.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 171448
+      },
+      {
+        "path": "assets/media/89290ce1edfbd075c2e2fc36-1440.webp",
+        "width": 1440,
+        "height": 960,
+        "bytes": 292128
+      },
+      {
+        "path": "assets/media/edabe1c21e52e11f23be4b5e-1536.webp",
+        "width": 1536,
+        "height": 1024,
+        "bytes": 321494
+      }
+    ],
+    "provenance": "Original generated Heirloom wedding imagery, 2026-11-15"
+  },
+  "c08e1c1fb43039dd1c1709cd": {
+    "path": "assets/media/96554ac4e97c169cd84a689d-960.webp",
+    "width": 960,
+    "height": 640,
+    "bytes": 118152,
+    "originalBytes": 2484315,
+    "originalWidth": 1536,
+    "originalHeight": 1024,
+    "variants": [
+      {
+        "path": "assets/media/70b78058822a993b2d0c4221-319.webp",
+        "width": 319,
+        "height": 213,
+        "bytes": 22564
+      },
+      {
+        "path": "assets/media/4d7ba8604720040df8234815-640.webp",
+        "width": 640,
+        "height": 427,
+        "bytes": 66340
+      },
+      {
+        "path": "assets/media/96554ac4e97c169cd84a689d-960.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 118152
+      },
+      {
+        "path": "assets/media/d79a3a8f8bad1f593ed89dab-1440.webp",
+        "width": 1440,
+        "height": 960,
+        "bytes": 195620
+      },
+      {
+        "path": "assets/media/2b386764856df87d5f798e6a-1536.webp",
+        "width": 1536,
+        "height": 1024,
+        "bytes": 212562
+      }
+    ],
+    "provenance": "Original generated Heirloom wedding imagery, 2026-11-15"
+  },
+  "9808382d49649e1b782feb8e": {
+    "path": "assets/media/4d3a3ddd76770efc0817d841-960.webp",
+    "width": 960,
+    "height": 640,
+    "bytes": 208922,
+    "originalBytes": 3249790,
+    "originalWidth": 1536,
+    "originalHeight": 1024,
+    "variants": [
+      {
+        "path": "assets/media/9932065256139b2dace4cb47-319.webp",
+        "width": 319,
+        "height": 213,
+        "bytes": 30122
+      },
+      {
+        "path": "assets/media/6cc64a705cd0b92342fb7a1a-640.webp",
+        "width": 640,
+        "height": 427,
+        "bytes": 107432
+      },
+      {
+        "path": "assets/media/4d3a3ddd76770efc0817d841-960.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 208922
+      },
+      {
+        "path": "assets/media/4960aa16b722fc01044eaff5-1440.webp",
+        "width": 1440,
+        "height": 960,
+        "bytes": 379962
+      },
+      {
+        "path": "assets/media/83b88e85f3db6800eaed91c2-1536.webp",
+        "width": 1536,
+        "height": 1024,
+        "bytes": 423632
+      }
+    ],
+    "provenance": "Original generated Heirloom wedding imagery, 2026-11-15"
+  },
+  "730e94e121c887b6f6674ebd": {
+    "path": "assets/media/886780b30d37077ffdc63664-960.webp",
+    "width": 960,
+    "height": 640,
+    "bytes": 127740,
+    "originalBytes": 2449699,
+    "originalWidth": 1536,
+    "originalHeight": 1024,
+    "variants": [
+      {
+        "path": "assets/media/cf7c9ac80336fb0dc5fb64cf-319.webp",
+        "width": 319,
+        "height": 213,
+        "bytes": 25072
+      },
+      {
+        "path": "assets/media/a31d935dda47a33ba01e04c0-640.webp",
+        "width": 640,
+        "height": 427,
+        "bytes": 72294
+      },
+      {
+        "path": "assets/media/886780b30d37077ffdc63664-960.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 127740
+      },
+      {
+        "path": "assets/media/a95bba4e8ff8ea6d2e612c73-1440.webp",
+        "width": 1440,
+        "height": 960,
+        "bytes": 214870
+      },
+      {
+        "path": "assets/media/aede87f5c2211e7e364bf5c6-1536.webp",
+        "width": 1536,
+        "height": 1024,
+        "bytes": 235942
+      }
+    ],
+    "provenance": "Original generated Heirloom wedding imagery, 2026-11-15"
   }
 }
