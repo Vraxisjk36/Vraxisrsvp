@@ -1,5 +1,5 @@
 import {createClient} from "npm:@supabase/supabase-js@2.57.0";
-const sites:Record<string,string>={"https://vraxisrsvp.online":"https://vraxisrsvp.online","https://vraxisjk36.github.io":"https://vraxisjk36.github.io/Vraxisrsvp"};
+const sites:Record<string,string>={"https://vraxisrsvp.online":"https://vraxisrsvp.online","https://vraxisjk36.github.io":"https://vraxisjk36.github.io/Vraxisrsvp","https://vraxisrsvp.kazadijoel36.workers.dev":"https://vraxisrsvp.kazadijoel36.workers.dev"};
 Deno.serve(async req=>{
  const origin=req.headers.get("origin")||"";
  const siteBase=Object.hasOwn(sites,origin)?sites[origin]:null;

@@ -5,7 +5,7 @@ const {readFileSync} = require('node:fs');
 const {join} = require('node:path');
 const {stripTypeScriptTypes} = require('node:module');
 const vm = require('node:vm');
-const sites = ['https://vraxisrsvp.online', 'https://vraxisjk36.github.io'];
+const sites = ['https://vraxisrsvp.online', 'https://vraxisjk36.github.io', 'https://vraxisrsvp.kazadijoel36.workers.dev'];
 const baseFor = origin => origin + (origin.endsWith('github.io') ? '/Vraxisrsvp' : '');
 function load(slug, options = {}) {
   let handler;
@@ -34,7 +34,7 @@ function request(method,origin,body={},auth=false) {
   return new Request('https://functions.example.invalid/test',{method,headers,...(method==='POST'?{body:JSON.stringify(body)}:{})});
 }
 for(const slug of ['create-checkout','publish-invitation','submit-rsvp']) {
-  test(slug+' accepts both configured origins and rejects unrelated origins',async()=>{
+  test(slug+' accepts all configured origins and rejects unrelated origins',async()=>{
     const {handler}=load(slug);
     for(const origin of sites){
       const preflight=await handler(request('OPTIONS',origin));
@@ -71,7 +71,7 @@ test('published URLs preserve the GitHub repository path and the custom domain',
     assert.equal((await response.json()).url,baseFor(origin)+'/invite.html?slug=inv-0123456789abcdef0123');
   }
 });
-test('RSVP requests from both sites reach validation and storage logic',async()=>{
+test('RSVP requests from all configured sites reach validation and storage logic',async()=>{
   for(const origin of sites){
     const {handler,sent}=load('submit-rsvp');
     const response=await handler(request('POST',origin,{slug:'inv-0123456789abcdef0123',guest_name:'QA Guest',guest_email:'qa@example.invalid',response:'yes',party_size:2}));
