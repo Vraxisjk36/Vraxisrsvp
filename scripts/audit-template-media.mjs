@@ -7,7 +7,7 @@ const pages=fs.readdirSync(root).filter(f=>/^preview-\d{3}\.html$/.test(f));
 const issues=[];
 for(const page of pages){
  const html=fs.readFileSync(path.join(root,page),'utf8');
- const embedded=html.match(/const TEMPLATE=("(?:\\\\.|[^"\\\\])*");/);
+ const embedded=html.match(/const TEMPLATE=("(?:\\.|[^"\\])*");/);
  let source=html;
  if(embedded){try{source+='\\n'+JSON.parse(embedded[1]);}catch{issues.push({page,kind:'unreadable-embedded-template'});}}
  const refs=[...source.matchAll(/<(?:img|video|source)\b[^>]*?\b(?:src|poster)\s*=\s*["']([^"']+)["']/gi)].map(m=>m[1]);
