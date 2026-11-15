@@ -1,7 +1,7 @@
 import { createClient } from "npm:@supabase/supabase-js@2.57.0";
 const respond=(body:unknown,status=200)=>new Response(JSON.stringify(body),{status,headers:{"Content-Type":"application/json"}});
 const hex=(bytes:ArrayBuffer)=>Array.from(new Uint8Array(bytes)).map(b=>b.toString(16).padStart(2,"0")).join("");
-const variants:Record<string,{tier:string,amount:number}>={"2369889":{tier:"signature",amount:1599},"2369903":{tier:"prestige",amount:2400}};
+const variants:Record<string,{tier:string,amount:number}>={"2369916":{tier:"signature",amount:1599},"2369915":{tier:"prestige",amount:2400}};
 Deno.serve(async req=>{
  if(req.method!=="POST")return respond({error:"Method not allowed"},405);
  const secret=Deno.env.get("LEMON_SQUEEZY_WEBHOOK_SECRET");
@@ -16,6 +16,7 @@ Deno.serve(async req=>{
  let payload;try{payload=JSON.parse(raw)}catch{return respond({error:"Invalid JSON"},400)}
  const event=req.headers.get("X-Event-Name")||payload?.meta?.event_name;
  if(event!=="order_created")return respond({ok:true,ignored:event||"unknown"});
+ if(Deno.env.get("LEMON_SQUEEZY_TEST_MODE")!=="false")return respond({error:"Live webhook is not configured"},503);
  const orderId=String(payload?.data?.id||"");
  const a=payload?.data?.attributes||{},custom=payload?.meta?.custom_data||{};
  const invitationId=custom.invitation_id,userId=custom.user_id;
