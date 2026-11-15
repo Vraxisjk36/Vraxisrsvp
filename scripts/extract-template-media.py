@@ -98,7 +98,7 @@ for id,body in bodies.items():
  shell,a,n=shells[id];tail=shell[a+n:];end=tail.index('</script>');old=tail[:end]
  # Preserve `frame` global for legacy storefront scripts. The preview frame still
  # receives srcdoc so saved selector paths and nested editor behavior remain stable.
- replacement='"";const frame=document.getElementById("invitation");fetch("templates/'+id+'.html?v=media1").then(r=>{if(!r.ok)throw Error("Design unavailable");return r.text();}).then(html=>{frame.srcdoc=html;}).catch(()=>{frame.srcdoc="<!doctype html><p>This design could not load. Please refresh to try again.</p>";});'
+ replacement=json.dumps(body,ensure_ascii=True).replace('<','\\u003c')+';const frame=document.getElementById("invitation");frame.srcdoc=TEMPLATE;'
  shell=shell[:a]+replacement+tail[end:];(root/f'preview-{id}.html').write_text(shell)
  reports.append({'id':id,'beforeHTML':len(baseline.encode()),'afterHTML':len(body.encode()),'previewBytes':len(shell.encode()),'embeddedImages':len(pattern.findall(baseline))})
 # Legacy editor wrappers use the same optimised interiors instead of retaining duplicate media.
