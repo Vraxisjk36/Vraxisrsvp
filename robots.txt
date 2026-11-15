@@ -1,12 +1,16 @@
 User-agent: *
-Allow: /
-Disallow: /dashboard.html
-Disallow: /manage.html
-Disallow: /account.html
-Disallow: /template-manager.html
-Disallow: /invite.html
-Disallow: /ready.html
-Disallow: /personalise.html
-Disallow: /start.html
+Allow: /Vraxisrsvp/
+Disallow: /Vraxisrsvp/account.html
+Disallow: /Vraxisrsvp/dashboard.html
+Disallow: /Vraxisrsvp/invite.html
+Disallow: /Vraxisrsvp/manage.html
+Disallow: /Vraxisrsvp/personalise.html
+Disallow: /Vraxisrsvp/ready.html
+Disallow: /Vraxisrsvp/signin.html
+Disallow: /Vraxisrsvp/start.html
+Disallow: /Vraxisrsvp/template-manager.html
+Disallow: /Vraxisrsvp/studio-
+Disallow: /Vraxisrsvp/templates/
+Disallow: /Vraxisrsvp/services/
 
-Sitemap: https://vraxisrsvp.online/sitemap.xml
+Sitemap: https://vraxisjk36.github.io/Vraxisrsvp/sitemap.xml
