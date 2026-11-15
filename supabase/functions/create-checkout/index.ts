@@ -29,14 +29,16 @@ Deno.serve(async req=>{
  const p=products[tier];
  const {data:paid}=await admin.from("orders").select("id").eq("invitation_id",inv.id).eq("status","paid").limit(1);
  if(paid?.length)return json({error:"This invitation is already paid"},409);
- const requestBody={data:{type:"checkouts",attributes:{custom_price:p.amount,test_mode:Deno.env.get("LEMON_SQUEEZY_TEST_MODE")!=="false",product_options:{enabled_variants:[Number(p.variant)],redirect_url:siteBase+"/dashboard.html?payment=return"},checkout_options:{embed:false},checkout_data:{email:user.email,custom:{invitation_id:inv.id,user_id:user.id,tier}}},relationships:{store:{data:{type:"stores",id:storeId}},variant:{data:{type:"variants",id:p.variant}}}}};
+ const attemptId=crypto.randomUUID();
+ const requestBody={data:{type:"checkouts",attributes:{custom_price:p.amount,test_mode:Deno.env.get("LEMON_SQUEEZY_TEST_MODE")!=="false",product_options:{enabled_variants:[Number(p.variant)],redirect_url:siteBase+"/dashboard.html?payment=return"},checkout_options:{embed:false},checkout_data:{email:user.email,custom:{invitation_id:inv.id,user_id:user.id,tier,attempt_id:attemptId}}},relationships:{store:{data:{type:"stores",id:storeId}},variant:{data:{type:"variants",id:p.variant}}}}};
  try{
   const response=await fetch("https://api.lemonsqueezy.com/v1/checkouts",{method:"POST",headers:{Accept:"application/vnd.api+json","Content-Type":"application/vnd.api+json",Authorization:"Bearer "+key},body:JSON.stringify(requestBody)});
   const result=await response.json();
   if(!response.ok)return json({error:"Checkout provider rejected the request",detail:result?.errors?.[0]?.detail||"Check store and variant configuration"},502);
   const checkoutId=result?.data?.id,checkoutUrl=result?.data?.attributes?.url;
+  if(result?.data?.attributes?.test_mode!==false)return json({error:"Checkout provider returned test mode"},502);
   if(!checkoutId||typeof checkoutUrl!=="string"||!checkoutUrl.startsWith("https://"))return json({error:"Invalid checkout response"},502);
-  const {error:saveError}=await admin.from("orders").insert({owner_id:user.id,invitation_id:inv.id,provider:"lemonsqueezy",provider_checkout_id:checkoutId,provider_variant_id:p.variant,tier,currency:"USD",amount_minor:p.amount,status:"pending",checkout_url:checkoutUrl});
+  const {error:saveError}=await admin.from("orders").insert({id:attemptId,owner_id:user.id,invitation_id:inv.id,provider:"lemonsqueezy",provider_checkout_id:checkoutId,provider_variant_id:p.variant,tier,currency:"USD",amount_minor:p.amount,status:"pending",checkout_url:checkoutUrl});
   if(saveError)return json({error:"Could not record checkout"},500);
   return json({url:checkoutUrl,checkout_id:checkoutId,tier,test_mode:requestBody.data.attributes.test_mode});
  }catch{return json({error:"Checkout service temporarily unavailable"},502)}
