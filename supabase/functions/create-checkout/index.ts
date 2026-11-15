@@ -10,17 +10,23 @@ Deno.serve(async req=>{
  if(!siteBase)return json({error:"Origin not allowed"},403);
  if(req.method==="OPTIONS")return new Response(null,{status:204,headers});
  if(req.method!=="POST")return json({error:"Method not allowed"},405);
- const key=Deno.env.get("LEMON_SQUEEZY_API_KEY"),storeId=Deno.env.get("LEMON_SQUEEZY_STORE_ID"),secret=Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"),url=Deno.env.get("SUPABASE_URL"),pub=Deno.env.get("SUPABASE_ANON_KEY");
- if(!key||!storeId||!secret||!url||!pub||Deno.env.get("LEMON_SQUEEZY_TEST_MODE")!=="false")return json({error:"Live checkout is not configured"},503);
+ const key=Deno.env.get("LEMON_SQUEEZY_API_KEY")?.trim(),storeId=Deno.env.get("LEMON_SQUEEZY_STORE_ID")?.trim(),secret=Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"),url=Deno.env.get("SUPABASE_URL");
+ const mode=Deno.env.get("LEMON_SQUEEZY_TEST_MODE")?.trim();
+ const missing=[...(!key?["LEMON_SQUEEZY_API_KEY"]:[]),...(!storeId?["LEMON_SQUEEZY_STORE_ID"]:[]),...(!secret?["SUPABASE_SERVICE_ROLE_KEY"]:[]),...(!url?["SUPABASE_URL"]:[])];
+ if(missing.length||mode!=="false"){
+   console.error("checkout_configuration_invalid",{missing,live_mode:mode==="false",mode_present:mode!==undefined});
+   return json({error:"Live checkout is not configured"},503);
+ }
  const bearer=req.headers.get("authorization")||"";
  if(!bearer.startsWith("Bearer "))return json({error:"Sign in required"},401);
- const auth=createClient(url,pub,{global:{headers:{Authorization:bearer}}});
- const {data:{user},error:userError}=await auth.auth.getUser(bearer.slice(7));
+ // The service-role server client can validate a user's JWT without depending on an
+ // additional SUPABASE_ANON_KEY env variable. Never send the service key to the browser.
+ const admin=createClient(url!,secret!,{auth:{persistSession:false,autoRefreshToken:false}});
+ const {data:{user},error:userError}=await admin.auth.getUser(bearer.slice(7));
  if(userError||!user)return json({error:"Session expired"},401);
  let input;try{input=await req.json()}catch{return json({error:"Invalid request"},400)}
  const invitationId=input?.invitation_id;
  if(typeof invitationId!=="string"||!/^[0-9a-f]{8}-[0-9a-f-]{27,}$/i.test(invitationId))return json({error:"Invalid invitation"},400);
- const admin=createClient(url,secret,{auth:{persistSession:false,autoRefreshToken:false}});
  const {data:inv,error:invError}=await admin.from("invitations").select("id,owner_id,template_id,status").eq("id",invitationId).eq("owner_id",user.id).single();
  if(invError||!inv)return json({error:"Invitation not found"},404);
  if(inv.status!=="draft")return json({error:"Only draft invitations can be checked out"},409);
