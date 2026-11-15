@@ -39,9 +39,9 @@ Deno.serve(async req=>{
  // Fail closed: full refund requires explicit refunded status. Partial refunds are logged for manual review.
  const refundTotal=Number(a.total),refundedAmount=Number(a.refunded_amount);
  if(event==="order_refunded"&&(!Number.isSafeInteger(refundTotal)||refundTotal<=0||!Number.isSafeInteger(refundedAmount)||refundedAmount<=0||refundedAmount>refundTotal))return respond({error:"Invalid refund amounts"},422);
- if(event==="order_refunded"&&!(a.status==="refunded"||a.status==="partial_refund"))return respond({error:"Invalid refund status"},422);
  const fullRefund=event==="order_refunded"&&a.status==="refunded"&&a.refunded===true&&refundedAmount===refundTotal;
- if(event==="order_refunded"&&a.status==="refunded"&&!fullRefund)return respond({error:"Inconsistent full refund data"},422);
+ const partialRefund=event==="order_refunded"&&refundedAmount<refundTotal&&(a.status==="paid"||a.status==="partial_refund")&&a.refunded!==true;
+ if(event==="order_refunded"&&!fullRefund&&!partialRefund)return respond({error:"Inconsistent refund status or amount"},422);
  const {data,error}=await admin.rpc("apply_verified_lemon_event",{
    p_event:event,p_order_id:orderId,p_attempt_id:attempt,p_invitation_id:invitation,
    p_owner_id:owner,p_variant:variantId,p_tier:item.tier,p_amount:item.amount,p_currency:"USD",
