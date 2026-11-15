@@ -36,7 +36,7 @@ Deno.serve(async req=>{
  const {data:paid}=await admin.from("orders").select("id").eq("invitation_id",inv.id).eq("status","paid").limit(1);
  if(paid?.length)return json({error:"This invitation is already paid"},409);
  const attemptId=crypto.randomUUID();
- const requestBody={data:{type:"checkouts",attributes:{custom_price:p.amount,test_mode:Deno.env.get("LEMON_SQUEEZY_TEST_MODE")!=="false",product_options:{enabled_variants:[Number(p.variant)],redirect_url:siteBase+"/dashboard.html?payment=return"},checkout_options:{embed:false},checkout_data:{email:user.email,custom:{invitation_id:inv.id,user_id:user.id,tier,attempt_id:attemptId}}},relationships:{store:{data:{type:"stores",id:storeId}},variant:{data:{type:"variants",id:p.variant}}}}};
+ const requestBody={data:{type:"checkouts",attributes:{custom_price:p.amount,test_mode:false,product_options:{enabled_variants:[Number(p.variant)],redirect_url:siteBase+"/dashboard.html?payment=return"},checkout_options:{embed:false},checkout_data:{email:user.email,custom:{invitation_id:inv.id,user_id:user.id,tier,attempt_id:attemptId}}},relationships:{store:{data:{type:"stores",id:storeId}},variant:{data:{type:"variants",id:p.variant}}}}};
  try{
   const response=await fetch("https://api.lemonsqueezy.com/v1/checkouts",{method:"POST",headers:{Accept:"application/vnd.api+json","Content-Type":"application/vnd.api+json",Authorization:"Bearer "+key},body:JSON.stringify(requestBody)});
   const result=await response.json();
