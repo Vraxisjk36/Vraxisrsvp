@@ -6,7 +6,7 @@ Deno.serve(async req=>{
  if(req.method!=="POST")return respond({error:"Method not allowed"},405);
  const secret=Deno.env.get("LEMON_SQUEEZY_WEBHOOK_SECRET");
  if(!secret)return respond({error:"Webhook not configured"},503);
- if(Deno.env.get("LEMON_SQUEEZY_TEST_MODE")!=="false")return respond({error:"Live webhook not configured"},503);
+ // Only verified live-mode payloads from our configured store are accepted below.
  const signature=req.headers.get("X-Signature")||"";
  if(!/^[a-f0-9]{64}$/i.test(signature))return respond({error:"Invalid signature"},401);
  const raw=await req.text();
