@@ -11,10 +11,9 @@ Deno.serve(async req=>{
  if(req.method==="OPTIONS")return new Response(null,{status:204,headers});
  if(req.method!=="POST")return json({error:"Method not allowed"},405);
  const key=Deno.env.get("LEMON_SQUEEZY_API_KEY")?.trim(),storeId=Deno.env.get("LEMON_SQUEEZY_STORE_ID")?.trim(),secret=Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"),url=Deno.env.get("SUPABASE_URL");
- const mode=Deno.env.get("LEMON_SQUEEZY_TEST_MODE")?.trim();
  const missing=[...(!key?["LEMON_SQUEEZY_API_KEY"]:[]),...(!storeId?["LEMON_SQUEEZY_STORE_ID"]:[]),...(!secret?["SUPABASE_SERVICE_ROLE_KEY"]:[]),...(!url?["SUPABASE_URL"]:[])];
- if(missing.length||mode!=="false"){
-   console.error("checkout_configuration_invalid",{missing,live_mode:mode==="false",mode_present:mode!==undefined});
+ if(missing.length){
+   console.error("checkout_configuration_invalid",{missing});
    return json({error:"Live checkout is not configured"},503);
  }
  const bearer=req.headers.get("authorization")||"";
