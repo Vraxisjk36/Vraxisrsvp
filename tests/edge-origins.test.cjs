@@ -52,9 +52,9 @@ for(const slug of ['create-checkout','publish-invitation','submit-rsvp']) {
     }
   });
 }
-test('checkout preserves all twenty tier prices and returns to the requesting site',async()=>{
-  const prestige=new Set(['002','005','010','012','014','017']);
-  for(const origin of sites)for(let n=1;n<=20;n++){
+test('checkout preserves all twenty-five tier prices and returns to the requesting site',async()=>{
+  const prestige=new Set(['002','005','010','012','014','017','021','022','023','024','025']);
+  for(const origin of sites)for(let n=1;n<=25;n++){
     const template=String(n).padStart(3,'0');const {handler,sent}=load('create-checkout',{template});
     const response=await handler(request('POST',origin,{invitation_id:'12345678-1234-1234-1234-123456789abc'},true));
     assert.equal(response.status,200);

@@ -4,6 +4,11 @@ window.vraxisApplyTemplateProfile = function (doc, id, profile) {
   const set = (selector, value) => {
     if (filled(value)) doc.querySelectorAll(selector).forEach(el => { el.textContent = value; });
   };
+  if(Number(id)>=21&&Number(id)<=25){
+    doc.querySelectorAll('[data-field]').forEach(el=>{const key=el.dataset.field;if(filled(profile[key]))el.textContent=profile[key];});
+    if(filled(profile.program)){const program=doc.querySelector('[data-program]');if(program){program.replaceChildren();profile.program.split(/\r?\n/).filter(s=>s.trim()).forEach((line,i)=>{const row=doc.createElement('details'),title=doc.createElement('summary'),text=doc.createElement('p');title.textContent=line;text.textContent='A little time to celebrate together.';row.append(title,text);row.open=i===0;program.append(row);});}}
+    return;
+  }
   if (id === '014') {
     for (const [field, key] of Object.entries({bride:'names',date:'date',city:'address',venue:'venue',tribute:'message',message:'message'})) set('[data-bind="'+field+'"]', profile[key]);
   }

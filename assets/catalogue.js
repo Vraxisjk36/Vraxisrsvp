@@ -9,13 +9,21 @@
   const cards = [...grid.children].filter(el => el.dataset.category);
   const metadata=new Map((window.VRAXIS_TEMPLATES||[]).map(t=>[t.id,t]));
   cards.forEach(card=>{card.dataset.tier=metadata.get(card.querySelector('[data-template]').dataset.template)?.tier||'Signature';});
+  let saved=new Set();try{saved=new Set(JSON.parse(localStorage.getItem('vraxis_shortlist')||'[]'));}catch{}
+  let savedOnly=false;
+  const savedFilter=document.getElementById('savedFilter'),savedCount=document.getElementById('savedCount');
+  function updateSaved(){savedCount.textContent=saved.size;cards.forEach(card=>{const id=card.querySelector('[data-template]').dataset.template,button=card.querySelector('.saved-design'),active=saved.has(id);button.setAttribute('aria-pressed',String(active));button.textContent=active?'♥':'♡';button.setAttribute('aria-label',(active?'Remove ':'Save ')+metadata.get(id).name+(active?' from':' to')+' your shortlist');});}
+  cards.forEach(card=>{const article=card.querySelector('article'),button=document.createElement('button');button.type='button';button.className='saved-design';article.style.position='relative';button.onclick=()=>{const id=article.dataset.template;if(saved.has(id))saved.delete(id);else saved.add(id);try{localStorage.setItem('vraxis_shortlist',JSON.stringify([...saved]));}catch{}updateSaved();apply();};article.append(button);});
+  updateSaved();savedFilter.onclick=()=>{savedOnly=!savedOnly;savedFilter.setAttribute('aria-pressed',String(savedOnly));apply();};
+  document.getElementById('collectionSort').onchange=event=>{const value=event.target.value;[...cards].sort((a,b)=>{const x=a.querySelector('[data-template]').dataset.template,y=b.querySelector('[data-template]').dataset.template;return value==='az'?metadata.get(x).name.localeCompare(metadata.get(y).name):value==='newest'?Number(y)-Number(x):Number(x)-Number(y);}).forEach(card=>grid.append(card));};
+  document.getElementById('clearFilters').onclick=()=>{category='All';edition='All';editionSelect.value='All';search.value='';savedOnly=false;savedFilter.setAttribute('aria-pressed','false');const url=new URL(location.href);url.searchParams.delete('category');url.searchParams.delete('tier');history.replaceState(null,'',url);apply();};
   const categories = new Set(cards.map(card => card.dataset.category));
   let category = new URLSearchParams(location.search).get('category') || 'All';
   if (!categories.has(category)) category = 'All';
   function apply() {
     const term = search.value.trim().toLocaleLowerCase();
     let count = 0;
-    const matches=card=>(edition==='All'||card.dataset.tier===edition)&&(!term||card.textContent.toLocaleLowerCase().includes(term));
+    const matches=card=>(!savedOnly||saved.has(card.querySelector('[data-template]').dataset.template))&&(edition==='All'||card.dataset.tier===edition)&&(!term||card.textContent.toLocaleLowerCase().includes(term));
     cards.forEach(card => {
       const visible = (category === 'All' || card.dataset.category === category) && matches(card);
       card.hidden = !visible;

@@ -8,7 +8,7 @@
   const outerStyle=document.createElement('style');outerStyle.textContent='.preview-nav{gap:10px}.preview-nav .cta{white-space:nowrap}.preview-info b{min-width:0;overflow-wrap:anywhere}';document.head.append(outerStyle);
   const fallback=new URL(template.cover,location.href).href;
   function polish(){
-    const doc=frame.contentDocument;if(!doc?.body||doc.__vraxisPolished)return;doc.__vraxisPolished=true;
+    const doc=frame.contentDocument;window.vraxisFinishDesign?.(doc,id);if(!doc?.body||doc.__vraxisPolished)return;doc.__vraxisPolished=true;
     const style=doc.createElement('style');style.id='vraxis-design-finishing';style.textContent='img,video{max-width:100%}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #b79a6b;outline-offset:4px}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}';
     if(id==='020')style.textContent+='@media(max-width:420px){.cover-copy,.hero-art,.mission-card,.mission-card .copy,.rsvp-wrap>*{min-width:0;max-width:100%}.cover-inner,.story-grid,.rsvp-wrap,.mission-grid{grid-template-columns:minmax(0,1fr)}.mission-card{grid-template-columns:80px minmax(0,1fr)}.schedule-row{grid-template-columns:80px minmax(0,1fr)}.cover-copy h2{font-size:clamp(40px,16vw,64px);overflow-wrap:anywhere}.hero-art,.skyline{overflow:hidden}}';
     doc.head.append(style);

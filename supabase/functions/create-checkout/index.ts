@@ -1,5 +1,5 @@
 import { createClient } from "npm:@supabase/supabase-js@2.57.0";
-const tiers:Record<string,"signature"|"prestige">={"001":"signature","002":"prestige","003":"signature","004":"signature","005":"prestige","006":"signature","007":"signature","008":"signature","009":"signature","010":"prestige","011":"signature","012":"prestige","013":"signature","014":"prestige","015":"signature","016":"signature","017":"prestige","018":"signature","019":"signature","020":"signature"};
+const tiers:Record<string,"signature"|"prestige">={"001":"signature","002":"prestige","003":"signature","004":"signature","005":"prestige","006":"signature","007":"signature","008":"signature","009":"signature","010":"prestige","011":"signature","012":"prestige","013":"signature","014":"prestige","015":"signature","016":"signature","017":"prestige","018":"signature","019":"signature","020":"signature","021":"prestige","022":"prestige","023":"prestige","024":"prestige","025":"prestige"};
 const products={signature:{variant:"2369889",amount:1599},prestige:{variant:"2369903",amount:2400}};
 const sites:Record<string,string>={"https://vraxisrsvp.online":"https://vraxisrsvp.online","https://vraxisjk36.github.io":"https://vraxisjk36.github.io/Vraxisrsvp"};
 Deno.serve(async req=>{

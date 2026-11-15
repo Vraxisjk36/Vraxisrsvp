@@ -4,7 +4,7 @@
 (()=>{
 "use strict";
 const params=new URLSearchParams(location.search);
-const id=/^0(0[1-9]|1[0-9]|20)$/.test(params.get('template')||'')?params.get('template'):'001';
+const id=/^0(0[1-9]|1[0-9]|2[0-5])$/.test(params.get('template')||'')?params.get('template'):'001';
 const hosts=[document.getElementById('frame'),document.getElementById('studioFrame')].filter(Boolean); if(!hosts.length)return;
 const get=(k,fallback={})=>{try{return JSON.parse(localStorage.getItem(k)||'null')??fallback}catch{return fallback}};
 const details=vraxisDraft.read('details',{}),studio=vraxisDraft.read('studio',{}),photos=vraxisDraft.read('photos',[]);
@@ -14,7 +14,7 @@ const profile={
  names:details.names||details.openingTitle,first:name1,second:name2,person:details.names,parents:details.names,
  date:details.date,time:details.time,venue:details.venue,address:details.address,city:details.address,
  dress:details.dress,message:details.introParagraph||details.message,letter:details.story||details.message,title:details.openingTitle||details.title,
- deadline:details.deadline,contact:details.contact,age:details.age,child:details.child
+ deadline:details.deadline,contact:details.contact,age:details.age,child:details.child,story:details.story,program:details.program,giftNote:details.giftNote,rsvpHeading:details.rsvpHeading
 };
 const map={
  '001':{text:{first:'first',second:'second',date:'date',ceremonyTime:'time',ceremonyVenue:'venue',ceremonyLocation:'address',receptionTime:'time',receptionVenue:'venue',dress:'dress',letter:'message'}},
@@ -103,7 +103,7 @@ function applyDoc(doc){
  if(id==='009'&&image(photos?.[0])){const img=doc.getElementById('heroImg');if(img){img.src=photos[0];photoCount++}}
  VraxisPhotographs.apply(doc,id,photos);
  // Make the invitation's people/event the main title, never the catalogue template's name.
- const templateNames=['The Heirloom','The Grand Affair','The Modern Vow','Midnight Club','The Social Edit','After Hours','The Little Garden','Moonlit Lullaby','The Big Little Secret','Little Wonderland','Sunday, With Love','The Bridal Edit','Something Sweet','The Last Fling','The Brotherhood',"After the Rain","Midnight Garden","Love in Bloom","Leo’s Birthday Fair","Captain Ethan’s Superhero Birthday"];
+ const templateNames=window.VRAXIS_TEMPLATES.map(t=>t.name);
  const original=templateNames[Number(id)-1];
  const preferred=details.openingTitle||details.names||details.title;
  if(filled(preferred)){

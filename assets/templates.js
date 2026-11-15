@@ -164,20 +164,65 @@ window.VRAXIS_TEMPLATES=Object.freeze([
   },
   {
     "id": "019",
-    "name": "Leo’s Birthday Fair",
+    "name": "Leo\u2019s Birthday Fair",
     "category": "Birthday",
-    "description": "Step right up to Leo’s birthday fair.",
+    "description": "Step right up to Leo\u2019s birthday fair.",
     "tier": "Signature",
     "price": 15.99,
     "cover": "assets/covers/019.jpg"
   },
   {
     "id": "020",
-    "name": "Captain Ethan’s Superhero Birthday",
+    "name": "Captain Ethan\u2019s Superhero Birthday",
     "category": "Birthday",
     "description": "A superhero celebration for Ethan.",
     "tier": "Signature",
     "price": 15.99,
     "cover": "assets/covers/020.jpg"
+  },
+  {
+    "id": "021",
+    "name": "The Velvet Hour",
+    "category": "Birthday",
+    "description": "A private club. An unforgettable birthday.",
+    "tier": "Prestige",
+    "price": 24,
+    "cover": "assets/covers/021.svg"
+  },
+  {
+    "id": "022",
+    "name": "A Sky Full of Wonder",
+    "category": "Baby Shower",
+    "description": "A little universe, already so loved.",
+    "tier": "Prestige",
+    "price": 24,
+    "cover": "assets/covers/022.svg"
+  },
+  {
+    "id": "023",
+    "name": "The Next Chapter",
+    "category": "Graduation",
+    "description": "For the work, the becoming, and what comes next.",
+    "tier": "Prestige",
+    "price": 24,
+    "cover": "assets/covers/023.svg"
+  },
+  {
+    "id": "024",
+    "name": "An Open Door",
+    "category": "Housewarming",
+    "description": "New keys. Familiar faces. A place to call home.",
+    "tier": "Prestige",
+    "price": 24,
+    "cover": "assets/covers/024.svg"
+  },
+  {
+    "id": "025",
+    "name": "The Unhurried Club",
+    "category": "Retirement",
+    "description": "A life well worked. A new world to discover.",
+    "tier": "Prestige",
+    "price": 24,
+    "cover": "assets/covers/025.svg"
   }
 ].map(Object.freeze));

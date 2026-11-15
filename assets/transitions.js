@@ -1,0 +1,2 @@
+/* Cross-document transitions remain progressive and never alter browser history. */
+for(const event of ['pageswap','pagereveal'])addEventListener(event,e=>{const transition=e.viewTransition;if(!transition)return;transition.ready?.catch(()=>{});transition.finished?.catch(()=>{});transition.updateCallbackDone?.catch(()=>{});if(matchMedia('(prefers-reduced-motion: reduce)').matches)transition.skipTransition();});

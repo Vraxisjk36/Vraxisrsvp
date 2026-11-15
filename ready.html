@@ -35,7 +35,7 @@ body.studio-open{overflow:hidden}
 .studio-bottom{display:flex;gap:8px;justify-content:space-between;align-items:center;padding:9px 12px max(9px,env(safe-area-inset-bottom));background:#fff;border-top:1px solid #ddd9cf;font:12px Arial,sans-serif;color:#56645b}
 .studio-bottom button{border:1px solid #263a30;background:#fff;color:#263a30;padding:10px 12px;font-weight:700;min-height:42px}
 @media(min-width:850px){.studio-canvas{padding:14px 10vw}#studioFrame{max-width:950px;margin:auto;box-shadow:0 8px 35px #1a2c2530}}
-#studioShell{height:100dvh;width:100vw}#studioExit{position:absolute;z-index:10;top:12px;right:12px;border:0;border-radius:50%;background:#1c3029c9;color:#fff;width:40px;height:40px;font-size:24px}#helper[hidden]{display:none!important}@media(max-width:760px){main{padding-top:24px!important}.grid{gap:18px!important}.sidebar{padding:20px!important}}</style><link rel="stylesheet" href="assets/experience.css?v=1"><link rel="stylesheet" href="assets/editor.css?v=1"></head><body>
+#studioShell{height:100dvh;width:100vw}#studioExit{position:absolute;z-index:10;top:12px;right:12px;border:0;border-radius:50%;background:#1c3029c9;color:#fff;width:40px;height:40px;font-size:24px}#helper[hidden]{display:none!important}@media(max-width:760px){main{padding-top:24px!important}.grid{gap:18px!important}.sidebar{padding:20px!important}}</style><link rel="stylesheet" href="assets/experience.css?v=1"><link rel="stylesheet" href="assets/editor.css?v=1"><link rel="stylesheet" href="assets/upgrade.css?v=20261115b"><script src="assets/transitions.js?v=20261115b"></script><script src="assets/upgrade.js?v=20261115b" defer></script></head><body>
 <header><a class="logo" href="index.html">vraxis<em>RSVP</em></a><nav class="links"><a href="catalogue.html">Collection</a><a href="dashboard.html">Dashboard</a></nav></header>
 <main><div class="kicker">FINAL PREVIEW</div><h1>It's yours. Take a look.</h1><p>Review your design, make any final changes, then continue.</p><div class="progress"></div>
 <div class="grid">
@@ -49,12 +49,12 @@ body.studio-open{overflow:hidden}
 </section>
 <div class="device"><div class="device-label"><span>Guest preview <span id="templateLabel" hidden>your design</span></span><span id="modeLabel">Guest preview</span><div class="preview-sizes" role="group" aria-label="Preview size"><button type="button" data-preview-size="wide" aria-pressed="true">Wide</button><button type="button" data-preview-size="phone" aria-pressed="false">Phone</button></div></div><iframe id="frame" title="Your personalised invitation"></iframe><p id="renderStatus" aria-live="polite">Preparing your personalised invitation…</p></div>
 </div></main>
-<section id="studioShell" hidden aria-label="Full screen invitation editor"><div class="studio-top"><strong>Invitation studio</strong><div style="display:flex;gap:8px"><button id="studioBack" class="secondary" type="button">← Preview</button><button id="studioDone" type="button">✓ Done editing</button></div></div><div class="studio-canvas"><iframe id="studioFrame" title="Full screen invitation editor"></iframe></div><button id="studioExit" type="button" aria-label="Close full screen editor">×</button><div class="studio-bottom"><span>Tap text or a photograph to edit it.</span><button id="studioEditDetails" type="button">Edit event details</button></div></section><script src="assets/vendor/supabase-2.57.0.min.js"></script><script src="assets/backend.js"></script><script src="assets/draft.js"></script><script src="assets/editor-utils.js"></script><script src="assets/photographs.js"></script><script>
+<section id="studioShell" hidden aria-label="Full screen invitation editor"><div class="studio-top"><strong>Invitation studio</strong><div style="display:flex;gap:8px"><button id="studioBack" class="secondary" type="button">← Preview</button><button id="studioDone" type="button">✓ Done editing</button></div></div><div class="studio-canvas"><iframe id="studioFrame" title="Full screen invitation editor"></iframe></div><button id="studioExit" type="button" aria-label="Close full screen editor">×</button><div class="studio-bottom"><span>Tap text or a photograph to edit it.</span><button id="studioEditDetails" type="button">Edit event details</button></div></section><script src="assets/vendor/supabase-2.57.0.min.js"></script><script src="assets/backend.js"></script><script src="assets/templates.js?v=20261115b"></script><script src="assets/draft.js"></script><script src="assets/editor-utils.js"></script><script src="assets/photographs.js"></script><script>
 (function(){
  const params=new URLSearchParams(location.search),id=params.get('template');
  let projectId=/^[0-9a-f-]{36}$/i.test(params.get('project')||'')?params.get('project'):null;let existingStatus=null;
- if(!/^0(0[1-9]|1[0-9]|20)$/.test(id||'')){location.replace('catalogue.html');return}
- const names=['The Heirloom','The Grand Affair','The Modern Vow','Midnight Club','The Social Edit','After Hours','The Little Garden','Moonlit Lullaby','The Big Little Secret','Little Wonderland','Sunday, With Love','The Bridal Edit','Something Sweet','The Last Fling','The Brotherhood',"After the Rain","Midnight Garden","Love in Bloom","Leo’s Birthday Fair","Captain Ethan’s Superhero Birthday"];
+ if(!/^0(0[1-9]|1[0-9]|2[0-5])$/.test(id||'')){location.replace('catalogue.html');return}
+ const names=window.VRAXIS_TEMPLATES.map(t=>t.name);
  const get=k=>{try{return JSON.parse(localStorage.getItem(k)||'{}')}catch{return {}}};
  const d=vraxisDraft.read('details',{});
  document.getElementById('templateLabel').textContent=names[Number(id)-1];
@@ -162,5 +162,5 @@ body.studio-open{overflow:hidden}
   }catch(e){status.textContent=e.message+' You can return to My Dashboard to continue.';button.disabled=false}
  };
 })();
-</script><script src="assets/template-personalisation.js"></script><script src="assets/personalised-preview.js?v=polish-1" defer></script><script src="assets/tap-editor.js?v=2" defer></script>
+</script><script src="assets/template-personalisation.js?v=20261115b"></script><script src="assets/personalised-preview.js?v=20261115b" defer></script><script src="assets/tap-editor.js?v=2" defer></script>
 <script src="assets/site-nav.js" defer></script></body></html>

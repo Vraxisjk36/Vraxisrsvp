@@ -3,8 +3,8 @@
 if(window.__vraxisTemplateImagesLoaded)return;
 window.__vraxisTemplateImagesLoaded=true;
 // Load optional file-based defaults even when the owner-media API is unavailable.
-const local=document.createElement('script');local.src='assets/local-template-media.js';local.defer=true;document.head.append(local);
-const id=(location.pathname.match(/preview-(\d{3})\.html$/)||[])[1];
+const local=document.createElement('script');local.src='assets/local-template-media.js?v=20261115b';local.defer=true;document.head.append(local);
+const id=(location.pathname.match(/preview-(\d{3})\.html$/)||[])[1]||window.vraxisGuestTemplateId;
 if(!id)return;
 const endpoint='https://ogmlfnmdhmrbbmxnxwqw.supabase.co/rest/v1/template_image_overrides?template_id=eq.'+encodeURIComponent(id)+'&select=slot,image_url,fit_mode,zoom,pos_x,pos_y';
 const headers={'apikey':'sb_publishable_K8hadrdvJiqCRB3eXs9tHg_0kUXl9Ry'};
