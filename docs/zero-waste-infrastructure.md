@@ -8,7 +8,7 @@ The existing Founding 20 integration is already complete and there are now 25 de
 |---|---:|---:|
 | Largest embedded invitation HTML | 21,161,817 bytes | 26,794 bytes |
 | All 25 invitation documents | 60,008,359 bytes | 297,479 bytes |
-| Largest storefront preview shell | 21,178,537 bytes | 11,550 bytes |
+| Largest storefront preview shell | 21,178,537 bytes | 42930 bytes |
 | Default unique image encodings | 30,020,350 bytes embedded source imagery | 7,841,048 bytes, including 9 imported stock images |
 | Collection cover budget | — | 21/25 below 100 KB; largest 136,400 bytes |
 | Deployable static artifact | — | approximately 28 MB, 599 files, largest file 962,336 bytes |
@@ -19,7 +19,7 @@ Cold-cache browser tests at 390 CSS pixels and DPR 2 measured first-screen stati
 
 ## Media delivery
 
-- All twenty-five shared interiors are in `templates/001.html` through `templates/025.html`. Preview shells and the guest viewer fetch them; rendered websites are not stored per customer.
+- All twenty-five shared interiors are in `templates/001.html` through `templates/025.html`. The guest viewer fetches them. Preview shells retain a small media-free compatibility copy so previously cached guest viewers can still decode existing links during rollout; rendered websites are not stored per customer.
 - Embedded photographic data is extracted into deduplicated WebP files with 320/640/960/1440/1920px variants where the original supports those widths. Smaller originals are not upscaled.
 - Responsive `srcset`/`sizes` and lazy loading cover static image markup. Native dynamically generated galleries keep functional defaults, with lazy-loading hints where appropriate. CSS photographic backgrounds select mobile/tablet/desktop variants without changing their gradients, crop positions or animations.
 - Inline native CSS and JS are externalised to content-fingerprinted files. The body structure, text, IDs and interactive controls of all 25 designs are checked against approved commit `c4f8b13` by `scripts/check-template-structure.py`.
