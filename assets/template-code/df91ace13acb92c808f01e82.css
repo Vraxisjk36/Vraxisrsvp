@@ -1,0 +1,23 @@
+:root{--vraxis-media-9e952ffa0d957c6df913dfbf:url("../media/5c28738e1356f0be3bf402de-320.webp");}@media(min-width:768px){:root{--vraxis-media-9e952ffa0d957c6df913dfbf:url("../media/5c28738e1356f0be3bf402de-320.webp");}}@media(min-width:1280px){:root{--vraxis-media-9e952ffa0d957c6df913dfbf:url("../media/5c28738e1356f0be3bf402de-320.webp");}}
+.new-garden-opening{position:fixed!important;inset:0;z-index:9999;overflow:hidden;background:#07110d;display:block!important;opacity:1;visibility:visible;transition:opacity .75s ease,visibility .75s ease}
+.new-garden-opening .gate-visual{position:absolute;inset:-5%;background-image:var(--vraxis-media-9e952ffa0d957c6df913dfbf);background-size:cover;background-position:50% 48%;filter:brightness(.52) saturate(.75);transform:scale(1.08);animation:gateDrift 12s ease-in-out infinite alternate;will-change:transform}
+.new-garden-opening .gate-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,10,7,.72),rgba(3,10,7,.15) 35%,rgba(3,10,7,.68) 80%,rgba(3,10,7,.93))}
+.new-garden-opening .gate-content{position:relative;z-index:2;min-height:100%;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:72px 24px 38px;color:#f5f0e4}
+.gate-small{font:500 9px 'DM Sans',sans-serif;letter-spacing:.31em;color:#d8d1b9}
+.gate-ornament{font:30px Georgia,serif;color:#d1bd8b;margin:32px 0 10px;opacity:.85}
+.gate-title{font:400 clamp(62px,15vw,106px)/.93 'Cormorant Garamond',Georgia,serif;letter-spacing:-.04em;text-shadow:0 4px 28px #0008}
+.gate-title em{font-weight:300}
+.gate-rule{width:1px;height:54px;background:#d4c7a1;margin:29px 0 20px;opacity:.85}
+.gate-copy{font:italic 19px 'Cormorant Garamond',Georgia,serif;color:#e8e2d3;margin:0 0 32px}
+.new-garden-opening .gate-enter{padding:16px 24px;min-width:218px;border:1px solid #c8b48a!important;background:rgba(7,20,13,.4)!important;color:#f4efdf!important;font-size:11px;letter-spacing:.12em;backdrop-filter:blur(7px);cursor:pointer}
+.gate-enter span{margin-left:12px}
+.gate-foot{position:absolute;bottom:max(26px,env(safe-area-inset-bottom));left:24px;right:24px;display:flex;justify-content:space-between;gap:8px;color:#c8c4b6;font:9px 'DM Sans',sans-serif;letter-spacing:.12em}
+.new-garden-opening.opening-exit .gate-content{animation:gateTextOut .65s ease forwards}
+.new-garden-opening.opening-exit .gate-visual{animation:gateReveal 1.4s cubic-bezier(.22,.75,.2,1) forwards}
+.new-garden-opening.opening-exit{animation:gateFade 1.45s ease forwards}
+.new-garden-opening.done{opacity:0!important;visibility:hidden!important;pointer-events:none!important;display:none!important}
+@keyframes gateDrift{from{transform:scale(1.08) translateY(0)}to{transform:scale(1.15) translateY(-1.5%)}}
+@keyframes gateReveal{from{transform:scale(1.08);filter:brightness(.52) saturate(.75)}to{transform:scale(1.35);filter:brightness(1.2) saturate(.95)}}
+@keyframes gateTextOut{to{opacity:0;transform:translateY(-18px)}}
+@keyframes gateFade{0%,38%{opacity:1}100%{opacity:0;visibility:hidden}}
+@media(prefers-reduced-motion:reduce){.new-garden-opening .gate-visual{animation:none}.new-garden-opening.opening-exit,.new-garden-opening.opening-exit .gate-content,.new-garden-opening.opening-exit .gate-visual{animation:none;opacity:0}}

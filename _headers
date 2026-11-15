@@ -1,0 +1,19 @@
+/assets/media/*
+  Cache-Control: public, max-age=31536000, immutable
+/assets/template-code/*
+  Cache-Control: public, max-age=31536000, immutable
+/templates/*
+  Cache-Control: public, max-age=0, must-revalidate
+/preview-*.html
+  Cache-Control: public, max-age=0, must-revalidate
+/invite.html
+  Cache-Control: no-store
+/dashboard.html
+  Cache-Control: no-store
+/manage.html
+  Cache-Control: no-store
+/account.html
+  Cache-Control: no-store
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

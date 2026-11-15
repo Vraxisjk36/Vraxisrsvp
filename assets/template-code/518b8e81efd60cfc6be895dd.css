@@ -1,0 +1,87 @@
+
+      #vraxisOpening {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483640;
+        background: #9b1830;
+        color: #fff3e9;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        padding: 32px 20px;
+        transition:
+          opacity 0.85s ease,
+          visibility 0.85s ease;
+      }
+      #vraxisOpening.dismissed {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      #vraxisOpening .opening-inner {
+        max-width: 680px;
+        animation: openingRise 1s ease both;
+      }
+      #vraxisOpening .opening-mark {
+        font:
+          600 11px/1.5 Arial,
+          sans-serif;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+      }
+      #vraxisOpening h2 {
+        font:
+          normal clamp(46px, 9vw, 94px)/1.04 Georgia,
+          serif;
+        letter-spacing: -0.055em;
+        margin: 36px 0 22px;
+        color: inherit;
+      }
+      #vraxisOpening .opening-rule {
+        width: 54px;
+        height: 1px;
+        background: currentColor;
+        margin: 24px auto;
+        opacity: 0.6;
+      }
+      #vraxisOpening .opening-sub {
+        font:
+          12px/1.7 Arial,
+          sans-serif;
+        letter-spacing: 0.22em;
+        margin: 0 0 42px;
+      }
+      #vraxisOpening button {
+        border: 1px solid currentColor;
+        background: transparent;
+        color: inherit;
+        min-height: 54px;
+        padding: 14px 28px;
+        font:
+          700 11px Arial,
+          sans-serif;
+        letter-spacing: 0.16em;
+        cursor: pointer;
+      }
+      #vraxisOpening button:focus-visible {
+        outline: 3px solid currentColor;
+        outline-offset: 5px;
+      }
+      @keyframes openingRise {
+        from {
+          opacity: 0;
+          transform: translateY(28px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #vraxisOpening,
+        #vraxisOpening .opening-inner {
+          animation: none;
+          transition: none;
+        }
+      }
+    

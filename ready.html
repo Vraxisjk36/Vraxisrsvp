@@ -49,7 +49,7 @@ body.studio-open{overflow:hidden}
 </section>
 <div class="device"><div class="device-label"><span>Guest preview <span id="templateLabel" hidden>your design</span></span><span id="modeLabel">Guest preview</span><div class="preview-sizes" role="group" aria-label="Preview size"><button type="button" data-preview-size="wide" aria-pressed="true">Wide</button><button type="button" data-preview-size="phone" aria-pressed="false">Phone</button></div></div><iframe id="frame" title="Your personalised invitation"></iframe><p id="renderStatus" aria-live="polite">Preparing your personalised invitation…</p></div>
 </div></main>
-<section id="studioShell" hidden aria-label="Full screen invitation editor"><div class="studio-top"><strong>Invitation studio</strong><div style="display:flex;gap:8px"><button id="studioBack" class="secondary" type="button">← Preview</button><button id="studioDone" type="button">✓ Done editing</button></div></div><div class="studio-canvas"><iframe id="studioFrame" title="Full screen invitation editor"></iframe></div><button id="studioExit" type="button" aria-label="Close full screen editor">×</button><div class="studio-bottom"><span>Tap text or a photograph to edit it.</span><button id="studioEditDetails" type="button">Edit event details</button></div></section><script src="assets/vendor/supabase-2.57.0.min.js"></script><script src="assets/backend.js"></script><script src="assets/templates.js?v=20261115b"></script><script src="assets/draft.js"></script><script src="assets/editor-utils.js"></script><script src="assets/photographs.js"></script><script>
+<section id="studioShell" hidden aria-label="Full screen invitation editor"><div class="studio-top"><strong>Invitation studio</strong><div style="display:flex;gap:8px"><button id="studioBack" class="secondary" type="button">← Preview</button><button id="studioDone" type="button">✓ Done editing</button></div></div><div class="studio-canvas"><iframe id="studioFrame" title="Full screen invitation editor"></iframe></div><button id="studioExit" type="button" aria-label="Close full screen editor">×</button><div class="studio-bottom"><span>Tap text or a photograph to edit it.</span><button id="studioEditDetails" type="button">Edit event details</button></div></section><script src="assets/vendor/supabase-2.57.0.min.js"></script><script src="assets/backend.js"></script><script src="assets/templates.js?v=zero-waste1"></script><script src="assets/photo-processing.js?v=zero-waste1"></script><script src="assets/draft.js"></script><script src="assets/editor-utils.js?v=zero-waste1"></script><script src="assets/photographs.js?v=zero-waste1"></script><script>
 (function(){
  const params=new URLSearchParams(location.search),id=params.get('template');
  let projectId=/^[0-9a-f-]{36}$/i.test(params.get('project')||'')?params.get('project'):null;let existingStatus=null;
@@ -99,7 +99,10 @@ body.studio-open{overflow:hidden}
    const edits=vraxisDraft.read('tap',{});
    // Upload tap-to-replace images as private objects; never publish browser-local data URLs.
    const publishedEdits={text:{...(edits.text||{})},images:{},backgrounds:{}};
-   const record={owner_id:user.id,template_id:id,title:d.title||d.names||names[Number(id)-1],event_data:d,design_data:{tap_edits:edits}};
+   const incomingPhotos=[...vraxisDraft.read('photos',[]),...Object.values(edits.images||{}),...Object.values(edits.backgrounds||{})].filter(src=>typeof src==='string'&&(src.startsWith('data:image/')||src.includes('/storage/v1/object/sign/invitation-photos/')));
+   const uniqueIncoming=new Set(incomingPhotos.map(src=>src.startsWith('https://')?src.split('?')[0]:src));
+   if(uniqueIncoming.size>VraxisPhoto.maxPhotos)throw new Error('Please keep this invitation to 12 unique personal photographs across the gallery and edited image slots.');
+   const record={owner_id:user.id,template_id:id,title:d.title||d.names||names[Number(id)-1],event_data:d,design_data:{tap_edits:{text:{...(edits.text||{})},images:{},backgrounds:{}}}};
    let result;
    if(cloudId){result=await vraxisDB.from('invitations').update({title:record.title,event_data:record.event_data}).eq('id',cloudId).eq('owner_id',user.id).select('id').single()}
    else{result=await vraxisDB.from('invitations').insert(record).select('id').single()}
@@ -109,10 +112,10 @@ body.studio-open{overflow:hidden}
    async function uploadPhoto(src,edited=false){
     const bytes=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(src));const hash=Array.from(new Uint8Array(bytes)).map(b=>b.toString(16).padStart(2,'0')).join('');
     const cached=uploadCache[hash];if(typeof cached==='string'&&cached.startsWith(user.id+'/'+cloudId+'/'))return cached;
-    const blob=await(await fetch(src)).blob();if(blob.size>8*1024*1024)throw new Error('A photograph exceeds the 8 MB limit.');
+    const optimised=await VraxisPhoto.encode(src);const blob=await(await fetch(optimised)).blob();if(blob.size>VraxisPhoto.maxBytes)throw new Error('A photograph exceeds the 300 KB upload limit.');
     const mime=blob.type==='image/png'?'image/png':blob.type==='image/webp'?'image/webp':'image/jpeg';const ext=mime==='image/png'?'png':mime==='image/webp'?'webp':'jpg';
-    const path=user.id+'/'+cloudId+'/'+(edited?'edited-':'')+crypto.randomUUID()+'.'+ext;
-    const upload=await vraxisDB.storage.from('invitation-photos').upload(path,blob,{contentType:mime,upsert:false});if(upload.error)throw upload.error;
+    const contentDigest=await crypto.subtle.digest('SHA-256',await blob.arrayBuffer());const contentHash=Array.from(new Uint8Array(contentDigest)).map(b=>b.toString(16).padStart(2,'0')).join('');const path=user.id+'/'+cloudId+'/'+contentHash+'.'+ext;
+    const upload=await vraxisDB.storage.from('invitation-photos').upload(path,blob,{contentType:mime,upsert:false});if(upload.error&&String(upload.error.statusCode)!=='409')throw upload.error;
     uploadCache[hash]=path;try{vraxisDraft.write('uploads',uploadCache)}catch{}return path;
    }
    const photos=vraxisDraft.read('photos',[]);
@@ -162,5 +165,5 @@ body.studio-open{overflow:hidden}
   }catch(e){status.textContent=e.message+' You can return to My Dashboard to continue.';button.disabled=false}
  };
 })();
-</script><script src="assets/template-personalisation.js?v=20261115b"></script><script src="assets/personalised-preview.js?v=20261115b" defer></script><script src="assets/tap-editor.js?v=2" defer></script>
+</script><script src="assets/template-personalisation.js?v=20261115b"></script><script src="assets/personalised-preview.js?v=zero-waste1" defer></script><script src="assets/tap-editor.js?v=zero-waste1" defer></script>
 <script src="assets/site-nav.js" defer></script></body></html>

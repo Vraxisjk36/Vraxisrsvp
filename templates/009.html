@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <meta content="#f7f2e9" name="theme-color" />
+    <title>The Big Little Secret — VraxisRSVP 009</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght,SOFT,WONK@9..144,400,20,1;9..144,600,20,1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/template-code/1cbd5ed50e3ff3490f0ca763.css">
+  <script src="assets/static-media.js?v=1"></script></head>
+  <body>
+    <div aria-label="A little secret invitation" aria-modal="true" id="secretIntro" role="dialog">
+      <div class="si-photo"></div>
+      <div class="si-noise"></div>
+      <div class="si-top">
+        <span>AN INVITATION FROM <span id="siParents">MIA &amp; JORDAN</span> </span>
+        <button class="si-skip" id="siSkip" type="button">Skip intro ↗</button>
+      </div>
+      <div class="si-stage" id="siStage">
+        <div class="si-content">
+          <div class="si-kicker">Something wonderful is coming</div>
+          <h1 class="si-title">We've been keeping<br />a little secret.</h1>
+          <p class="si-sub">
+            One tiny heartbeat. Two very excited parents. And one very special invitation for you.
+          </p>
+          <div class="si-frame">
+            <img
+              alt="Family portrait"
+              id="siFamilyPhoto"
+              src="assets/media/9a63b2653574be9a2fcb985e-960.webp"
+            / srcset="assets/media/241df4e37461dc688b6fb7fc-320.webp 320w, assets/media/49a9f25579149b5648ff51ed-640.webp 640w, assets/media/9a63b2653574be9a2fcb985e-960.webp 959w, assets/media/4b0c36e3c1c7041fc841d992-1440.webp 1440w" sizes="(max-width: 767px) 100vw, 70vw" decoding="async" loading="lazy">
+            <span class="si-frame-label">our favourite little secret ♡</span>
+            <span class="si-seal">?</span>
+          </div>
+          <button class="si-button" id="siBegin" type="button">Open our little secret ✳</button>
+          <small class="si-hint">A surprise awaits inside</small>
+        </div>
+      </div>
+      <div class="si-pull-scene" id="siPull">
+        <div class="si-secret-room">
+          <div class="si-room-eyebrow">A LITTLE SURPRISE IS WAITING</div>
+          <h2 class="si-room-title">
+            Three little wishes.<br />
+            <i>One big secret.</i>
+          </h2>
+          <p class="si-room-desc">
+            Tap the three floating balloons to send your wishes to the little one.
+          </p>
+          <div class="si-balloon-field" id="siBalloons">
+            <button
+              aria-label="Send first wish"
+              class="si-balloon si-b1"
+              data-wish="0"
+              type="button"
+            >
+              <span>♡</span>
+            </button>
+            <button
+              aria-label="Send second wish"
+              class="si-balloon si-b2"
+              data-wish="1"
+              type="button"
+            >
+              <span>✦</span>
+            </button>
+            <button
+              aria-label="Send third wish"
+              class="si-balloon si-b3"
+              data-wish="2"
+              type="button"
+            >
+              <span>✳</span>
+            </button>
+            <div class="si-gift" id="siGift">
+              <div class="si-gift-lid"></div>
+              <div class="si-gift-body">
+                <span>?</span>
+              </div>
+            </div>
+            <div class="si-invite-note" id="siInviteNote">
+              <span>YOU'RE INVITED</span>
+              <strong>Our little secret<br />is worth celebrating.</strong>
+              <small>The answer stays a surprise… for now.</small>
+            </div>
+          </div>
+          <div class="si-wish-progress" id="siProgress">0 of 3 wishes sent</div>
+          <button class="si-room-skip" id="siWishSkip" type="button">
+            Reveal the invitation instead →
+          </button>
+        </div>
+      </div>
+      <div class="si-final" id="siFinal">
+        <span class="si-kicker" style="color: #6e514b">SHHH… THE SECRET STAYS SAFE</span>
+        <h2>Boy or girl?<br />Come find out.</h2>
+        <p>
+          <span id="siFinalParents">Mia &amp; Jordan</span> can't wait to celebrate their little one
+          with you.
+        </p>
+        <button class="si-button" id="siEnter" type="button">See your invitation →</button>
+      </div>
+    </div>
+    <header class="top">
+      <div class="mark">VRAXISRSVP <span style="opacity: 0.5">/ 009</span></div>
+      <button class="edit" id="openEdit">✎ Personalise</button>
+    </header>
+    <main>
+      <div class="shell hero">
+        <div class="hero-copy">
+          <div class="baby-kicker">✦ A LITTLE ONE IS COMING ✦</div>
+          <span class="eyebrow">A celebration for two, soon to be three</span>
+          <h1>
+            Our big<br />
+            <em>little</em>
+            <br />secret.
+          </h1>
+          <p class="sub">
+            <strong id="parentNamesHero">Mia &amp; Jordan</strong> have something wonderful to
+            celebrate. And you're part of the story.
+          </p>
+          <a class="pill" href="#prediction">Make your prediction ↗</a>
+          <p class="hint" style="margin-top: 22px">            A BABY IS ON THE WAY · <span id="heroDate">21 MARCH 2027</span>
+          </p>
+        </div>
+        <div class="hero-photo">
+          <span aria-hidden="true" class="star">✳</span>
+          <div class="photo-wrap">
+            <img
+              alt="Parents-to-be portrait"
+              id="heroImg"
+              src="assets/media/dfd6de4a8054004e32abd049-960.webp"
+            / srcset="assets/media/5ee110ee75c13054f281114e-320.webp 320w, assets/media/b891109025432e02fb7842e2-640.webp 640w, assets/media/dfd6de4a8054004e32abd049-960.webp 960w" sizes="(max-width: 767px) 100vw, 70vw" decoding="async">
+          </div>
+          <span aria-hidden="true" class="star2">✺</span>
+          <div aria-hidden="true" class="nursery-mobile">
+            <div class="mobile-top"></div>
+            <div class="mobile-string s1">
+              <span>☾</span>
+            </div>
+            <div class="mobile-string s2">
+              <span>✦</span>
+            </div>
+            <div class="mobile-string s3">
+              <span>♡</span>
+            </div>
+            <div class="mobile-string s4">
+              <span>✧</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div aria-hidden="true" class="ticker">
+        <span
+          >✳ SOMETHING WONDERFUL IS COMING ✳ A LITTLE SURPRISE ✳ A WHOLE LOT OF LOVE ✳ SOMETHING
+          WONDERFUL IS COMING ✳ A LITTLE SURPRISE ✳ A WHOLE LOT OF LOVE ✳ </span
+        >
+      </div>
+      <section class="story">
+        <div class="section-inner story-grid">
+          <div class="story-photo reveal-on-scroll">
+            <img
+              alt="A family moment"
+              id="storyImg"
+              src="assets/media/2d445111d26bc69abee3943b-960.webp"
+            / srcset="assets/media/e179f665c349951c210b4d83-320.webp 320w, assets/media/6d46c2a1b52f1abfeb2aa4d7-640.webp 640w, assets/media/2d445111d26bc69abee3943b-960.webp 960w" sizes="(max-width: 767px) 100vw, 70vw" decoding="async" loading="lazy">
+          </div>
+          <div class="reveal-on-scroll">
+            <span class="eyebrow">A note from us</span>
+            <h2 class="section-title">First came love. Then came this.</h2>
+            <p class="story-note" id="storyText">
+              We have been keeping the sweetest little secret, and our hearts are bursting to share
+              it with the people we love. Before we meet our little one, we want one afternoon full
+              of laughter, guesses, happy tears and you.
+            </p>
+            <p class="story-sign">Love, <span id="parentNamesStory">Mia &amp; Jordan</span> ♡</p>
+          </div>
+          <div aria-hidden="true" class="baby-onesie">
+            <svg role="img" viewbox="0 0 130 145">
+              <path
+                d="M40 13 Q65 27 90 13 L117 30 104 61 91 54 91 105 77 127 65 116 53 127 39 105 39 54 26 61 13 30Z"
+                fill="#fff9ef"
+                stroke="#bd8f8b"
+                stroke-width="2.5"
+              ></path>
+              <path d="M49 15 Q65 39 81 15" fill="none" stroke="#bd8f8b" stroke-width="2.5"></path>
+              <path
+                d="M39 105 Q65 93 91 105"
+                fill="none"
+                stroke="#bd8f8b"
+                stroke-dasharray="3 4"
+              ></path>
+              <path
+                d="M60 66 Q52 54 45 64 Q38 78 65 93 Q92 78 85 64 Q78 54 70 66 L65 71Z"
+                fill="#e6a8b1"
+              ></path>
+            </svg>
+            <span>little love</span>
+          </div>
+        </div>
+      </section>
+      <section class="facts">
+        <div class="section-inner">
+          <div aria-hidden="true" class="baby-footprints">
+            <span class="foot f1">●<i>•••</i> </span>
+            <span class="foot f2">●<i>•••</i> </span>
+            <span class="foot f3">●<i>•••</i> </span>
+            <span class="foot f4">●<i>•••</i> </span>
+          </div>
+          <span class="eyebrow">You're invited</span>
+          <h2 class="section-title">The little details.</h2>
+          <div class="facts-grid">
+            <article class="fact reveal-on-scroll">
+              <small>01 / WHEN</small>
+              <h3 id="eventDate">Sunday, 21 March 2027</h3>
+              <p id="eventTime">2:00 PM — 5:00 PM</p>
+              <button class="smallbtn" id="calendarBtn">Add to calendar ↗</button>
+            </article>
+            <article class="fact reveal-on-scroll">
+              <small>02 / WHERE</small>
+              <h3 id="eventVenue">The Glasshouse</h3>
+              <p id="eventLocation">Potchefstroom, South Africa</p>
+              <a
+                href="https://www.google.com/maps/search/?api=1&amp;query=Potchefstroom"
+                id="mapLink"
+                rel="noopener"
+                target="_blank"
+                >Get directions ↗</a
+              >
+            </article>
+            <article class="fact reveal-on-scroll">
+              <small>03 / THE PLAN</small>
+              <h3>Come curious.</h3>
+              <p id="dressCode">
+                Wear whatever makes you feel wonderful. Bring your best guess and your biggest
+                smile.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="prediction" id="prediction">
+        <div class="section-inner">
+          <div aria-hidden="true" class="baby-cloud">☁ <span>✦</span> ☁</div>
+          <span class="eyebrow">The guessing game</span>
+          <h2 class="section-title">What's your<br />little hunch?</h2>
+          <p class="intro">
+            No spoilers here. Pick your prediction and we'll make you a little keepsake. The actual
+            surprise stays a secret until the celebration.
+          </p>
+          <div class="choices">
+            <button class="choice" data-guess="Girl">
+              <span class="glyph">✿</span>
+              <strong>Team Girl</strong>
+              <span>I'm calling it!</span>
+            </button>
+            <button class="choice" data-guess="Boy">
+              <span class="glyph">✦</span>
+              <strong>Team Boy</strong>
+              <span>I've got a feeling!</span>
+            </button>
+          </div>
+          <div aria-live="polite" class="result" id="predictionResult">
+            <span class="eyebrow">Your prediction card</span>
+            <h3 id="predictionTitle">Team Girl ✿</h3>
+            <p id="predictionDesc">Your guess is in! The secret stays safe until the big day.</p>
+            <button class="smallbtn" id="savePrediction">Save my prediction card ↓</button>
+            <p class="hint">
+              Your prediction is saved in this browser only. It isn't sent to the hosts.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="reveal">
+        <div class="section-inner reveal-box reveal-on-scroll">
+          <div aria-hidden="true" class="baby-rattle">
+            <span class="rattle-head">♡</span>
+            <span class="rattle-stick"> </span>
+          </div>
+          <div class="lock">✳</div>
+          <span class="eyebrow">The secret is safe</span>
+          <h3>The big reveal happens together.</h3>
+          <p>
+            We're saving the surprise for the celebration. No spoilers, no accidental reveals, just
+            one beautiful moment with our favourite people.
+          </p>
+          <p><strong id="revealParents">Mia &amp; Jordan</strong> can't wait to see you.</p>
+        </div>
+      </section>
+      <section class="photos">
+        <div class="section-inner">
+          <span class="eyebrow">Our little photo album</span>
+          <h2 class="section-title">Us, before<br />the adventure.</h2>
+          <p>Every family story starts somewhere. Here are a few moments from ours.</p>
+          <div class="photo-grid">
+            <figure class="reveal-on-scroll">
+              <img
+                alt="Couple portrait"
+                id="gallery1"
+                src="assets/media/294bb4a2b201e869e149c879-960.webp"
+              / srcset="assets/media/3aba68213d7a20c140d13c82-320.webp 320w, assets/media/bcd0a3579690d82163e5201c-640.webp 640w, assets/media/294bb4a2b201e869e149c879-960.webp 960w" sizes="(max-width: 767px) 100vw, 70vw" decoding="async" loading="lazy">
+              <figcaption id="caption1">The beginning ♡</figcaption>
+            </figure>
+            <figure class="reveal-on-scroll">
+              <img
+                alt="Happy couple"
+                id="gallery2"
+                src="assets/media/176e13e3be1e9d26c65ab7e9-960.webp"
+              / srcset="assets/media/84cb7a77bf6e0574a22b417a-320.webp 320w, assets/media/960eff9f0e02418dce4a534e-640.webp 640w, assets/media/176e13e3be1e9d26c65ab7e9-960.webp 960w" sizes="(max-width: 767px) 100vw, 70vw" decoding="async" loading="lazy">
+              <figcaption id="caption2">Our favourite days</figcaption>
+            </figure>
+            <figure class="reveal-on-scroll">
+              <img
+                alt="A treasured memory"
+                id="gallery3"
+                src="assets/media/22d15e3ce4d3b2ca813ca193-960.webp"
+              / srcset="assets/media/628c2aaec78c4cf034874ff3-320.webp 320w, assets/media/c67db8db4946d901861851d7-640.webp 640w, assets/media/22d15e3ce4d3b2ca813ca193-960.webp 960w" sizes="(max-width: 767px) 100vw, 70vw" decoding="async" loading="lazy">
+              <figcaption id="caption3">And now, this chapter</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+      <section class="keepsake" id="keepsake">
+        <div class="section-inner">
+          <div class="keepsake-card reveal-on-scroll">
+            <div aria-hidden="true" class="baby-moon">☾ <span>✦</span></div>
+            <span class="eyebrow">A note from us to you</span>
+            <h2>Before we meet you, little one…</h2>
+            <p id="babyLetter">
+              You are already loved beyond words. One day we'll tell you about the people who
+              gathered to celebrate you before we even knew your name.
+            </p>
+            <div class="keepsake-preview">
+              A little letter from <strong id="letterParents">Mia &amp; Jordan</strong>
+            </div>
+            <button class="smallbtn" id="copyLetter" type="button">Copy this little note ♡</button>
+          </div>
+        </div>
+      </section>
+      <section class="rsvp" id="rsvp">
+        <div class="rsvp-card reveal-on-scroll">
+          <div aria-hidden="true" class="baby-stars">✧   ✦   ✧</div>
+          <span class="eyebrow">A little gathering, a lot of love</span>
+          <h2>Will you be there?</h2>
+          <p>We'd love to celebrate with you. Let us know if you can make it.</p>
+          <form id="rsvpForm">
+            <div class="field">
+              <label for="guestName">Your name</label>
+              <input id="guestName" maxlength="90" placeholder="Your full name" required="" />
+            </div>
+            <div class="field">
+              <label for="attendance">Can you come?</label>
+              <select id="attendance" required="">
+                <option value="">Choose one</option>
+                <option value="yes">Yes, wouldn't miss it!</option>
+                <option value="no">Sending love from afar</option>
+              </select>
+            </div>
+            <div class="field" hidden="" id="guestCountField">
+              <label for="guestCount">Number of guests (including you)</label>
+              <input id="guestCount" max="10" min="1" type="number" value="1" />
+            </div>
+            <div class="field">
+              <label for="guestMessage">A note for the parents (optional)</label>
+              <textarea
+                id="guestMessage"
+                maxlength="500"
+                placeholder="Leave a little love..."
+              ></textarea>
+            </div>
+            <button class="submit" type="submit">Send my reply ♡</button>
+          </form>
+          <div class="rsvp-confirm" id="rsvpConfirm" role="status">
+            <h3 id="rsvpConfirmTitle">Thank you ♡</h3>
+            <p id="rsvpConfirmText"></p>
+          </div>
+          <p class="hint">
+            Preview only: replies are not sent or stored online until the VraxisRSVP backend is
+            connected.
+          </p>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <span class="eyebrow">Made with love</span>
+      <h2 id="footerParents">Mia &amp; Jordan ♡</h2>
+      <p>One little secret. A whole new world.</p>
+      <small>VRAXISRSVP · THE BIG LITTLE SECRET · TEMPLATE 009</small>
+    </footer>
+    <div class="drawer-back" id="drawerBack"></div>
+    <aside aria-hidden="true" aria-label="Personalise invitation" class="drawer" id="drawer">
+      <div class="drawer-head">
+        <h2>Make it yours.</h2>
+        <button class="close" id="closeEdit">Close ✕</button>
+      </div>
+      <p class="help">
+        Changes update this browser preview. Upload real family photos below. For publishing, the
+        VraxisRSVP Studio will need to save and host these images.
+      </p>
+      <div id="textFields"></div>
+      <h3>Family photographs</h3>
+      <p class="help">
+        Choose photos from your phone or computer. Images are resized for preview. This standalone
+        HTML does not upload them to a server.
+      </p>
+      <div id="photoFields"></div>
+      <button class="submit" id="resetPhotos" style="background: #b85d55">
+        Restore sample photos
+      </button>
+    </aside>
+    <div class="toast" id="toast" role="status"></div>
+    <div
+      aria-label="Photo viewer"
+      aria-modal="true"
+      class="lightbox"
+      id="photoLightbox"
+      role="dialog"
+    >
+      <button aria-label="Close photo" id="closeLightbox" type="button">Close ✕</button>
+      <img alt="Enlarged family photo" id="lightboxImage" />
+      <p id="lightboxCaption"></p>
+    </div>
+    <script src="assets/template-code/deb2aa3272520f2340d2f8ce.js"></script>
+    <script src="assets/template-code/92343ee4b35f806383964366.js"></script>
+  </body>
+</html>

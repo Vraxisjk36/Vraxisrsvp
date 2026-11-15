@@ -1,0 +1,158 @@
+:root{--vraxis-media-b734bd1ecf891812333dcee0:url("../media/f8966a490908023df6cef8a0-640.webp");--vraxis-media-3b5fe8fd10e06768e1fe0f77:url("../media/3d769a7ccc18cd58bebb7873-640.webp");--vraxis-media-8c7653f6bb3cb8394473b1f3:url("../media/aaaf1b7c13faecfc65f5b483-640.webp");}@media(min-width:768px){:root{--vraxis-media-b734bd1ecf891812333dcee0:url("../media/af48266cba71486b6dc4bc65-960.webp");--vraxis-media-3b5fe8fd10e06768e1fe0f77:url("../media/b4e080e51ec5acdd434e8be8-960.webp");--vraxis-media-8c7653f6bb3cb8394473b1f3:url("../media/999608f7e4305efb605e63b0-960.webp");}}@media(min-width:1280px){:root{--vraxis-media-b734bd1ecf891812333dcee0:url("../media/9b89787ffe2e00e12948e0a2-1440.webp");--vraxis-media-3b5fe8fd10e06768e1fe0f77:url("../media/5fd75aecf5e090403784d38f-1440.webp");--vraxis-media-8c7653f6bb3cb8394473b1f3:url("../media/f6f6236c3e4d7a10e8a0661f-1440.webp");}}
+      /* V4: birthday-person-first redesign */
+      #mcGate .mc-title {
+        font-size: clamp(70px, 20vw, 148px);
+        line-height: 0.82;
+        letter-spacing: -0.045em;
+        width: 100%;
+        overflow-wrap: anywhere;
+      }
+
+      #mcGate .mc-title .mc-night {
+        font-size: 0.59em;
+        line-height: 1.04;
+        letter-spacing: 0.005em;
+        color: transparent;
+        -webkit-text-stroke: 1.4px #f3ede5;
+      }
+
+      #mcGate .mc-frame {
+        width: min(calc(100% - 28px), 620px);
+      }
+
+      #mcGate .mc-label {
+        margin-bottom: 22px;
+      }
+      #mcGate .mc-sub {
+        font-size: 11px;
+      }
+
+      #mcGate .mc-confirm strong {
+        font-size: clamp(42px, 11vw, 100px);
+        line-height: 1.04;
+        max-width: 95vw;
+        overflow-wrap: anywhere;
+      }
+
+      #mcGate .mc-bg {
+        background-image:
+          linear-gradient(180deg, #05050594, #0909099e 46%, #090909ef),
+          var(--vraxis-media-b734bd1ecf891812333dcee0);
+      }
+
+      .hero {
+        position: relative;
+        min-height: 100svh;
+        overflow: hidden;
+      }
+      .hero-content {
+        position: relative;
+        z-index: 2;
+      }
+      .hero h1 {
+        font-size: clamp(70px, 18vw, 220px);
+        line-height: 0.82;
+        max-width: 100%;
+        overflow-wrap: anywhere;
+      }
+      .hero h1 .line:last-child {
+        color: transparent;
+        -webkit-text-stroke: 1.4px #f8f3ed;
+      }
+
+      .mc-birthday-portrait {
+        position: absolute;
+        z-index: 0;
+        right: -4vw;
+        top: 12%;
+        width: 57%;
+        height: 72%;
+        background:
+          linear-gradient(90deg, #0008, #0000 38%),
+          var(--vraxis-media-3b5fe8fd10e06768e1fe0f77) center/cover;
+        filter: grayscale(1) contrast(1.1);
+        opacity: 0.72;
+        transform: rotate(3deg);
+        box-shadow: 0 22px 80px #0008;
+        animation: mcPortraitIn 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+      }
+
+      @keyframes mcPortraitIn {
+        from {
+          opacity: 0;
+          transform: translateY(35px) rotate(5deg) scale(1.06);
+        }
+        to {
+          opacity: 0.72;
+          transform: translateY(0) rotate(3deg) scale(1);
+        }
+      }
+
+      .hero .hero-top,
+      .hero h1,
+      .hero-bottom {
+        position: relative;
+        z-index: 2;
+      }
+      .hero .hero-top {
+        padding-top: 12px;
+      }
+      .hero h1 {
+        text-shadow: 0 4px 28px #0008;
+      }
+
+      .intro-photo {
+        background-image: var(--vraxis-media-8c7653f6bb3cb8394473b1f3) !important;
+        filter: grayscale(0.5);
+      }
+
+      .mc-photo-editor {
+        display: block;
+        margin-top: 12px;
+        font-size: 12px;
+      }
+      .mc-photo-editor input {
+        display: block;
+        width: 100%;
+        margin-top: 7px;
+        padding: 12px;
+        background: #fff;
+        color: #111;
+        border: 1px solid #aaa;
+      }
+
+      @media (max-width: 600px) {
+        .hero {
+          min-height: 100svh;
+        }
+        .mc-birthday-portrait {
+          width: 74%;
+          height: 60%;
+          right: -15%;
+          top: 15%;
+          opacity: 0.52;
+        }
+        .hero h1 {
+          font-size: clamp(62px, 18vw, 118px);
+          line-height: 0.87;
+        }
+        .hero-bottom {
+          padding-bottom: 30px;
+        }
+        .hero-content {
+          min-height: 100svh;
+        }
+        #mcGate .mc-title {
+          font-size: clamp(65px, 18vw, 110px);
+        }
+        #mcGate .mc-title .mc-night {
+          font-size: 0.62em;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .mc-birthday-portrait {
+          animation: none;
+        }
+      }
+    

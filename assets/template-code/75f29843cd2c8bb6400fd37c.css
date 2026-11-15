@@ -1,0 +1,309 @@
+:root{--vraxis-media-b5093166555d66d3d63e7a70:url("../media/c36f46d338bec2c271dc144f-640.webp");--vraxis-media-e8bea9a41d8df2f86c714573:url("../media/2a03700cd6a817f7b21979da-640.webp");}@media(min-width:768px){:root{--vraxis-media-b5093166555d66d3d63e7a70:url("../media/1853599e6a21760c652bd5d6-960.webp");--vraxis-media-e8bea9a41d8df2f86c714573:url("../media/2c271c5f52631165e7a42720-960.webp");}}@media(min-width:1280px){:root{--vraxis-media-b5093166555d66d3d63e7a70:url("../media/1853599e6a21760c652bd5d6-960.webp");--vraxis-media-e8bea9a41d8df2f86c714573:url("../media/3b4afb56de7ab6044438649b-1440.webp");}}
+      /* V2 — Person-first Prestige editorial */
+      .top {
+        background: linear-gradient(180deg, rgba(5, 13, 11, 0.85), transparent);
+      }
+      .top .logo {
+        font-size: 16px;
+        letter-spacing: 0.06em;
+      }
+      .hero {
+        min-height: 100svh;
+        display: block;
+        padding: 0;
+        background: #0c1715;
+      }
+      .hero:before,
+      .hero:after {
+        display: none;
+      }
+      .honour-hero-image {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(
+            90deg,
+            rgba(7, 14, 12, 0.98) 0%,
+            rgba(7, 14, 12, 0.78) 39%,
+            rgba(7, 14, 12, 0.12) 100%
+          ),
+          linear-gradient(0deg, rgba(7, 14, 12, 0.85), transparent 38%),
+          var(--vraxis-media-b5093166555d66d3d63e7a70) 75% 32% / cover;
+      }
+      .honour-hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 1250px;
+        margin: auto;
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 130px 6% 75px;
+      }
+      .honour-kicker {
+        font-size: 11px;
+        letter-spacing: 0.21em;
+        color: #e4cfad;
+        text-transform: uppercase;
+      }
+      .honour-rule {
+        width: 62px;
+        height: 1px;
+        background: var(--gold);
+        margin: 24px 0;
+      }
+      .honour-script {
+        font-family: Italiana, Georgia, serif;
+        font-size: clamp(26px, 4vw, 48px);
+        font-style: italic;
+        margin: 0;
+        color: #f0e4d2;
+      }
+      .honour-hero-content h1 {
+        font:
+          400 clamp(100px, 15vw, 225px)/0.9 Italiana,
+          Georgia,
+          serif;
+        margin: 10px 0 15px;
+        letter-spacing: -0.055em;
+        max-width: 950px;
+      }
+      .honour-hero-content h1 small {
+        font:
+          italic 400 clamp(25px, 4vw, 52px) Italiana,
+          Georgia,
+          serif;
+        letter-spacing: 0;
+        margin: 0 12px;
+        color: var(--gold);
+      }
+      .honour-hero-content h1 b {
+        font-weight: 400;
+        color: var(--gold);
+      }
+      .honour-tag {
+        font-size: 15px;
+        color: #f3e9d8;
+        line-height: 1.8;
+        letter-spacing: 0.02em;
+      }
+      .honour-actions {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        flex-wrap: wrap;
+        margin: 30px 0;
+      }
+      .honour-link {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        text-underline-offset: 7px;
+      }
+      .honour-date {
+        font-size: 10px;
+        letter-spacing: 0.24em;
+        color: #e1caa5;
+        margin-top: 30px;
+      }
+      .intro-signature {
+        font-family: Italiana, Georgia, serif;
+        font-size: 27px;
+        color: #8b7759;
+        margin-top: 32px;
+      }
+      .memory-chapters {
+        background: #f0e9df;
+        color: #14251e;
+        padding: 120px 0 140px;
+      }
+      .memory-header {
+        text-align: center;
+        margin-bottom: 85px;
+      }
+      .memory-header .eyebrow {
+        color: #877252;
+      }
+      .memory-header h2 {
+        font-size: clamp(56px, 8vw, 115px);
+        margin: 20px 0 15px;
+        line-height: 0.98;
+      }
+      .memory-header h2 em {
+        font-style: italic;
+        color: #977c59;
+      }
+      .memory-header p {
+        color: #657066;
+      }
+      .memory-chapter {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-height: 620px;
+        margin: 0 0 90px;
+        box-shadow: 0 30px 75px rgba(20, 35, 28, 0.1);
+      }
+      .memory-chapter.reverse .memory-photo {
+        order: 2;
+      }
+      .memory-photo {
+        position: relative;
+        min-height: 620px;
+        overflow: hidden;
+        background: #20352a;
+      }
+      .memory-photo:after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(transparent 70%, rgba(0, 0, 0, 0.55));
+      }
+      .memory-photo img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        transition: transform 1.2s ease;
+        filter: saturate(0.8);
+      }
+      .memory-chapter:hover .memory-photo img {
+        transform: scale(1.045);
+      }
+      .memory-photo span {
+        position: absolute;
+        bottom: 27px;
+        left: 30px;
+        z-index: 1;
+        color: white;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+      }
+      .memory-copy {
+        background: #fbf7f0;
+        padding: clamp(30px, 6vw, 90px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .memory-copy .eyebrow {
+        color: #90734e;
+      }
+      .memory-number {
+        position: absolute;
+        right: 18px;
+        top: 0;
+        font:
+          180px Italiana,
+          Georgia,
+          serif;
+        color: rgba(138, 118, 86, 0.075);
+        pointer-events: none;
+      }
+      .memory-copy h3 {
+        font-size: clamp(60px, 6.5vw, 110px);
+        line-height: 0.94;
+        margin: 26px 0;
+      }
+      .memory-copy h3 i {
+        font-weight: 400;
+        color: #8b7555;
+      }
+      .memory-copy p {
+        font-size: 14px;
+        line-height: 2.05;
+        color: #526057;
+        max-width: 460px;
+      }
+      .memory-foot {
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        border-top: 1px solid #d5c8b7;
+        padding-top: 25px;
+        margin-top: 45px;
+        color: #866d4f;
+      }
+      .interlude {
+        background:
+          linear-gradient(rgba(9, 19, 17, 0.75), rgba(9, 19, 17, 0.8)),
+          var(--vraxis-media-e8bea9a41d8df2f86c714573) center/cover;
+      }
+      .rsvp h2 {
+        font-size: clamp(54px, 6.8vw, 96px);
+      }
+      .footer h2 {
+        font-size: clamp(36px, 7vw, 85px);
+        opacity: 0.22;
+      }
+      .memory-chapter .memory-photo img {
+        display: block;
+      }
+      @media (max-width: 760px) {
+        .honour-hero-image {
+          background:
+            linear-gradient(
+              0deg,
+              #07110e 0%,
+              rgba(7, 17, 14, 0.83) 36%,
+              rgba(7, 17, 14, 0.18) 100%
+            ),
+            var(--vraxis-media-b5093166555d66d3d63e7a70) 52% 20% / cover;
+        }
+        .honour-hero-content {
+          justify-content: flex-end;
+          padding: 120px 24px 65px;
+        }
+        .honour-hero-content h1 {
+          font-size: clamp(74px, 17vw, 125px);
+        }
+        .honour-hero-content h1 small {
+          font-size: 25px;
+        }
+        .honour-tag {
+          font-size: 13px;
+        }
+        .memory-chapters {
+          padding: 75px 0;
+        }
+        .memory-header {
+          margin-bottom: 45px;
+        }
+        .memory-chapter {
+          grid-template-columns: 1fr;
+          margin-bottom: 45px;
+        }
+        .memory-chapter.reverse .memory-photo {
+          order: 0;
+        }
+        .memory-photo {
+          min-height: 380px;
+          height: 55vh;
+          max-height: 550px;
+        }
+        .memory-copy {
+          padding: 40px 30px 48px;
+        }
+        .memory-copy h3 {
+          font-size: 65px;
+        }
+        .memory-number {
+          font-size: 120px;
+        }
+        .memory-copy p {
+          font-size: 13px;
+        }
+        .memory-header h2 {
+          font-size: 60px;
+        }
+        .top nav {
+          display: none;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .memory-photo img {
+          transition: none;
+        }
+      }
+    

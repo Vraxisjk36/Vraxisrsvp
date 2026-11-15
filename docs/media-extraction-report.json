@@ -1,0 +1,185 @@
+{
+  "sourceCommit": "c4f8b13d28778e847d2ed83e8b947e85d8f2437f",
+  "templates": [
+    {
+      "id": "001",
+      "beforeHTML": 768277,
+      "afterHTML": 12733,
+      "previewBytes": 11523,
+      "embeddedImages": 8
+    },
+    {
+      "id": "002",
+      "beforeHTML": 7540126,
+      "afterHTML": 22916,
+      "previewBytes": 11468,
+      "embeddedImages": 20
+    },
+    {
+      "id": "003",
+      "beforeHTML": 2713884,
+      "afterHTML": 20050,
+      "previewBytes": 11529,
+      "embeddedImages": 24
+    },
+    {
+      "id": "004",
+      "beforeHTML": 21161817,
+      "afterHTML": 15812,
+      "previewBytes": 11526,
+      "embeddedImages": 14
+    },
+    {
+      "id": "005",
+      "beforeHTML": 4526289,
+      "afterHTML": 19716,
+      "previewBytes": 11532,
+      "embeddedImages": 14
+    },
+    {
+      "id": "006",
+      "beforeHTML": 4379752,
+      "afterHTML": 26794,
+      "previewBytes": 11520,
+      "embeddedImages": 29
+    },
+    {
+      "id": "007",
+      "beforeHTML": 3692292,
+      "afterHTML": 15877,
+      "previewBytes": 11538,
+      "embeddedImages": 5
+    },
+    {
+      "id": "008",
+      "beforeHTML": 31667,
+      "afterHTML": 6378,
+      "previewBytes": 11532,
+      "embeddedImages": 0
+    },
+    {
+      "id": "009",
+      "beforeHTML": 1999023,
+      "afterHTML": 19653,
+      "previewBytes": 11550,
+      "embeddedImages": 8
+    },
+    {
+      "id": "010",
+      "beforeHTML": 60105,
+      "afterHTML": 13249,
+      "previewBytes": 11538,
+      "embeddedImages": 0
+    },
+    {
+      "id": "011",
+      "beforeHTML": 2179465,
+      "afterHTML": 6533,
+      "previewBytes": 11485,
+      "embeddedImages": 5
+    },
+    {
+      "id": "012",
+      "beforeHTML": 2839654,
+      "afterHTML": 12610,
+      "previewBytes": 11479,
+      "embeddedImages": 6
+    },
+    {
+      "id": "013",
+      "beforeHTML": 832123,
+      "afterHTML": 12614,
+      "previewBytes": 11479,
+      "embeddedImages": 2
+    },
+    {
+      "id": "014",
+      "beforeHTML": 3497113,
+      "afterHTML": 18786,
+      "previewBytes": 3026,
+      "embeddedImages": 6
+    },
+    {
+      "id": "015",
+      "beforeHTML": 1248084,
+      "afterHTML": 8577,
+      "previewBytes": 3032,
+      "embeddedImages": 4
+    },
+    {
+      "id": "016",
+      "beforeHTML": 1134736,
+      "afterHTML": 8298,
+      "previewBytes": 3022,
+      "embeddedImages": 7
+    },
+    {
+      "id": "017",
+      "beforeHTML": 594193,
+      "afterHTML": 6710,
+      "previewBytes": 3024,
+      "embeddedImages": 13
+    },
+    {
+      "id": "018",
+      "beforeHTML": 723453,
+      "afterHTML": 5989,
+      "previewBytes": 3019,
+      "embeddedImages": 6
+    },
+    {
+      "id": "019",
+      "beforeHTML": 31944,
+      "afterHTML": 10240,
+      "previewBytes": 3044,
+      "embeddedImages": 0
+    },
+    {
+      "id": "020",
+      "beforeHTML": 29683,
+      "afterHTML": 9015,
+      "previewBytes": 3089,
+      "embeddedImages": 0
+    },
+    {
+      "id": "021",
+      "beforeHTML": 5012,
+      "afterHTML": 5062,
+      "previewBytes": 3025,
+      "embeddedImages": 0
+    },
+    {
+      "id": "022",
+      "beforeHTML": 5134,
+      "afterHTML": 5184,
+      "previewBytes": 3043,
+      "embeddedImages": 0
+    },
+    {
+      "id": "023",
+      "beforeHTML": 4731,
+      "afterHTML": 4781,
+      "previewBytes": 3030,
+      "embeddedImages": 0
+    },
+    {
+      "id": "024",
+      "beforeHTML": 4787,
+      "afterHTML": 4837,
+      "previewBytes": 3020,
+      "embeddedImages": 0
+    },
+    {
+      "id": "025",
+      "beforeHTML": 5015,
+      "afterHTML": 5065,
+      "previewBytes": 3036,
+      "embeddedImages": 0
+    }
+  ],
+  "uniqueAssets": 115,
+  "originalUniqueBytes": 31913259,
+  "defaultUniqueBytes": 7841048,
+  "remoteImported": 9,
+  "remoteFailures": []
+}

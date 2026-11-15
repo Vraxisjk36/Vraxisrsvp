@@ -86,12 +86,8 @@
   save.onclick=()=>{const value=edit.value.trim();if(!value){dialog.querySelector('[role=alert]').textContent='Add the wording you’d like your guests to see.';edit.focus();return;}if(selection&&commit({...selection,after:value}))closeDialog();};
   picker.onchange=async()=>{
     const file=picker.files?.[0],chosen=selection;if(!file||!chosen)return;
-    uploading=true;updateHistory();status('Preparing your photograph…');const objectURL=URL.createObjectURL(file);
-    try{
-      const img=new Image();await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(Error('We couldn’t read that image. Please choose a JPG, PNG or WebP photograph.'));img.src=objectURL;});
-      const canvas=document.createElement('canvas'),scale=Math.min(1,1400/Math.max(img.width,img.height));canvas.width=Math.max(1,Math.round(img.width*scale));canvas.height=Math.max(1,Math.round(img.height*scale));canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
-      commit({...chosen,after:canvas.toDataURL('image/jpeg',.78)});
-    }catch(error){status(error.message);}finally{URL.revokeObjectURL(objectURL);picker.value='';uploading=false;updateHistory();}
+    uploading=true;updateHistory();status('Preparing your photograph…');try{commit({...chosen,after:await VraxisPhoto.encode(file)});
+    }catch(error){status(error.message);}finally{picker.value='';uploading=false;updateHistory();}
   };
   history.hidden=true;updateHistory();
 })();

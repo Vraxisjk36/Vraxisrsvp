@@ -1,0 +1,155 @@
+{
+  "description": "Cold-cache local preview, 390 CSS pixels / DPR 2; external fonts, Supabase requests and scrolling excluded. Measurement before final request deduplication; not production egress.",
+  "results": [
+    {
+      "id": "001",
+      "firstScreenStaticBytes": 356636,
+      "imageBytes": 270978,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "002",
+      "firstScreenStaticBytes": 296798,
+      "imageBytes": 167702,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "003",
+      "firstScreenStaticBytes": 256062,
+      "imageBytes": 128982,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "004",
+      "firstScreenStaticBytes": 492231,
+      "imageBytes": 378568,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "005",
+      "firstScreenStaticBytes": 364599,
+      "imageBytes": 237042,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "006",
+      "firstScreenStaticBytes": 419145,
+      "imageBytes": 278092,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "007",
+      "firstScreenStaticBytes": 248551,
+      "imageBytes": 138780,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "008",
+      "firstScreenStaticBytes": 100729,
+      "imageBytes": 21606,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "009",
+      "firstScreenStaticBytes": 327240,
+      "imageBytes": 200468,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "010",
+      "firstScreenStaticBytes": 381174,
+      "imageBytes": 272738,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "011",
+      "firstScreenStaticBytes": 71717,
+      "imageBytes": 14484,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "012",
+      "firstScreenStaticBytes": 152441,
+      "imageBytes": 84032,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "013",
+      "firstScreenStaticBytes": 197577,
+      "imageBytes": 99914,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "014",
+      "firstScreenStaticBytes": 211265,
+      "imageBytes": 131500,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "015",
+      "firstScreenStaticBytes": 79199,
+      "imageBytes": 26792,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "016",
+      "firstScreenStaticBytes": 295153,
+      "imageBytes": 232538,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "017",
+      "firstScreenStaticBytes": 174098,
+      "imageBytes": 118274,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "018",
+      "firstScreenStaticBytes": 197050,
+      "imageBytes": 150172,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "019",
+      "firstScreenStaticBytes": 66010,
+      "imageBytes": 0,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "020",
+      "firstScreenStaticBytes": 63494,
+      "imageBytes": 0,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "021",
+      "firstScreenStaticBytes": 61831,
+      "imageBytes": 1453,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "022",
+      "firstScreenStaticBytes": 62057,
+      "imageBytes": 1539,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "023",
+      "firstScreenStaticBytes": 61838,
+      "imageBytes": 1736,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "024",
+      "firstScreenStaticBytes": 61486,
+      "imageBytes": 1338,
+      "failedRequiredResources": []
+    },
+    {
+      "id": "025",
+      "firstScreenStaticBytes": 61612,
+      "imageBytes": 1220,
+      "failedRequiredResources": []
+    }
+  ]
+}

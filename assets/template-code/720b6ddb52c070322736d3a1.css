@@ -1,0 +1,17 @@
+
+/* Modern Vow signature detail: two lines, one vow. */
+.mv-signature { width:min(100%,340px); margin:12px 0 24px; position:relative; pointer-events:none; overflow:visible; }
+.mv-signature svg { width:100%; height:auto; display:block; overflow:visible; }
+.mv-signature path { fill:none; stroke:#292622; stroke-width:1.45; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; stroke-dasharray:550; stroke-dashoffset:550; transition:stroke-dashoffset 2.5s cubic-bezier(.37,.04,.14,1); }
+.mv-signature path.mv-second { stroke:#8e8278; transition-delay:.32s; transition-duration:2.8s; }
+.mv-signature.is-drawn path { stroke-dashoffset:0; }
+.mv-signature-label { font:500 9px/1.5 Arial,sans-serif; letter-spacing:.2em; text-transform:uppercase; color:#79736d; opacity:0; transform:translateY(6px); transition:opacity .8s 1.9s,transform .8s 1.9s; margin-top:2px; }
+.mv-signature.is-drawn .mv-signature-label { opacity:1; transform:none; }
+#story .mv-signature { margin-top:5px; }
+#reply .mv-signature { margin-top:4px; margin-bottom:28px; }
+@media(max-width:760px) { .mv-signature { width:min(75vw,290px); } .mv-signature-label { font-size:8px; } }
+@media(prefers-reduced-motion:reduce) { .mv-signature path { transition:none; stroke-dashoffset:0; } .mv-signature-label { transition:none;opacity:1;transform:none; } }
+/* Gentle photographic life, no layout changes. */
+.hero-photo img { animation:mv-photo-breathe 17s ease-in-out infinite alternate; transform-origin:50% 44%; }
+@keyframes mv-photo-breathe { from { transform:scale(1); } to { transform:scale(1.035); } }
+@media(prefers-reduced-motion:reduce) { .hero-photo img {animation:none;} }

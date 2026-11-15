@@ -8,10 +8,12 @@
 const id=(location.pathname.match(/preview-(\d{3})\.html$/)||[])[1]||window.vraxisGuestTemplateId;
 if(!id||window.__vraxisLocalMedia)return;
 window.__vraxisLocalMedia=true;
+const available=new Set(/* LOCAL_MEDIA_INDEX */ []);
 const root='assets/templates/'+id+'/';
 const valid=/^[a-z0-9_-]+$/i;
 const tested=new Map(),watched=new WeakSet();
 function check(path,done){
+ if(!available.has(path)){done(null);return;}
  if(tested.has(path)){tested.get(path).then(done);return}
  const promise=new Promise(resolve=>{
   const image=new Image();image.onload=()=>resolve(path);

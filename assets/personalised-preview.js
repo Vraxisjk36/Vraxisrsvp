@@ -44,7 +44,7 @@ function setValue(el,value){
 function image(src){return typeof src==='string'&&(src.startsWith('data:image/')||src.startsWith('blob:')||/^https:\/\//.test(src))}
 function status(msg){const el=document.getElementById('renderStatus');if(el)el.textContent=msg}
 function applyDoc(doc){
- if(!doc||!doc.body)return;
+ if(!doc||!doc.body||!doc.body.children.length)return;
  VraxisPhotographs.prepare(doc);
  if(activeDoc!==doc){activeDoc=doc;applied=false}
  const conf=map[id]||{};

@@ -1,0 +1,8 @@
+:root{--vraxis-media-e35e9a96bad4fd48c35094c6:url("../media/e33e80bd3ba639e44d08eb45-640.webp");}@media(min-width:768px){:root{--vraxis-media-e35e9a96bad4fd48c35094c6:url("../media/dfe38ffb72c4cd7e23664e71-960.webp");}}@media(min-width:1280px){:root{--vraxis-media-e35e9a96bad4fd48c35094c6:url("../media/eef9af5a8946fb750af6f38b-1440.webp");}}
+      .hero:before {
+        background-image: var(
+          --hero-image,
+          var(--vraxis-media-e35e9a96bad4fd48c35094c6)
+        );
+      }
+    

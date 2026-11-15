@@ -22,7 +22,7 @@
     {title:'Set the scene.',intro:'The date, the time and the place your guests will meet.',body:()=>grid(field('date','Event date','date','',true)+field('time','Event time','time','',true)+field('venue','Venue name','text','The Glasshouse',true)+field('address','Full address','text','Street, city, country'))},
     {title:'Give it your voice.',intro:'Keep it simple, or add a story. These details are optional.',optional:true,body:()=>grid(field('message','A message for your guests','textarea','We would love you to celebrate with us.')+field('dress','Dress code','text','Garden formal')+field('openingTitle','Opening headline (optional)','text','A celebration of us')+field('openingSubtitle','Opening subtitle (optional)','text','Together with our families')+field('introParagraph','Introductory paragraph','textarea')+field('story',baby?'A little family story':'Your story or tribute','textarea')+field('program','Schedule (one item per line)','textarea','14:00 · Welcome\n15:00 · The celebration begins')+field('giftNote','Gifts or special requests','textarea'))},
     {title:'Make room for their replies.',intro:'Let your guests know when to reply and what you’d like to ask.',optional:true,body:()=>grid(field('deadline','RSVP closing date','date')+field('contact','Contact number (optional)','tel')+field('rsvpHeading','RSVP heading','text','Will you join us?')+field('rsvpQuestion','Response question','text','Can you make it?')+field('rsvpOptions','Response labels (up to 3, one per line)','textarea','Joyfully accepts\nRegretfully declines\nNot sure yet')+field('guestQuestions','Extra guest questions (up to 4)','textarea','Meal preference\nAny dietary needs?'))},
-    {title:'Bring your people into the picture.',intro:'Add up to six photographs. Your first photo will be used for the shared invitation preview.',optional:true,body:()=>'<label class="photo-upload" for="file"><span class="upload-plus" aria-hidden="true">+</span><strong>Add your photographs</strong><span>JPG, PNG, WebP or GIF · up to 6 photos</span><input id="file" type="file" accept="image/*" multiple></label><div class="photo-grid" id="thumbs"></div><p class="photo-note">Prefer the original artwork? You can continue without adding photos.</p>'},
+    {title:'Bring your people into the picture.',intro:'Add up to twelve photographs. Your first photo will be used for the shared invitation preview.',optional:true,body:()=>'<label class="photo-upload" for="file"><span class="upload-plus" aria-hidden="true">+</span><strong>Add your photographs</strong><span>JPG, PNG, WebP or GIF · up to 12 photos</span><input id="file" type="file" accept="image/*" multiple></label><div class="photo-grid" id="thumbs"></div><p class="photo-note">Prefer the original artwork? You can continue without adding photos.</p>'},
     {title:'It’s coming together.',intro:'Give the details one last look. You can still change words and images in the editor.',body:()=>review()}
   ];
   function persist() {
@@ -87,14 +87,13 @@
       if(i>0){const cover=document.createElement('button');cover.type='button';cover.textContent='Use as cover';cover.onclick=()=>{const next=[src,...photos.filter((_,n)=>n!==i)];if(savePhotos(next))renderPhotos();};controls.append(cover);}
       controls.append(remove);card.append(img,label,controls);thumbs.append(card);
     });
-    document.getElementById('file').disabled=photos.length>=6||uploading;
+    document.getElementById('file').disabled=photos.length>=12||uploading;
   }
   async function upload(event) {
-    const current=draft.read('photos',[]),files=[...event.target.files].slice(0,6-current.length);if(!files.length)return;
+    const current=draft.read('photos',[]),files=[...event.target.files].slice(0,12-current.length);if(!files.length)return;
     uploading=true;next.disabled=true;error.textContent='';saveStatus.textContent='Preparing your photographs…';const output=[];
     try{
-      for(const file of files){if(!file.type.startsWith('image/'))throw Error('Please choose a JPG, PNG or WebP photograph.');const objectURL=URL.createObjectURL(file);
-        try{const img=new Image();await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(Error('We couldn’t read '+file.name+'. Please try another photo.'));img.src=objectURL;});const canvas=document.createElement('canvas'),scale=Math.min(1,1400/Math.max(img.width,img.height));canvas.width=Math.max(1,Math.round(img.width*scale));canvas.height=Math.max(1,Math.round(img.height*scale));canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);output.push(canvas.toDataURL('image/jpeg',.78));}finally{URL.revokeObjectURL(objectURL);}
+      for(const file of files){if(!file.type.startsWith('image/'))throw Error('Please choose a JPG, PNG or WebP photograph.');output.push(await VraxisPhoto.encode(file));
       }
       savePhotos([...current,...output]);
     }catch(e){error.textContent=e.message;saveStatus.textContent='Your existing photographs are safe.';}

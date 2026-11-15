@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#FFF5EF" />
+    <title>The Last Fling — VraxisRSVP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/template-code/db34f3478d21f6870afd3223.css">
+  <script src="assets/static-media.js?v=1"></script></head>
+  <body>
+    <header>
+      <div>
+        <div class="brand">The Last Fling</div>
+        <div class="micro">VraxisRSVP · Prestige</div>
+      </div>
+      <button class="btn" id="editOpen">✎ Personalise</button>
+    </header>
+    <main>
+      <section class="hero" id="top">
+        <div>
+          <div class="eyebrow">The official girls' getaway · 2027</div>
+          <h1>One last <em>fling.</em> <br />All for <span data-bind="bride">Nadia</span>.</h1>
+          <p>
+            Before the vows, there's one unforgettable weekend with her favourite people. Pack your
+            bags. We're celebrating our girl properly.
+          </p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap">
+            <a href="#weekend" class="btn dark">Explore the weekend ↓</a>
+            <a href="#rsvp" class="btn">I'm coming ↗</a>
+          </div>
+          <p class="micro" style="margin-top: 28px">
+            <span data-bind="date">20–22 March 2027</span> &nbsp; · &nbsp;
+            <span data-bind="city">Cape Town</span>
+          </p>
+        </div>
+        <div class="hero-photo">
+          <img
+            data-photo="hero"
+            alt="Bachelorette getaway editorial portrait"
+            src="assets/media/b96d34852c0e4620f5c46fa8-960.webp"
+          / srcset="assets/media/0803ddddcdc84dda2ed383ac-320.webp 320w, assets/media/ec1ddd6b42406d7c41ea6814-640.webp 640w, assets/media/b96d34852c0e4620f5c46fa8-960.webp 960w, assets/media/f0286ebd960f64ff2f4212e8-1440.webp 1440w" sizes="(max-width: 767px) 100vw, 70vw" decoding="async">
+          <div class="stamp">THE GIRLS<br />ARE GOING<br />OUT ✳</div>
+        </div>
+      </section>
+      <div class="marquee" aria-hidden="true">
+        <span
+          >THE WEEKEND IS OURS ✳ CELEBRATING <span data-bind="bride">NADIA</span> ✳ THE WEEKEND IS
+          OURS ✳ THE LAST FLING ✳ THE WEEKEND IS OURS ✳ CELEBRATING
+          <span data-bind="bride">NADIA</span> ✳ THE WEEKEND IS OURS ✳ THE LAST FLING ✳
+        </span>
+      </div>
+      <section class="intro">
+        <div class="wrap intro-grid">
+          <img
+            class="intro-photo"
+            data-photo="bride"
+            src="assets/media/01554e73c448a0de6f1f8918-960.webp"
+            alt="Bride-to-be portrait"
+          / srcset="assets/media/801f9130b24a9e26957fc4df-320.webp 320w, assets/media/d03080fd56460da250b7ea75-640.webp 640w, assets/media/01554e73c448a0de6f1f8918-960.webp 960w, assets/media/2500099585d447404cd39997-1440.webp 1440w" sizes="(max-width: 767px) 100vw, 70vw" decoding="async">
+          <div>
+            <div class="eyebrow">A weekend for our favourite girl</div>
+            <h2 class="serif">She's found her person. <em>We've got the weekend.</em></h2>
+            <p class="lead" data-bind="tribute">
+              Nadia is the friend who turns ordinary moments into stories we'll tell forever. So
+              before her next big chapter, we're giving her a weekend filled with the people, places
+              and little surprises she loves most.
+            </p>
+            <p class="micro">Hosted with love by her favourite people ♡</p>
+          </div>
+        </div>
+      </section>
+      <section class="itinerary" id="weekend">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">01 / The plan</div>
+              <h2 class="serif">
+                Three days.<br />
+                <em>One for the books.</em>
+              </h2>
+            </div>
+            <p>
+              Not just a schedule. Your actual weekend guide—what's happening, when to arrive, and
+              where to be.
+            </p>
+          </div>
+          <div class="day-tabs" role="tablist" aria-label="Weekend itinerary">
+            <button type="button" role="tab" class="active" data-day="0" aria-selected="true">
+              Friday · Arrival
+            </button>
+            <button type="button" role="tab" data-day="1" aria-selected="false">
+              Saturday · The Main Event
+            </button>
+            <button type="button" role="tab" data-day="2" aria-selected="false">
+              Sunday · Slow Morning
+            </button>
+          </div>
+          <div class="timeline fade" id="timeline" aria-live="polite"></div>
+          <p class="itinerary-note">
+            *Times and locations are sample details. The host can customise the full itinerary in
+            the published version.
+          </p>
+        </div>
+      </section>
+      <section class="looks">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">02 / Outfit notes</div>
+              <h2 class="serif">The looks<br />are <em>planned.</em></h2>
+            </div>
+            <p>
+              Three moments. Three moods. Bring your personality; we've handled the inspiration.
+            </p>
+          </div>
+          <div class="look-grid">
+            <article class="look">
+              <img
+                data-photo="look1"
+                src="assets/media/1256cf06770fd96c59910d6e-960.webp"
+                alt="Daytime outfit inspiration"
+              / srcset="assets/media/c7fb904d13722838783197f6-320.webp 319w, assets/media/de331600b61837bac90cf9c7-640.webp 640w, assets/media/1256cf06770fd96c59910d6e-960.webp 960w, assets/media/8e3138aecc48e5e1ca3cffe7-1440.webp 1440w" sizes="(max-width: 767px) 100vw, 70vw" decoding="async" loading="lazy">
+              <h3>01. Arrival chic</h3>
+              <p>
+                Easy, effortless and camera-ready. Think linen, denim and your favourite sunglasses.
+              </p>
+            </article>
+            <article class="look">
+              <img
+                data-photo="look2"
+                src="assets/media/77f298cc0194015ec355f765-960.webp"
+                alt="Evening outfit inspiration"
+              / srcset="assets/media/b1ff35b4aee310a619dedf7d-320.webp 320w, assets/media/0c539be85bec84ab0761bf01-640.webp 640w, assets/media/77f298cc0194015ec355f765-960.webp 960w, assets/media/febdca1beaaf537b6a70eefc-1440.webp 1440w" sizes="(max-width: 767px) 100vw, 70vw" decoding="async" loading="lazy">
+              <h3>02. Main character</h3>
+              <p>Dress to be remembered. Everyone in colour; the bride gets her own spotlight.</p>
+            </article>
+            <article class="look">
+              <img
+                data-photo="look3"
+                src="assets/media/71f7ac3ac780ce1ce0525150-960.webp"
+                alt="Brunch outfit inspiration"
+              / srcset="assets/media/4ab7b9c92304dd44200dfead-320.webp 319w, assets/media/3c296ff49c2390049adde598-640.webp 640w, assets/media/71f7ac3ac780ce1ce0525150-960.webp 960w, assets/media/8c22629daaf31071560c37b1-1440.webp 1440w" sizes="(max-width: 767px) 100vw, 70vw" decoding="async" loading="lazy">
+              <h3>03. Sunday soft</h3>
+              <p>Comfy, pretty and ready for one last brunch together.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="kit">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">03 / Before you leave</div>
+              <h2 class="serif">The packing <em>edit.</em></h2>
+            </div>
+            <p>
+              Tick off your essentials. Your checklist stays in this browser while the page remains
+              open.
+            </p>
+          </div>
+          <div class="kit-grid" id="checklist">
+            <label class="kit-item"> <input type="checkbox" /> Your Friday outfit</label>
+            <label class="kit-item"> <input type="checkbox" /> Saturday night look</label>
+            <label class="kit-item"> <input type="checkbox" /> Sunday brunch fit</label>
+            <label class="kit-item"> <input type="checkbox" /> Swimwear & sunscreen</label>
+            <label class="kit-item"> <input type="checkbox" /> Phone charger</label>
+            <label class="kit-item"> <input type="checkbox" /> Your best energy ♡</label>
+          </div>
+        </div>
+      </section>
+      <section class="logistics" id="details">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">04 / Everything you need</div>
+              <h2 class="serif">The <em>essentials.</em></h2>
+            </div>
+            <p>Less frantic group-chat scrolling. More time to get excited.</p>
+          </div>
+          <div class="info-grid">
+            <article class="info">
+              <div class="eyebrow">When</div>
+              <h3 data-bind="date">20–22 March 2027</h3>
+              <p>Arrive Friday afternoon. Final timings are in the itinerary above.</p>
+              <button class="btn" id="calendar">Add to calendar ↗</button>
+            </article>
+            <article class="info">
+              <div class="eyebrow">Where</div>
+              <h3 data-bind="city">Cape Town</h3>
+              <p data-bind="venue">
+                Sea Point, Cape Town · Exact accommodation address shared with confirmed guests.
+              </p>
+              <a
+                class="btn"
+                id="map"
+                href="https://www.google.com/maps/search/?api=1&query=Sea+Point+Cape+Town"
+                target="_blank"
+                rel="noopener"
+                >View location ↗</a
+              >
+            </article>
+            <article class="info">
+              <div class="eyebrow">The group</div>
+              <h3>Girls only. Good vibes.</h3>
+              <p data-bind="notes">
+                Accommodation is being coordinated by the host. Please confirm attendance before
+                booking travel.
+              </p>
+              <a class="btn" href="#rsvp">Confirm your spot ↗</a>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="memory">
+        <div class="wrap memory-grid">
+          <img
+            data-photo="friends"
+            src="assets/media/1f2a281cf6625ab7e6343a17-960.webp"
+            alt="Friends sharing a special moment"
+          / srcset="assets/media/34697a04d266a3eea7714cbe-320.webp 320w, assets/media/a69d6ca877197b90b2b9ab78-640.webp 640w, assets/media/1f2a281cf6625ab7e6343a17-960.webp 960w, assets/media/7198e54f4c138eab005dd69f-1440.webp 1439w" sizes="(max-width: 767px) 100vw, 70vw" decoding="async" loading="lazy">
+          <div class="memory-copy">
+            <div class="eyebrow">05 / A little note</div>
+            <h2 class="serif">The best part? <em>Being together.</em></h2>
+            <p style="font-size: 18px; line-height: 1.7" data-bind="message">
+              It's not about having the perfect itinerary. It's about the laughs, the photos, the
+              inside jokes and being there for Nadia before she says “I do.” We can't wait to make
+              these memories with you.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="pass">
+        <div class="wrap pass-layout">
+          <div>
+            <div class="eyebrow">06 / Your weekend pass</div>
+            <h2 class="serif">
+              You're on<br />
+              <em>the list.</em>
+            </h2>
+            <p style="line-height: 1.7; max-width: 450px">
+              Create a personalised keepsake pass for the weekend. It's a fun memento—not a ticket
+              or proof of booking.
+            </p>
+            <label for="passName" class="micro">Your name</label>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px">
+              <input
+                id="passName"
+                maxlength="35"
+                placeholder="Enter your name"
+                style="padding: 14px; min-width: 0; flex: 1; font-size: 16px"
+              />
+              <button class="btn coral" id="savePass">Save PNG ↗</button>
+            </div>
+          </div>
+          <div class="ticket" id="ticket">
+            <div class="micro">The Last Fling · Guest edition</div>
+            <div
+              style="
+                font-family: &quot;Playfair Display&quot;, serif;
+                font-size: 32px;
+                margin-top: 15px;
+              "            >
+              Weekend with <span data-bind="bride">Nadia</span> ♡
+            </div>
+            <div class="guest" id="passDisplay">Your name here</div>
+            <div class="micro">
+              <span data-bind="city">Cape Town</span> ·
+              <span data-bind="date">20–22 March 2027</span>
+            </div>
+            <div class="barcode">|||| ||| ||||| || |||| ||||| |||</div>
+          </div>
+        </div>
+      </section>
+      <section class="rsvp" id="rsvp">
+        <div class="wrap rsvp-grid">
+          <div>
+            <div class="eyebrow">07 / Save your spot</div>
+            <h2 class="serif">Are you <em>in?</em></h2>
+            <p style="line-height: 1.7">
+              We need to know who's coming so we can make the weekend perfect for our girl. Let us
+              know below.
+            </p>
+            <p class="small">Demo mode: submissions are not sent or stored online.</p>
+          </div>
+          <div>
+            <form class="form" id="rsvpForm">
+              <label
+                >Your full name<input name="name" required maxlength="80" placeholder="Your name" />
+              </label>
+              <label
+                >Email address<input
+                  type="email"
+                  name="email"
+                  required
+                  placeholder="you@example.com"
+                />
+              </label>
+              <label
+                >Can you join us?<select name="attending" id="attending">
+                  <option value="yes">Absolutely, I'm in!</option>
+                  <option value="no">Sorry, I can't make it</option>
+                </select>
+              </label>
+              <div id="attendExtra">
+                <label
+                  >Anything we should know?<textarea
+                    name="requests"
+                    placeholder="Dietary needs, travel questions, anything helpful..."
+                  ></textarea>
+                </label>
+              </div>
+              <label
+                >A message for the bride<textarea
+                  name="wish"
+                  placeholder="Leave her a little love..."
+                ></textarea>
+              </label>
+              <button class="btn coral" type="submit">Send my response ↗</button>
+            </form>
+            <div class="confirm" id="confirm" role="status"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div>
+        <div class="brand">The Last Fling</div>
+        <div class="micro">A weekend for <span data-bind="bride">Nadia</span></div>
+      </div>
+      <div class="micro">VraxisRSVP · Template 014 · Prestige</div>
+    </footer>
+    <dialog id="editor">
+      <div class="dialog-head">
+        <h2 class="serif">Make it hers.</h2>
+        <button class="btn" id="editClose" aria-label="Close personalisation">✕</button>
+      </div>
+      <p class="small">
+        Preview personalisation only. Changes are not permanently saved. Photos are loaded locally
+        in this browser.
+      </p>
+      <div class="edit-grid">
+        <label>Bride's first name<input data-edit="bride" value="Nadia" /> </label>
+        <label
+          >Weekend date / display text<input data-edit="date" value="20–22 March 2027" />
+        </label>
+        <label>Destination<input data-edit="city" value="Cape Town" /> </label>
+        <label
+          >Accommodation / location details<textarea data-edit="venue">
+Sea Point, Cape Town · Exact accommodation address shared with confirmed guests.</textarea>
+        </label>
+        <label
+          >Tribute to the bride<textarea data-edit="tribute">
+Nadia is the friend who turns ordinary moments into stories we'll tell forever. So before her next big chapter, we're giving her a weekend filled with the people, places and little surprises she loves most.</textarea>
+        </label>
+        <label
+          >Group information<textarea data-edit="notes">
+Accommodation is being coordinated by the host. Please confirm attendance before booking travel.</textarea>
+        </label>
+        <label
+          >Personal message<textarea data-edit="message">
+It's not about having the perfect itinerary. It's about the laughs, the photos, the inside jokes and being there for Nadia before she says “I do.” We can't wait to make these memories with you.</textarea>
+        </label>
+        <label>Hero photo<input type="file" accept="image/*" data-upload="hero" /> </label>
+        <label>Bride portrait<input type="file" accept="image/*" data-upload="bride" /> </label>
+        <label>Friends photo<input type="file" accept="image/*" data-upload="friends" /> </label>
+        <label>Look 1 photo<input type="file" accept="image/*" data-upload="look1" /> </label>
+        <label>Look 2 photo<input type="file" accept="image/*" data-upload="look2" /> </label>
+        <label>Look 3 photo<input type="file" accept="image/*" data-upload="look3" /> </label>
+      </div>
+      <div class="edit-actions">
+        <button class="btn dark" id="editDone">Done ✓</button>
+      </div>
+    </dialog>
+    <script src="assets/template-code/ad23301f9b0cc3f914f909ea.js"></script>
+    <link rel="stylesheet" href="assets/template-code/518b8e81efd60cfc6be895dd.css">
+    <div id="vraxisOpening" role="dialog" aria-modal="true" aria-label="Invitation opening">
+      <div class="opening-inner">
+        <div class="opening-mark">THE LAST FLING · 014</div>
+        <h2>One last night<br />before forever.</h2>
+        <div class="opening-rule"></div>
+        <p class="opening-sub">THE WEEKEND BEGINS HERE</p>
+        <button type="button" id="vraxisOpeningEnter">OPEN THE INVITATION &rarr;</button>
+      </div>
+    </div>
+    <script src="assets/template-code/7e848007f52a2506a442f4b9.js"></script>
+  </body>
+</html>

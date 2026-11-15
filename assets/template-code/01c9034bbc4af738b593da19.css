@@ -1,0 +1,5 @@
+
+  html, body { margin: 0 !important; width: 100%; min-height: 100%; overflow-x: hidden; }
+  html { -webkit-text-size-adjust: 100%; }
+  .mv-intro { width: 100vw; min-height: 100vh; min-height: 100dvh; }
+  img { max-width: 100%; }

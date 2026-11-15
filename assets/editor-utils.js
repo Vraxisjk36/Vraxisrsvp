@@ -1,6 +1,10 @@
 /* Shared rendering keeps the editor and published invitation visually consistent. */
 (() => {
-  const imageURL = value => typeof value === 'string' && (/^https:\/\//.test(value) || /^data:image\/(jpeg|png|webp);base64,/.test(value));
+  const imageURL = value => {
+    if(typeof value!=='string')return false;
+    if(/^https:\/\//.test(value)||/^data:image\/(jpeg|png|webp);base64,/.test(value))return true;
+    try{const url=new URL(value,location.href);return url.origin===location.origin&&/\/assets\/(?:media|covers)\//.test(url.pathname);}catch{return false;}
+  };
   function setText(el,value) {
     const doc=el.ownerDocument,walker=doc.createTreeWalker(el,4),nodes=[];
     while(walker.nextNode())nodes.push(walker.currentNode);
@@ -33,7 +37,7 @@
   function setImage(el,value){
     if(el?.tagName!=='IMG'||!imageURL(value))return;
     const doc=el.ownerDocument;remap(doc,el.src,value);const original=doc.__vraxisOriginalPhotoURLs?.get(el);if(original)remap(doc,original,value);
-    el.src=value;el.alt='Personal invitation photograph';el.style.objectFit='cover';
+    el.removeAttribute('srcset');el.removeAttribute('sizes');delete el.dataset.vraxisResponsive;el.src=value;el.alt='Personal invitation photograph';el.style.objectFit='cover';
   }
   function setBackground(doc,path,src) {
     if(!imageURL(src)||/[{}]/.test(path))return;

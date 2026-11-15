@@ -18,7 +18,7 @@
   };
   const primary={'003':['#heroImage'],'005':['#heroPhoto','.se-photo'],'006':['#reel-image'],'007':['#storyImage'],'009':['#heroImg','#siFamilyPhoto'],'010':['#heroPhoto'],'013':['[data-photo="hero"]']};
   function apply(doc,id,photos){
-    prepare(doc);photos=Array.isArray(photos)?photos.filter(VraxisEditor.imageURL).slice(0,6):[];if(!photos.length)return;
+    prepare(doc);photos=Array.isArray(photos)?photos.filter(VraxisEditor.imageURL).slice(0,12):[];if(!photos.length)return;
     if(id==='008'){
       const input=doc.getElementById('editPhoto');if(input&&input.value!==photos[0]){input.value=photos[0];input.dispatchEvent(new doc.defaultView.Event('input',{bubbles:true}));}
       return;
