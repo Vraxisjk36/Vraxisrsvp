@@ -1,5 +1,12 @@
 name: Invitation media source audit
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'preview-*.html'
+      - 'assets/**'
+      - 'scripts/audit-template-media.mjs'
+      - '.github/workflows/invitation-media-audit.yml'
   pull_request:
     paths:
       - 'preview-*.html'
