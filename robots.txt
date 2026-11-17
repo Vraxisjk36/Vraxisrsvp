@@ -13,4 +13,4 @@ Disallow: /studio-
 Disallow: /templates/
 Disallow: /services/
 
-Sitemap: https://vraxisrsvp.kazadijoel36.workers.dev/sitemap.xml
+Sitemap: https://vraxisrsvp.online/sitemap.xml
