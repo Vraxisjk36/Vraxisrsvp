@@ -28,8 +28,14 @@
     @media(prefers-reduced-motion:reduce){.vraxis-preview-actions{transition:none}}
   `;
   document.head.append(immersive);
-  const nav=document.querySelector('.preview-nav');
-  const use=nav?.querySelector('a[href*="personalise.html"],a[href*="start.html"],a.cta');
+  const nav=document.querySelector('.preview-nav')||document.querySelector('body > header');
+  const use=document.querySelector('a[href*="personalise.html?template="],a[href*="start.html"]');
+  // Older previews use a plain header and an unclassed information bar.
+  if(!document.querySelector('.preview-nav')){
+    nav?.style.setProperty('display','none','important');
+    const info=[...document.body.children].find(el=>el.tagName==='DIV'&&el.querySelector('a[href="catalogue.html"]')&&el.nextElementSibling===frame);
+    info?.style.setProperty('display','none','important');
+  }
   const actions=document.createElement('nav');actions.className='vraxis-preview-actions is-visible';
   actions.setAttribute('aria-label','Preview actions');
   const back=document.createElement('a');back.href='catalogue.html';back.textContent='← Back';
