@@ -250,4 +250,4 @@ window.VRAXIS_TEMPLATES=Object.freeze([
     "cover": "assets/covers/025.svg",
     "source": "templates/025.html?v=72b320bf3ab7"
   }
-].map(Object.freeze));
+].filter(template => Number(template.id) <= 20).map(Object.freeze));
