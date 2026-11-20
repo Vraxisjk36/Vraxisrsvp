@@ -30,7 +30,8 @@ for(const el of document.querySelectorAll('a,button'))for(const node of [...el.c
   }
   const track=(event,details={})=>window.dataLayer.push({event,...details});
   const idFromPath=(value)=>{
-    const match=String(value||'').match(/(?:preview-|templates\\/)(\\d{3})(?:\\.html|\\/|$|[?#])/i);
+    const path=String(value||'');
+    const match=path.match(new RegExp('(?:preview-|templates/)([0-9]{3})(?:[.]html|/|$|[?#])','i'));
     return match?match[1]:undefined;
   };
   const pathname=location.pathname;
@@ -43,11 +44,11 @@ for(const el of document.querySelectorAll('a,button'))for(const node of [...el.c
     if(url.origin!==location.origin)return;
     const target=url.pathname;
     const id=idFromPath(target)||url.searchParams.get('template')||previewId;
-    if(/(?:preview-\\d{3}\\.html|\\/templates\\/\\d{3})/i.test(target)){
+    if(target.includes('preview-')||target.includes('/templates/')){
       track('template_explore',{template_id:id||undefined,source_page:pathname});
-    }else if(/(?:personalise|start|create|builder)\\.html$/i.test(target)){
+    }else if(['personalise.html','start.html','create.html','builder.html'].some(name=>target.endsWith(name))){
       track('template_use',{template_id:id||undefined,source_page:pathname});
-    }else if(/(?:checkout|payment)\\.html$/i.test(target)){
+    }else if(['checkout.html','payment.html'].some(name=>target.endsWith(name))){
       track('checkout_navigation',{template_id:id||undefined});
     }
   },{capture:true,passive:true});
