@@ -1,5 +1,9 @@
 (() => {
   const grid = document.getElementById('catalogue');
+  // Keep the original 20 designs in the public collection; retain archived files for recovery.
+  [...grid.querySelectorAll('[data-template]')].forEach(tile => {
+    if (Number(tile.dataset.template) > 20) tile.closest('[data-category]')?.remove();
+  });
   const search = document.getElementById('templateSearch');
   const editionSelect = document.getElementById('editionFilter');
   let edition = new URLSearchParams(location.search).get('tier') || 'All';
