@@ -6,6 +6,49 @@
   const context=new URLSearchParams(location.search);if(/^[0-9a-f-]{36}$/i.test(context.get('draft')||''))document.querySelectorAll('a[href^="start.html"],a[href^="personalise.html"]').forEach(link=>{const url=new URL(link.href);url.searchParams.set('draft',context.get('draft'));if(/^[0-9a-f-]{36}$/i.test(context.get('project')||''))url.searchParams.set('project',context.get('project'));link.href=url.href;});
   if(!document.querySelector('script[src*="site-nav.js"]')){const nav=document.createElement('script');nav.src=new URL('assets/site-nav.js',location.href).href;document.body.append(nav);}
   const outerStyle=document.createElement('style');outerStyle.textContent='.preview-nav{gap:10px}.preview-nav .cta{white-space:nowrap}.preview-info b{min-width:0;overflow-wrap:anywhere}';document.head.append(outerStyle);
+
+  // The entire preview viewport belongs to the invitation, just like promo captures.
+  // Keep editing/navigation accessible through a discreet on-demand control.
+  const immersive=document.createElement('style');
+  immersive.textContent=`
+    html,body{height:100%;margin:0;overflow:hidden}
+    body>.preview-nav,body>.preview-info{display:none!important}
+    #invitation{display:block!important;position:fixed!important;inset:0!important;
+      width:100vw!important;height:100vh!important;height:100dvh!important;
+      min-height:0!important;max-height:none!important;border:0!important;margin:0!important}
+    .vraxis-preview-actions{position:fixed;z-index:2147483000;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));
+      display:flex;align-items:center;gap:8px;opacity:0;transform:translateY(10px);
+      transition:opacity .2s,transform .2s;pointer-events:none}
+    .vraxis-preview-actions.is-visible,.vraxis-preview-actions:focus-within{opacity:1;transform:none;pointer-events:auto}
+    .vraxis-preview-actions a{background:rgba(28,31,29,.88);color:#fff!important;
+      border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:11px 15px;
+      text-decoration:none;font:600 12px/1.2 system-ui,sans-serif;letter-spacing:.01em;
+      box-shadow:0 5px 20px rgba(0,0,0,.18)}
+    .vraxis-preview-actions a:focus-visible{outline:3px solid #c6a979;outline-offset:3px}
+    @media(prefers-reduced-motion:reduce){.vraxis-preview-actions{transition:none}}
+  `;
+  document.head.append(immersive);
+  const nav=document.querySelector('.preview-nav')||document.querySelector('body > header');
+  const use=document.querySelector('a[href*="personalise.html?template="],a[href*="start.html"]');
+  // Older previews use a plain header and an unclassed information bar.
+  if(!document.querySelector('.preview-nav')){
+    nav?.style.setProperty('display','none','important');
+    const info=[...document.body.children].find(el=>el.tagName==='DIV'&&el.querySelector('a[href="catalogue.html"]')&&el.nextElementSibling===frame);
+    info?.style.setProperty('display','none','important');
+  }
+  const actions=document.createElement('nav');actions.className='vraxis-preview-actions is-visible';
+  actions.setAttribute('aria-label','Preview actions');
+  const back=document.createElement('a');back.href='catalogue.html';back.textContent='← Back';
+  actions.append(back);
+  if(use){const go=document.createElement('a');go.href=use.href;go.textContent='Use this template';actions.append(go);}
+  document.body.append(actions);
+  let hideTimer;
+  const showActions=()=>{actions.classList.add('is-visible');clearTimeout(hideTimer);hideTimer=setTimeout(()=>{if(!actions.matches(':focus-within'))actions.classList.remove('is-visible');},3200);};
+  document.addEventListener('pointermove',showActions,{passive:true});
+  document.addEventListener('pointerdown',showActions,{passive:true});
+  document.addEventListener('keydown',showActions);
+  actions.addEventListener('focusin',()=>{clearTimeout(hideTimer);actions.classList.add('is-visible');});
+  showActions();
   const fallback=new URL(template.cover,location.href).href;
   function polish(){
     const doc=frame.contentDocument;window.vraxisFinishDesign?.(doc,id);if(!doc?.body||doc.__vraxisPolished)return;doc.__vraxisPolished=true;
